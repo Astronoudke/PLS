@@ -1,0 +1,11 @@
+        <tr>
+            <td>
+                {{ relation.return_relation() }}
+            </td>
+            <td>
+                <button type="button" onclick="window.location.href='{{ url_for('new_study.remove_relation',
+                name_study=study.name, id_relation=relation.id) }}';">
+                    Delete Relation
+                </button>
+            </td>
+        </tr>

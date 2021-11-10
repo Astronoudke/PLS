@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_utaut.css') }}">
+    <div class="title-box">
+        <h1 class="title-header"> {{ study.name }}</h1>
+    </div>
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.edit_study', name_study=study.name) }}';">
+        Edit Study
+    </button>
+    <div id="table-corevariables">
+        <h1 class="table-header">Core Variables</h1>
+        <table class="table-class">
+          <tr>
+            <th>Abbreviation</th>
+            <th>Name</th>
+          </tr>
+          {% for core_variable in core_variables %}
+            {% include 'new_study/_corevariable_utaut.html' %}
+          {% endfor %}
+        </table>
+    </div>
+
+
+    <div class="popuptext">
+        <div class="form-container">
+            <div class="row">
+                <div class="col-md-4">
+                    {{ wtf.quick_form(form_add_variable) }}
+                </div>
+            </div>
+        </div>
+        <button type="button" onclick="window.location.href='{{ url_for('new_study.new_core_variable', name_study=study.name) }}';">
+            Create New Variable
+        </button>
+    </div>
+
+
+    <div id="table-relations">
+        <h1 class="table-header">Relations</h1>
+        <table class="table-class">
+            {% for relation in relations %}
+                {% include 'new_study/_relation.html' %}
+            {% endfor %}
+        </table>
+    </div>
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.new_relation', name_study=study.name) }}';">
+        Create New Relation
+    </button>
+
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.create_questionnaire', name_study=study.name) }}';">
+        Go To Questionnaire
+    </button>
+
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

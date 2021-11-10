@@ -1,0 +1,88 @@
+2021-11-10 10:33:45,435 ERROR: Exception on /new_study/utaut/Drivers of Recreational Online Gambling Intentions: A UTAUT2 Perspective, Enhancements, Results, and Implications [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 74, in utaut
+    if current_user not in study.linked_users:
+AttributeError: 'NoneType' object has no attribute 'linked_users'
+2021-11-10 10:35:43,853 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 10:37:29,757 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 10:43:15,507 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 11:04:45,830 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 11:05:15,535 ERROR: Exception on /new_study/new_study [POST] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1799, in _execute_context
+    self.dialect.do_execute(
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: utau_tmodel.name
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 22, in new_study
+    db.session.commit()
+  File "<string>", line 2, in commit
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\session.py", line 1428, in commit
+    self._transaction.commit(_to_root=self.future)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\session.py", line 829, in commit
+    self._prepare_impl()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\session.py", line 808, in _prepare_impl
+    self.session.flush()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\session.py", line 3340, in flush
+    self._flush(objects)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\session.py", line 3480, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 70, in __exit__
+    compat.raise_(
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
+    raise exception
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\session.py", line 3440, in _flush
+    flush_context.execute()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\unitofwork.py", line 456, in execute
+    rec.execute(self)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\unitofwork.py", line 630, in execute
+    util.preloaded.orm_persistence.save_obj(
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\persistence.py", line 244, in save_obj
+    _emit_insert_statements(
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\persistence.py", line 1221, in _emit_insert_statements
+    result = connection._execute_20(
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1611, in _execute_20
+    return meth(self, args_10style, kwargs_10style, execution_options)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 325, in _execute_on_connection
+    return connection._execute_clauseelement(
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1478, in _execute_clauseelement
+    ret = self._execute_context(
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
+    self._handle_dbapi_exception(
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2023, in _handle_dbapi_exception
+    util.raise_(
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
+    raise exception
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1799, in _execute_context
+    self.dialect.do_execute(
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: utau_tmodel.name
+[SQL: INSERT INTO utau_tmodel (name) VALUES (?)]
+[parameters: ('UTAUT',)]
+(Background on this error at: https://sqlalche.me/e/14/gkpj)
+2021-11-10 11:05:47,150 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]

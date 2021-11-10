@@ -1,0 +1,50 @@
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+
+.vertical-menu {
+  margin-left: 200px;
+  margin-top: 50px;
+  width: 400px;
+}
+
+.vertical-menu a {
+  background-color: #eee;
+  color: black;
+  display: block;
+  padding: 12px;
+  text-decoration: none;
+}
+
+.vertical-menu a:hover {
+  background-color: #ccc;
+}
+
+.vertical-menu a.active {
+  color: white;
+  background: linear-gradient(270deg, #340108, #520011, #520039, #52004f, #260052, #100052);
+  background-size: 1200% 1200%;
+
+  -webkit-animation: AnimationAActive 13s ease infinite;
+  -moz-animation: AnimationAActive 13s ease infinite;
+  animation: AnimationAActive 13s ease infinite;
+}
+
+@-webkit-keyframes AnimationAActive {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationAActive {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationAActive {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}

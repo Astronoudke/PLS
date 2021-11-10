@@ -1,0 +1,82 @@
+2021-10-01 13:57:59,939 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:43]
+2021-10-01 14:01:08,019 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:43]
+2021-10-01 14:01:14,762 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:43]
+2021-10-01 14:06:28,736 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:43]
+2021-10-01 14:06:50,831 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:43]
+2021-10-01 14:07:10,906 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:43]
+2021-10-01 14:07:51,820 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:43]
+2021-10-01 14:11:32,760 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:43]
+2021-10-01 14:23:32,589 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:45]
+2021-10-01 14:56:28,215 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:45]
+2021-10-01 14:56:43,671 ERROR: Exception on /reset_password_request [POST] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\routes.py", line 150, in reset_password_request
+    send_password_reset_email(user)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\email.py", line 15, in send_password_reset_email
+    token = user.get_reset_password_token()
+AttributeError: 'User' object has no attribute 'get_reset_password_token'
+2021-10-01 15:00:04,897 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:45]
+2021-10-01 15:00:18,593 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:45]
+2021-10-01 15:00:26,336 ERROR: Exception on /reset_password_request [POST] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\routes.py", line 150, in reset_password_request
+    send_password_reset_email(user)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\email.py", line 15, in send_password_reset_email
+    token = user.get_reset_password_token()
+  File "C:\Users\noudy\PycharmProjects\PLS\app\models.py", line 57, in get_reset_password_token
+    return jwt.encode(
+AttributeError: module 'jwt' has no attribute 'encode'
+2021-10-01 15:01:59,078 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:45]
+2021-10-01 15:11:28,075 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:45]
+2021-10-01 15:30:49,288 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:45]
+2021-10-01 15:38:42,656 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:45]
+2021-10-01 15:44:02,915 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:47]
+2021-10-01 15:44:04,668 ERROR: Exception on / [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1454]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\routes.py", line 24, in index
+    return render_template("index.html", title='Home Page', posts=posts)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 147, in render_template
+    return _render(
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 128, in _render
+    rv = template.render(context)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\jinja2\environment.py", line 1304, in render
+    self.environment.handle_exception()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\index.html", line 1, in top-level template code
+    {% extends "base.html" %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 35, in top-level template code
+    {% block scripts %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 36, in block 'scripts'
+    {{ super() }}
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\jinja2\utils.py", line 84, in from_obj
+    if hasattr(obj, "jinja_pass_arg"):
+jinja2.exceptions.UndefinedError: there is no parent block called 'scripts'.
+2021-10-01 15:52:59,272 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:47]
+2021-10-01 15:54:37,804 INFO: Peer startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:47]

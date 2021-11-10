@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_questionnaire.css') }}">
+    <div class="title-box">
+        <h1 class="title-header"> {{ study.name }}</h1>
+    </div>
+
+    <p>Completed cases/questionnaires: {{ questionnaire.total_completed_cases() }}</p>
+
+    <p>The link to the page: {{ link }}</p>
+
+    <button type="button" onclick="window.location.href='{{ url_for('main.create_session', study_code=study.code) }}';">
+        Go to Questionnaire
+    </button>
+{% endblock %}

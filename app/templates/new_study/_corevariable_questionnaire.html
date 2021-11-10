@@ -1,0 +1,12 @@
+    <div id="table-corevariable">
+        <h1 class="table-header"> {{ core_variable.name }}</h1>
+        <table class="table-class">
+          <tr>
+            <th>Question</th>
+          </tr>
+        </table>
+    </div>
+
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.new_question', name_corevariable=core_variable.name, name_study=study.name) }}';">
+        Create New Question for {{ core_variable.name }}
+    </button>

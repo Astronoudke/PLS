@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_questionnaire.css') }}">
+    <div class="title-box">
+        <h1 class="title-header"> {{ study.name }}</h1>
+    </div>
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.edit_study', name_study=study.name) }}';">
+        Edit Study
+    </button>
+    <div class="table-corevariable">
+        <h1 class="table-header">Collected data participants</h1>
+        <table class="table-class">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+          </tr>
+          {% for demographic in demographics %}
+            <tr>
+                <td>
+                    {{ demographic.name }}
+                </td>
+                <td>
+                    {{ demographic.questiontype_name }}
+                </td>
+                <td>
+                    <button type="button" onclick="window.location.href='{{ url_for('new_study.remove_demographic',
+                    name_study=study.name, name_demographic=demographic.name) }}';">
+                        Delete Demographic
+                    </button>
+                </td>
+            </tr>
+          {% endfor %}
+        </table>
+        <div class="form-container">
+            <div class="row">
+                <div class="col-md-4">
+                    {{ wtf.quick_form(form_add_demographic) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% for questiongroup in questiongroups_questions.keys() %}
+        <div class="table-corevariable">
+            <h1 class="table-header"> {{ questiongroup.title }}</h1>
+            <table class="table-class">
+              <tr>
+                <th>Question</th>
+              </tr>
+              {% for question in questiongroups_questions.get(questiongroup) %}
+                  <tr>
+                    <td> {{ question.question }}</td>
+                    {% if question.reversed_score %}
+                        <td>
+                            <button type="button" onclick="window.location.href='{{ url_for('new_study.switch_reversed_score',
+                            name_study=study.name, name_question=question.question) }}';">
+                                Make Score Not Reversed
+                            </button>
+                        </td>
+                    {% else %}
+                        <td>
+                            <button type="button" onclick="window.location.href='{{ url_for('new_study.switch_reversed_score',
+                            name_study=study.name, name_question=question.question) }}';">
+                                Make Score Reversed
+                            </button>
+                        </td>
+                    {% endif %}
+                    <td>
+                        <button type="button" onclick="window.location.href='{{ url_for('new_study.remove_question',
+                        name_study=study.name, name_question=question.question) }}';">
+                            Delete Question
+                        </button>
+                    </td>
+                  </tr>
+              {% endfor %}
+            </table>
+        </div>
+
+        <button type="button" onclick="window.location.href='{{ url_for('new_study.new_question',
+        name_questiongroup=questiongroup.title, name_study=study.name) }}';">
+            Create New Question for {{ questiongroup.title }}
+        </button>
+    {% endfor %}
+
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.use_standard_questions_questionnaire',
+    name_study=study.name) }}';">
+        Use Standard Questions
+    </button>
+
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.utaut', name_study=study.name) }}';">
+        Go Back to UTAUT
+    </button>
+
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.start_study', name_study=study.name) }}';">
+        Start Study
+    </button>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block content %}
+    <h1>You are not authorized to view this page.</h1>
+    <p>If you want to view this study, please contact authorized users to obtain the rights.</p>
+    <button type="button" onclick="window.location.href='{{ url_for('main.index') }}';">
+                Go to Main Menu
+    </button>
+{% endblock %}

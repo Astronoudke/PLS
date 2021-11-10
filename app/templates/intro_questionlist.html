@@ -1,0 +1,34 @@
+{% extends "base_visitor.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_intro_questionlist.css') }}">
+    <div class="questionnaire-title-box">
+        <div class="title-box">
+            <h1 class="title-header"> {{ study.name }}</h1>
+        </div>
+    </div>
+    <div class="data-usage-box">
+        <h1 class="data-usage-header">Used personal data</h1>
+        <h2 class="data-usage-subheader">Manually given data:</h2>
+        <ul>
+          {% for demographic in demographics %}
+            <li>{{ demographic.name }}</li>
+          {% endfor %}
+        </ul>
+        <h2 class="data-usage-subheader">Automatically saved data:</h2>
+        <ul>
+        </ul>
+    </div>
+    <div class="description-box">
+        <p class="description"> {{ study.description }} </p>
+    </div>
+
+    <div class="form-container" style="margin: 10px;">
+        <div class="row">
+            <div class="col-md-4">
+                {{ wtf.quick_form(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base_logged_out.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_login.css') }}">
+    <h1>Sign In</h1>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
+    <br>
+    <p>New User? <a href="{{ url_for('auth.register') }}">Click to Register!</a></p>
+    <p>
+        Forgot Your Password?
+        <a href="{{ url_for('auth.reset_password_request') }}">Click to Reset It</a>
+    </p>
+
+    <div class="info-box">
+        <img src="https://spacelaser.nl/images/IMG_1873.png" class="info-box-logo"></img>
+        <p style="color:black;text-align: left;">RubyHub is a webapplication for researchers to conduct UTAUT-based studies. The unified theory of acceptance and use of technology (UTAUT) is a technology acceptance model formulated by Venkatesh and others in "User acceptance of information technology: Toward a unified view".[1] The UTAUT aims to explain user intentions to use an information system and subsequent usage behavior. The theory holds that there are four key constructs: 1) performance expectancy, 2) effort expectancy, 3) social influence, and 4) facilitating conditions.
+The first three are direct determinants of usage intention and behavior, and the fourth is a direct determinant of user behavior. Gender, age, experience, and voluntariness of use are posited to moderate the impact of the four key constructs on usage intention and behavior. The theory was developed through a review and consolidation of the constructs of eight models that earlier research had employed to explain information systems usage behaviour (theory of reasoned action, technology acceptance model, motivational model, theory of planned behavior, a combined theory of planned behavior/technology acceptance model, model of personal computer use, diffusion of innovations theory, and social cognitive theory). Subsequent validation by Venkatesh et al. (2003) of UTAUT in a longitudinal study found it to account for 70% of the variance in Behavioural Intention to Use (BI) and about 50% in actual use.[1]</p>
+    </div>
+{% endblock %}

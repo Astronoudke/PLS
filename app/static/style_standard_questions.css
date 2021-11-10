@@ -1,0 +1,26 @@
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  background-color: rgb(241,241,241);
+}
+
+#table-corevariable {
+  position: relative;
+  width: 1000px;
+  height: auto;
+  background-color: #f1f1f1;
+  border: 2px solid black;
+}
+
+.table-header {
+  margin-top: 7px;
+  margin-bottom: 7px;
+  font-family: Georgia, serif;
+}
+
+.table-class {
+  width: 95%;
+  margin: 0 auto;
+}

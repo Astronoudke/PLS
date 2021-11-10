@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block app_content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_standard_questions.css') }}">
+    <div class="title-box">
+        <h1 class="title-header">Standard Questions</h1>
+    </div>
+    {% for core_variable in corevariables %}
+        <div id="table-corevariable">
+            <h1 class="table-header"> {{ core_variable.name }}</h1>
+            <table class="table-class">
+              <tr>
+                <th>Question</th>
+              </tr>
+              {% for question in questions if question.corevariable_id == core_variable.id %}
+                  <tr>
+                    <td> {{ question.question }}</td>
+                    <td>
+                        <button type="button" onclick="window.location.href='{{ url_for('main.remove_standard_question',
+                        id_question=question.id) }}';">
+                            Delete Question
+                        </button>
+                    </td>
+                  </tr>
+              {% endfor %}
+            </table>
+            <button type="button" onclick="window.location.href='{{ url_for('main.new_question_user',
+            name_corevariable=core_variable.name, username=user.username) }}';">
+                Create New Question for {{ core_variable.name }}
+            </button>
+        </div>
+    {% endfor %}
+{% endblock %}

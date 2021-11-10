@@ -1,0 +1,14 @@
+        <tr>
+            <td>
+                {{ core_variable.abbreviation }}
+            </td>
+            <td>
+                {{ core_variable.name }}
+            </td>
+            <td>
+                <button type="button" onclick="window.location.href='{{ url_for('new_study.remove_core_variable',
+                name_study=study.name, name_core_variable=core_variable.name) }}';">
+                    Delete Variable
+                </button>
+            </td>
+        </tr>
