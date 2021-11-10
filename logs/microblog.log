@@ -95,3 +95,4 @@ Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 189, in intro_questionlist
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
 AttributeError: 'NoneType' object has no attribute 'id'
+2021-11-10 19:19:05,550 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
