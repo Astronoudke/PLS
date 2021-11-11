@@ -61,3 +61,5 @@ Traceback (most recent call last):
     raise exception
 sqlalchemy.exc.InvalidRequestError: Entity namespace for "questionnaire" has no property "study_code"
 2021-11-11 16:50:53,651 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 21:58:09,097 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 22:04:12,157 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
