@@ -1,4 +1,4 @@
-2021-11-11 10:48:55,996 ERROR: Exception on /current_studies [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+2021-11-11 11:06:28,497 ERROR: Exception on /standard_questions/Noudke [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -10,8 +10,8 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 111, in current_studies
-    return render_template("current_studies.html", title='New Study', studies=studies)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 122, in standard_questions
+    return render_template("standard_questions.html", title='New Study', user=user, studies=studies,
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
     return _render(
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
@@ -20,16 +20,21 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\current_studies.html", line 2, in top-level template code
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\standard_questions.html", line 2, in top-level template code
     {% from 'bootstrap/form.html' import render_form, render_field %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 49, in top-level template code
-    {% block scripts %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 50, in block 'scripts'
-    {{ super() }}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\utils.py", line 84, in from_obj
-    if hasattr(obj, "jinja_pass_arg"):
-jinja2.exceptions.UndefinedError: there is no parent block called 'scripts'.
-2021-11-11 10:49:10,343 ERROR: Exception on /user/Noudke [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  [Previous line repeated 966 more times]
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\utils.py", line 544, in get
+    return self[key]
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\utils.py", line 582, in __getitem__
+    rv = self._mapping[key]
+RecursionError: maximum recursion depth exceeded in comparison
+2021-11-11 11:06:29,502 ERROR: Exception on /standard_questions/Noudke [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -41,8 +46,8 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 46, in user
-    return render_template('user.html', user=user, posts=posts, form=form)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 122, in standard_questions
+    return render_template("standard_questions.html", title='New Study', user=user, studies=studies,
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
     return _render(
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
@@ -51,17 +56,31 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\user.html", line 1, in top-level template code
-    {% extends "base.html" %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 49, in top-level template code
-    {% block scripts %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 50, in block 'scripts'
-    {{ super() }}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\utils.py", line 84, in from_obj
-    if hasattr(obj, "jinja_pass_arg"):
-jinja2.exceptions.UndefinedError: there is no parent block called 'scripts'.
-2021-11-11 10:49:33,402 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-11 10:51:14,511 ERROR: Exception on /d/e/a2aabe6c-e34b-42ca-9e51-9a223d050c6c [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\standard_questions.html", line 2, in top-level template code
+    {% from 'bootstrap/form.html' import render_form, render_field %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 1, in top-level template code
+    {% extends 'base.html' %}
+  [Previous line repeated 966 more times]
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\utils.py", line 544, in get
+    return self[key]
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\utils.py", line 582, in __getitem__
+    rv = self._mapping[key]
+RecursionError: maximum recursion depth exceeded in comparison
+2021-11-11 11:07:10,818 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 11:14:23,446 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 11:16:15,675 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 11:17:15,102 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 11:17:55,506 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 11:18:21,202 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 11:30:52,383 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 11:32:53,106 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 11:36:26,737 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 12:18:34,543 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 16:42:50,616 ERROR: Exception on /new_study/utaut/6eae27aa-cd3e-4f7f-9341-5d32f675b8ad [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -71,8 +90,10 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 196, in intro_questionlist
-    return render_template('intro_questionlist.html', title="Intro: {}".format(study.name), study=study,
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 148, in utaut
+    return render_template("new_study/utaut.html", title='UTAUT', study=study, model=model,
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
     return _render(
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
@@ -81,19 +102,20 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\intro_questionlist.html", line 2, in top-level template code
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\utaut.html", line 2, in top-level template code
     {% from 'bootstrap/form.html' import render_form, render_field %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base_visitor.html", line 1, in top-level template code
-    {% extends 'bootstrap/base.html' %}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 59, in get_source
-    return self._get_source_fast(environment, template)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 95, in _get_source_fast
-    raise TemplateNotFound(template)
-jinja2.exceptions.TemplateNotFound: bootstrap/base.html
-2021-11-11 10:51:39,191 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-11 10:56:10,882 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-11 10:56:53,368 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-11 11:01:21,907 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-11 11:05:01,370 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-11 11:05:10,735 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-11 11:06:27,613 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 42, in top-level template code
+    {% block content %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 53, in block 'content'
+    {% block app_content %}{% endblock %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\utaut.html", line 20, in block 'app_content'
+    {% include 'new_study/_corevariable_utaut.html' %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\_corevariable_utaut.html", line 9, in top-level template code
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.remove_core_variable',
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\helpers.py", line 338, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\helpers.py", line 325, in url_for
+    rv = url_adapter.build(
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\werkzeug\routing.py", line 2305, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'new_study.remove_core_variable' with values ['name_core_variable', 'study_code']. Did you forget to specify values ['name_study']?

@@ -6,7 +6,7 @@
     <div class="title-box">
         <h1 class="title-header"> {{ study.name }}</h1>
     </div>
-    <button type="button" onclick="window.location.href='{{ url_for('new_study.edit_study', name_study=study.name) }}';">
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.edit_study', study_code=study_code) }}';">
         Edit Study
     </button>
     <div class="table-corevariable">
@@ -26,7 +26,7 @@
                 </td>
                 <td>
                     <button type="button" onclick="window.location.href='{{ url_for('new_study.remove_demographic',
-                    name_study=study.name, name_demographic=demographic.name) }}';">
+                    study_code=study_code, name_demographic=demographic.name) }}';">
                         Delete Demographic
                     </button>
                 </td>
@@ -54,21 +54,21 @@
                     {% if question.reversed_score %}
                         <td>
                             <button type="button" onclick="window.location.href='{{ url_for('new_study.switch_reversed_score',
-                            name_study=study.name, name_question=question.question) }}';">
+                            study_code=study_code, name_question=question.question) }}';">
                                 Make Score Not Reversed
                             </button>
                         </td>
                     {% else %}
                         <td>
                             <button type="button" onclick="window.location.href='{{ url_for('new_study.switch_reversed_score',
-                            name_study=study.name, name_question=question.question) }}';">
+                            study_code=study_code, name_question=question.question) }}';">
                                 Make Score Reversed
                             </button>
                         </td>
                     {% endif %}
                     <td>
                         <button type="button" onclick="window.location.href='{{ url_for('new_study.remove_question',
-                        name_study=study.name, name_question=question.question) }}';">
+                        study_code=study_code, name_question=question.question) }}';">
                             Delete Question
                         </button>
                     </td>
@@ -78,21 +78,21 @@
         </div>
 
         <button type="button" onclick="window.location.href='{{ url_for('new_study.new_question',
-        name_questiongroup=questiongroup.title, name_study=study.name) }}';">
+        name_questiongroup=questiongroup.title, study_code=study_code) }}';">
             Create New Question for {{ questiongroup.title }}
         </button>
     {% endfor %}
 
     <button type="button" onclick="window.location.href='{{ url_for('new_study.use_standard_questions_questionnaire',
-    name_study=study.name) }}';">
+    study_code=study_code) }}';">
         Use Standard Questions
     </button>
 
-    <button type="button" onclick="window.location.href='{{ url_for('new_study.utaut', name_study=study.name) }}';">
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.utaut', study_code=study_code) }}';">
         Go Back to UTAUT
     </button>
 
-    <button type="button" onclick="window.location.href='{{ url_for('new_study.start_study', name_study=study.name) }}';">
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.start_study', study_code=study_code) }}';">
         Start Study
     </button>
 {% endblock %}

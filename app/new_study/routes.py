@@ -41,62 +41,59 @@ def new_study():
         #Create new study
         new_study = Study(name=form.name_of_study.data, description=form.description_of_study.data,
                           technology=form.technology_of_study.data, model_id=new_model.id)
+        new_study.create_code()
         db.session.add(new_study)
         db.session.commit()
 
         current_user.link(new_study)
         db.session.commit()
 
-        return redirect(url_for('new_study.utaut', name_study=new_study.name))
+        return redirect(url_for('new_study.utaut', study_code=new_study.code))
     return render_template("new_study/new_study.html", title='New Study', form=form)
 
 
-@bp.route('/edit_study/<name_study>', methods=['GET', 'POST'])
+@bp.route('/edit_study/<study_code>', methods=['GET', 'POST'])
 @login_required
-def edit_study(name_study):
+def edit_study(study_code):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
 
-    study = Study.query.filter_by(name=name_study).first()
-    form = EditStudyForm(name_study, study.description, study.technology)
+    form = EditStudyForm(study.name, study.description, study.technology)
     if form.validate_on_submit():
         study.name = form.name_of_study.data
         study.description = form.description_of_study.data
         study.technology = form.technology_of_study.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('new_study.utaut', name_study=form.name_of_study.data))
+        return redirect(url_for('new_study.utaut', study_code=study_code))
     elif request.method == 'GET':
-        form.name_of_study.data = name_study
+        form.name_of_study.data = study.name
         form.description_of_study.data = study.description
         form.technology_of_study.data = study.technology
     return render_template('new_study/edit_study.html', title='Edit Profile',
                            form=form)
 
 
-@bp.route('/add_user/<name_study>', methods=['GET', 'POST'])
+@bp.route('/add_user/<study_code>', methods=['GET', 'POST'])
 @login_required
-def add_user(name_study):
+def add_user(study_code):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
 
-    study = Study.query.filter_by(name=name_study).first()
     form = AddUserForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.name_user.data).first()
@@ -104,7 +101,7 @@ def add_user(name_study):
         db.session.commit()
 
         flash('Your changes have been saved.')
-        return redirect(url_for('new_study.edit_study', name_study=name_study))
+        return redirect(url_for('new_study.edit_study', study_code=study_code))
 
     return render_template('new_study/add_user.html', title='Edit Profile',
                            form=form)
@@ -115,19 +112,18 @@ def add_user(name_study):
 #############################################################################################################
 
 
-@bp.route('/utaut/<name_study>', methods=['GET', 'POST'])
+@bp.route('/utaut/<study_code>', methods=['GET', 'POST'])
 @login_required
-def utaut(name_study):
+def utaut(study_code):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     core_variables = [corevariable for corevariable in model.linked_corevariables]
@@ -147,7 +143,7 @@ def utaut(name_study):
         core_variable.link(model)
         db.session.commit()
 
-        return redirect(url_for('new_study.utaut', name_study=name_study))
+        return redirect(url_for('new_study.utaut', study_code=study_code))
 
     return render_template("new_study/utaut.html", title='UTAUT', study=study, model=model,
                            core_variables=core_variables,
@@ -155,24 +151,24 @@ def utaut(name_study):
                            form_add_variable=form_add_variable)
 
 
-@bp.route('/utaut/new_core_variable/<name_study>', methods=['GET', 'POST'])
+@bp.route('/utaut/new_core_variable/<study_code>', methods=['GET', 'POST'])
 @login_required
-def new_core_variable(name_study):
+def new_core_variable(study_code):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
 
     form = CreateNewCoreVariableForm()
 
     if form.validate_on_submit():
-        study = Study.query.filter_by(name=name_study).first()
+        study = Study.query.filter_by(code=study_code).first()
         new_corevariable = CoreVariable(name=form.name_corevariable.data,
                                         abbreviation=form.abbreviation_corevariable.data,
                                         description=form.description_corevariable.data)
@@ -184,26 +180,23 @@ def new_core_variable(name_study):
         new_corevariable.link(model)
         db.session.commit()
 
-        return redirect(url_for('new_study.utaut', name_study=name_study))
+        return redirect(url_for('new_study.utaut', study_code=study_code))
 
     return render_template("new_study/new_corevariable.html", title='New Core Variable', form=form)
 
 
-@bp.route('/remove_core_variable/<name_study>/<name_core_variable>', methods=['GET', 'POST'])
+@bp.route('/remove_core_variable/<study_code>/<name_core_variable>', methods=['GET', 'POST'])
 @login_required
-def remove_core_variable(name_study, name_core_variable):
+def remove_core_variable(study_code, name_core_variable):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
-    study = Study.query.filter_by(name=name_study).first()
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     corevariable = CoreVariable.query.filter_by(name=name_core_variable).first()
@@ -223,27 +216,24 @@ def remove_core_variable(name_study, name_core_variable):
         QuestionGroup.query.filter_by(title=name_core_variable, questionnaire_id=questionnaire.id).delete()
         db.session.commit()
 
-    return redirect(url_for('new_study.utaut', name_study=name_study))
+    return redirect(url_for('new_study.utaut', study_code=study_code))
 
 
-@bp.route('/utaut/new_relation/<name_study>', methods=['GET', 'POST'])
+@bp.route('/utaut/new_relation/<study_code>', methods=['GET', 'POST'])
 @login_required
-def new_relation(name_study):
+def new_relation(study_code):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
     form = CreateNewRelationForm()
 
     if form.validate_on_submit():
-        study = Study.query.filter_by(name=name_study).first()
         model = UTAUTmodel.query.filter_by(id=study.model_id).first()
 
         id_influencer = CoreVariable.query.filter_by(
@@ -257,29 +247,27 @@ def new_relation(name_study):
         db.session.add(newrelation)
         db.session.commit()
 
-        return redirect(url_for('new_study.utaut', name_study=name_study))
+        return redirect(url_for('new_study.utaut', study_code=study_code))
 
     return render_template("new_study/new_relation.html", title='New Relation', form=form)
 
 
-@bp.route('/remove_relation/<name_study>/<id_relation>', methods=['GET', 'POST'])
+@bp.route('/remove_relation/<study_code>/<id_relation>', methods=['GET', 'POST'])
 @login_required
-def remove_relation(name_study, id_relation):
+def remove_relation(study_code, id_relation):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
     Relation.query.filter_by(id=id_relation).delete()
     db.session.commit()
 
-    return redirect(url_for('new_study.utaut', name_study=name_study))
+    return redirect(url_for('new_study.utaut', study_code=study_code))
 
 
 #############################################################################################################
@@ -287,21 +275,18 @@ def remove_relation(name_study, id_relation):
 #############################################################################################################
 
 
-@bp.route('/create_questionnaire/<name_study>', methods=['GET', 'POST'])
+@bp.route('/create_questionnaire/<study_code>', methods=['GET', 'POST'])
 @login_required
-def create_questionnaire(name_study):
+def create_questionnaire(study_code):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
-    study = Study.query.filter_by(name=name_study).first()
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     if Questionnaire.query.filter_by(study_id=study.id).first() is None:
         newquestionnaire = Questionnaire(study_id=study.id)
@@ -315,24 +300,21 @@ def create_questionnaire(name_study):
             db.session.add(questiongroup)
             db.session.commit()
 
-    return redirect(url_for('new_study.pre_questionnaire', name_study=name_study))
+    return redirect(url_for('new_study.pre_questionnaire', study_code=study_code))
 
 
-@bp.route('/pre_questionnaire/<name_study>', methods=['GET', 'POST'])
+@bp.route('/pre_questionnaire/<study_code>', methods=['GET', 'POST'])
 @login_required
-def pre_questionnaire(name_study):
+def pre_questionnaire(study_code):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
-    study = Study.query.filter_by(name=name_study).first()
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     form = ScaleForm()
@@ -340,26 +322,23 @@ def pre_questionnaire(name_study):
     if form.validate_on_submit():
         questionnaire.scale = form.scale.data
         db.session.commit()
-        return redirect(url_for('new_study.questionnaire', name_study=name_study))
+        return redirect(url_for('new_study.questionnaire', study_code=study_code))
 
     return render_template("new_study/pre_questionnaire.html", title='Pre-questionnaire', study=study, model=model, form=form)
 
 
-@bp.route('/questionnaire/<name_study>', methods=['GET', 'POST'])
+@bp.route('/questionnaire/<study_code>', methods=['GET', 'POST'])
 @login_required
-def questionnaire(name_study):
+def questionnaire(study_code):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
-    study = Study.query.filter_by(name=name_study).first()
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     form_add_demographic = AddDemographic()
@@ -388,7 +367,7 @@ def questionnaire(name_study):
         demographic.link(questionnaire)
         db.session.commit()
 
-        return redirect(url_for('new_study.questionnaire', name_study=name_study))
+        return redirect(url_for('new_study.questionnaire', study_code=study_code))
 
     demographics = [demographic for demographic in questionnaire.linked_demographics]
 
@@ -398,21 +377,18 @@ def questionnaire(name_study):
                            demographics=demographics)
 
 
-@bp.route('/questionnaire/switch_reversed_score/<name_study>/<name_question>', methods=['GET', 'POST'])
+@bp.route('/questionnaire/switch_reversed_score/<study_code>/<name_question>', methods=['GET', 'POST'])
 @login_required
-def switch_reversed_score(name_study, name_question):
+def switch_reversed_score(study_code, name_question):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
-    study = Study.query.filter_by(name=name_study).first()
     user = User.query.filter_by(id=current_user.id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
 
@@ -423,24 +399,22 @@ def switch_reversed_score(name_study, name_question):
     else:
         question.reversed_score = True
         db.session.commit()
-    return redirect(url_for('new_study.questionnaire', name_study=name_study))
+    return redirect(url_for('new_study.questionnaire', study_code=study_code))
 
 
-@bp.route('/questionnaire/use_standard_questions_questionnaire/<name_study>', methods=['GET', 'POST'])
+@bp.route('/questionnaire/use_standard_questions_questionnaire/<study_code>', methods=['GET', 'POST'])
 @login_required
-def use_standard_questions_questionnaire(name_study):
+def use_standard_questions_questionnaire(study_code):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     user = User.query.filter_by(id=current_user.id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
 
@@ -455,27 +429,24 @@ def use_standard_questions_questionnaire(name_study):
         db.session.add(newquestion)
         db.session.commit()
 
-    return redirect(url_for('new_study.questionnaire', name_study=name_study))
+    return redirect(url_for('new_study.questionnaire', study_code=study_code))
 
 
-@bp.route('/questionnaire/new_question/<name_questiongroup>/<name_study>', methods=['GET', 'POST'])
+@bp.route('/questionnaire/new_question/<name_questiongroup>/<study_code>', methods=['GET', 'POST'])
 @login_required
-def new_question(name_questiongroup, name_study):
+def new_question(name_questiongroup, study_code):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
     form = CreateNewQuestion()
 
     if form.validate_on_submit():
-        study = Study.query.filter_by(name=name_study).first()
         questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
         questiongroup = QuestionGroup.query.filter_by(title=name_questiongroup,
                                                       questionnaire_id=questionnaire.id).first()
@@ -485,53 +456,48 @@ def new_question(name_questiongroup, name_study):
         db.session.add(new_question)
         db.session.commit()
 
-        return redirect(url_for("new_study.questionnaire", name_study=name_study))
+        return redirect(url_for("new_study.questionnaire", study_code=study_code))
 
     return render_template("new_study/new_question.html", title="New Question", form=form)
 
 
-@bp.route('/remove_question/<name_study>/<name_question>', methods=['GET', 'POST'])
+@bp.route('/remove_question/<study_code>/<name_question>', methods=['GET', 'POST'])
 @login_required
-def remove_question(name_study, name_question):
+def remove_question(study_code, name_question):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
     Question.query.filter_by(question=name_question).delete()
     db.session.commit()
 
-    return redirect(url_for('new_study.questionnaire', name_study=name_study))
+    return redirect(url_for('new_study.questionnaire', study_code=study_code))
 
 
-@bp.route('/remove_demographic/<name_study>/<name_demographic>', methods=['GET', 'POST'])
+@bp.route('/remove_demographic/<study_code>/<name_demographic>', methods=['GET', 'POST'])
 @login_required
-def remove_demographic(name_study, name_demographic):
+def remove_demographic(study_code, name_demographic):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
 
-    study = Study.query.filter_by(name=name_study).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     demographic = Demographic.query.filter_by(name=name_demographic).first()
 
     demographic.unlink(questionnaire)
     db.session.commit()
 
-    return redirect(url_for('new_study.questionnaire', name_study=name_study))
+    return redirect(url_for('new_study.questionnaire', study_code=study_code))
 
 
 #############################################################################################################
@@ -539,45 +505,37 @@ def remove_demographic(name_study, name_demographic):
 #############################################################################################################
 
 
-@bp.route('/start_study/<name_study>/', methods=['GET', 'POST'])
+@bp.route('/start_study/<study_code>/', methods=['GET', 'POST'])
 @login_required
-def start_study(name_study):
+def start_study(study_code):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
-    study = Study.query.filter_by(name=name_study).first()
     if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study.code))
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
-    study = Study.query.filter_by(name=name_study).first()
-    study.create_code()
-    db.session.commit()
     study.stage_1 = False
     study.stage_2 = True
     db.session.commit()
 
-    study_code = study.code
-
-    return redirect(url_for('new_study.study_underway', name_study=name_study, study_code=study_code))
+    return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
 
 @bp.route('/study_underway/<name_study>/<study_code>', methods=['GET', 'POST'])
 @login_required
 def study_underway(name_study, study_code):
     # check authorization
-    study = Study.query.filter_by(name=name_study).first()
+    study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     study = Study.query.filter_by(name=name_study).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     if study.stage_1:
-        return redirect(url_for('new_study.utaut', name_study=name_study))
+        return redirect(url_for('new_study.utaut', study_code=study_code))
     link = '127.0.0.1:5000/e/e/{}'.format(study.code)
 
     return render_template('new_study/study_underway.html', title="Underway: {}".format(name_study), study=study,

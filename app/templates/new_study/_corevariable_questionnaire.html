@@ -7,6 +7,6 @@
         </table>
     </div>
 
-    <button type="button" onclick="window.location.href='{{ url_for('new_study.new_question', name_corevariable=core_variable.name, name_study=study.name) }}';">
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.new_question', name_corevariable=core_variable.name, study_code=study_code) }}';">
         Create New Question for {{ core_variable.name }}
     </button>

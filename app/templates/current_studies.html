@@ -6,7 +6,7 @@
     <div class="content-container">
         <div class="vertical-menu">
             {% for study in studies %}
-                <a href="{{ url_for('new_study.utaut', name_study=study.name) }}"> {{ study.name }}</a>
+                <a href="{{ url_for('new_study.utaut', study_code=study_code) }}"> {{ study.name }}</a>
             {% endfor %}
         </div>
         <button type="button" onclick="window.location.href='{{ url_for('main.index') }}';">
