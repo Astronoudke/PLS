@@ -1,73 +1,4 @@
-2021-11-05 13:57:55,418 ERROR: Exception on /new_study/new_study [POST] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 22, in new_study
-    technology=form.technology_of_study.data, model_id=new_model.id)
-AttributeError: 'NoneType' object has no attribute 'id'
-2021-11-05 13:59:05,158 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-05 13:59:36,639 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-05 14:04:34,392 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-05 14:10:16,316 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-05 14:11:30,763 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-05 14:16:41,374 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-05 14:22:33,602 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-05 14:41:59,979 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-05 14:42:01,897 ERROR: Exception on /c/e/f77bea29-e40a-4723-bc8d-e15164d8a070/2 [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1454]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2070, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1515, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1513, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1499, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 260, in questionlist
-    return render_template('questionlist.html', title="Questionlist {}: {}".format(str(questionlist_number), study.name),
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 147, in render_template
-    return _render(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 128, in _render
-    rv = template.render(context)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\jinja2\environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\questionlist.html", line 2, in top-level template code
-    {% import 'bootstrap/wtf.html' as wtf %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base_visitor.html", line 1, in top-level template code
-    {% extends 'bootstrap/base.html' %}
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
-    {% block doc -%}
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
-    {%- block html %}
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 6, in block 'html'
-    {%- block head %}
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 13, in block 'head'
-    {%- block styles %}
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 15, in block 'styles'
-    <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\jinja2\utils.py", line 84, in from_obj
-    if hasattr(obj, "jinja_pass_arg"):
-jinja2.exceptions.UndefinedError: 'bootstrap_find_resource' is undefined
-2021-11-08 09:57:40,040 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 10:02:29,836 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 10:03:35,687 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 10:03:54,095 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 10:04:35,006 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 10:06:17,924 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 10:16:46,611 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 10:17:51,362 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 10:18:33,288 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 10:18:52,473 ERROR: Exception on /c/e/f77bea29-e40a-4723-bc8d-e15164d8a070/2 [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
+2021-11-09 14:26:04,514 ERROR: Exception on /d/e/start/1a9272be-9ace-4367-ac10-292e655f4968 [POST] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -77,11 +8,25 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 233, in questionlist
+  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 225, in start_questionlist
+    session["answers"].append(demographic_answer)
+KeyError: 'answers'
+2021-11-09 14:26:40,790 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-09 14:26:43,168 ERROR: Exception on /c/e/1a9272be-9ace-4367-ac10-292e655f4968/0 [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 245, in questionlist
     if int(questionlist_number) >= session['questionlist_maxamount']:
 KeyError: 'questionlist_maxamount'
-2021-11-08 10:35:21,804 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 10:35:48,766 ERROR: Exception on /c/e/f77bea29-e40a-4723-bc8d-e15164d8a070/2 [POST] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
+2021-11-09 14:28:53,306 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-09 14:28:55,978 ERROR: Exception on /c/e/1a9272be-9ace-4367-ac10-292e655f4968/0 [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -91,11 +36,11 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 253, in questionlist
-    answer_index = session["answers"].index([answero for answero in session["answers"] if answero.question_id == question.id])
-ValueError: [<Answer (transient 2351754562240)>] is not in list
-2021-11-08 10:39:32,789 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 10:39:36,120 ERROR: Exception on /c/e/f77bea29-e40a-4723-bc8d-e15164d8a070/2 [POST] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 246, in questionlist
+    if int(questionlist_number) >= session['questionlist_maxamount']:
+KeyError: 'questionlist_maxamount'
+2021-11-09 14:32:27,991 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-09 14:32:29,909 ERROR: Exception on /c/e/1a9272be-9ace-4367-ac10-292e655f4968/0 [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -105,9 +50,56 @@ Traceback (most recent call last):
     rv = self.dispatch_request()
   File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 254, in questionlist
-    answer_index = session["answers"].index([answero for answero in session["answers"] if answero.question_id == question.id])
-ValueError: [<Answer (transient 2444041400624)>] is not in list
-2021-11-08 10:49:27,396 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 10:57:24,997 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-08 11:10:54,537 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 247, in questionlist
+    if int(questionlist_number) >= session['questionlist_maxamount']:
+KeyError: 'questionlist_maxamount'
+2021-11-09 14:34:20,706 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-09 14:41:00,378 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-09 14:41:04,049 ERROR: Exception on /d/e/cf6739dc-fd70-45a5-83fa-9ea1a27eb1b2 [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 185, in intro_questionlist
+    if session["user"] in [case.session_id for case in Case.query.all()]:
+KeyError: 'user'
+2021-11-09 14:41:12,561 ERROR: Exception on /new_study/utaut/The study of the jive of happiness [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 66, in utaut
+    check_authorization(name_study)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 9, in check_authorization
+    if current_user not in study.linked_users:
+AttributeError: 'NoneType' object has no attribute 'linked_users'
+2021-11-09 14:45:15,573 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-09 14:53:43,869 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-09 15:17:55,706 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-09 15:17:58,430 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-09 15:18:09,098 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-09 15:22:39,693 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-09 15:26:01,807 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 09:59:12,031 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 10:03:26,440 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 10:04:31,163 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 10:05:02,255 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 10:16:09,897 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 10:19:28,845 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 10:26:28,741 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 10:31:42,220 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 10:31:59,212 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 10:33:19,351 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 10:33:38,182 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]

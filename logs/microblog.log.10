@@ -1,124 +1,98 @@
-2021-11-05 10:19:28,390 ERROR: Exception on /c/e/b07c0e94-260e-42be-9a52-e455af124f14/0 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+2021-11-08 11:10:56,986 ERROR: Exception on /new_study/questionnaire/use_standard_questions_questionnaire/Drivers of Recreational Online Gambling Intentions [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
     rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 246, in questionlist
-    return render_template('questionlist.html', title="Questionlist {}: {}".format(str(questionlist_number), study.name),
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
-    return _render(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
-    rv = template.render(context)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\questionlist.html", line 2, in top-level template code
-    {% import 'bootstrap/wtf.html' as wtf %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base_visitor.html", line 1, in top-level template code
-    {% extends 'bootstrap/base.html' %}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
-    {% block doc -%}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
-    {%- block html %}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
-    {% block body -%}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
-    {% block content -%}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base_visitor.html", line 25, in block 'content'
-    {% block app_content %}{% endblock %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\questionlist.html", line 16, in block 'app_content'
-    {{ wtf.quick_form(form_likert) }}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\runtime.py", line 828, in _invoke
-    rv = self._func(*arguments)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\wtf.html", line 176, in template
-    {%- for field in form %}
-TypeError: 'NoneType' object is not iterable
-2021-11-05 10:19:50,958 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-05 10:19:51,741 ERROR: Exception on /c/e/b07c0e94-260e-42be-9a52-e455af124f14/0 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 268, in use_standard_questions_questionnaire
+    replaced_name_question = replaced_name_question.question.replace('(…)', study.technology)
+AttributeError: 'str' object has no attribute 'question'
+2021-11-08 11:11:17,586 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 11:27:06,016 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 11:27:09,581 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 11:34:18,559 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 11:38:02,112 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 11:38:07,597 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 11:58:20,812 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 11:58:25,909 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 11:58:56,166 ERROR: Exception on /new_study/questionnaire/Kolere [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
     rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 246, in questionlist
-    return render_template('questionlist.html', title="Questionlist {}: {}".format(str(questionlist_number), study.name),
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 248, in questionnaire
+    return render_template("new_study/questionnaire.html", title='Questionnaire', study=study, model=model,
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 147, in render_template
     return _render(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 128, in _render
     rv = template.render(context)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 1304, in render
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\jinja2\environment.py", line 1304, in render
     self.environment.handle_exception()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\questionlist.html", line 2, in top-level template code
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\questionnaire.html", line 2, in top-level template code
     {% import 'bootstrap/wtf.html' as wtf %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base_visitor.html", line 1, in top-level template code
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 1, in top-level template code
     {% extends 'bootstrap/base.html' %}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
     {% block doc -%}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
     {%- block html %}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
     {% block body -%}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
     {% block content -%}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base_visitor.html", line 25, in block 'content'
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 47, in block 'content'
     {% block app_content %}{% endblock %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\questionlist.html", line 16, in block 'app_content'
-    {{ wtf.quick_form(form_likert) }}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\runtime.py", line 828, in _invoke
-    rv = self._func(*arguments)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\wtf.html", line 176, in template
-    {%- for field in form %}
-TypeError: 'NoneType' object is not iterable
-2021-11-05 10:19:56,687 ERROR: Exception on /c/e/b07c0e94-260e-42be-9a52-e455af124f14/0 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\questionnaire.html", line 31, in block 'app_content'
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.switch_reversed_score',
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\helpers.py", line 338, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\helpers.py", line 325, in url_for
+    rv = url_adapter.build(
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\werkzeug\routing.py", line 2314, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'new_study.switch_reversed_score' with values ['name_question', 'name_study']. Did you mean 'new_study.remove_core_variable' instead?
+2021-11-08 11:59:40,681 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 12:03:45,459 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 12:05:15,358 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 12:36:50,848 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 12:37:26,599 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 12:48:00,618 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 12:49:50,511 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 12:53:23,799 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 13:05:49,790 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 13:28:04,144 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 13:30:40,883 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 13:32:43,231 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 13:47:26,244 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 14:01:50,032 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 14:04:09,149 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 14:04:29,825 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 14:07:35,907 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-08 14:14:16,824 ERROR: Exception on /c/e/90a511b3-8754-4bdf-8d51-c12d921876e6/5 [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
     rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
     rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 246, in questionlist
-    return render_template('questionlist.html', title="Questionlist {}: {}".format(str(questionlist_number), study.name),
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
-    return _render(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
-    rv = template.render(context)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 1304, in render
-    self.environment.handle_exception()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\questionlist.html", line 2, in top-level template code
-    {% import 'bootstrap/wtf.html' as wtf %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base_visitor.html", line 1, in top-level template code
-    {% extends 'bootstrap/base.html' %}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 1, in top-level template code
-    {% block doc -%}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 4, in block 'doc'
-    {%- block html %}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 20, in block 'html'
-    {% block body -%}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\base.html", line 23, in block 'body'
-    {% block content -%}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base_visitor.html", line 25, in block 'content'
-    {% block app_content %}{% endblock %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\questionlist.html", line 16, in block 'app_content'
-    {{ wtf.quick_form(form_likert) }}
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\runtime.py", line 828, in _invoke
-    rv = self._func(*arguments)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_bootstrap\templates\bootstrap\wtf.html", line 176, in template
-    {%- for field in form %}
-TypeError: 'NoneType' object is not iterable
+  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 233, in questionlist
+    if int(questionlist_number) >= session['questionlist_maxamount']:
+KeyError: 'questionlist_maxamount'

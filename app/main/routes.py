@@ -260,22 +260,22 @@ def questionlist(study_code, questionlist_number):
     if form.validate_on_submit():
         for (question, value) in zip([question for question in questions], form.data.values()):
             if isinstance(value, str) and len(value) < 4:
-                if question.id in [answer.question_id for answer in session["answers"]]:
+                #if question.id in [answer.question_id for answer in session["answers"]]:
                     for answer in session["answers"]:
                         if answer.question_id == question.id:
                             if question.reversed_score:
                                 answer.score = reverse_value(value, questionnaire.scale)
                             else:
                                 answer.score = value
-                else:
-                    if question.reversed_score:
-                        answer = Answer(score=reverse_value(value, questionnaire.scale), question_id=question.id,
-                                        case_id=Case.query.filter_by(session_id=session["user"]).first().id)
-                        session["answers"].append(answer)
-                    else:
-                        answer = Answer(score=value, question_id=question.id,
-                                        case_id=Case.query.filter_by(session_id=session["user"]).first().id)
-                        session["answers"].append(answer)
+                        else:
+                            if question.reversed_score:
+                                answer = Answer(score=reverse_value(value, questionnaire.scale), question_id=question.id,
+                                                case_id=Case.query.filter_by(session_id=session["user"]).first().id)
+                                session["answers"].append(answer)
+                            else:
+                                answer = Answer(score=value, question_id=question.id,
+                                                case_id=Case.query.filter_by(session_id=session["user"]).first().id)
+                                session["answers"].append(answer)
         return redirect(
             url_for('main.questionlist', study_code=study_code, questionlist_number=next_questionlist_number))
 
