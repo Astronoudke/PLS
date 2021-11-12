@@ -26,7 +26,7 @@
                 </td>
                 <td>
                     <button type="button" onclick="window.location.href='{{ url_for('new_study.remove_demographic',
-                    study_code=study_code, name_demographic=demographic.name) }}';">
+                    study_code=study.code, name_demographic=demographic.name) }}';">
                         Delete Demographic
                     </button>
                 </td>
@@ -54,21 +54,21 @@
                     {% if question.reversed_score %}
                         <td>
                             <button type="button" onclick="window.location.href='{{ url_for('new_study.switch_reversed_score',
-                            study_code=study_code, name_question=question.question) }}';">
+                            study_code=study.code, name_question=question.question) }}';">
                                 Make Score Not Reversed
                             </button>
                         </td>
                     {% else %}
                         <td>
                             <button type="button" onclick="window.location.href='{{ url_for('new_study.switch_reversed_score',
-                            study_code=study_code, name_question=question.question) }}';">
+                            study_code=study.code, name_question=question.question) }}';">
                                 Make Score Reversed
                             </button>
                         </td>
                     {% endif %}
                     <td>
                         <button type="button" onclick="window.location.href='{{ url_for('new_study.remove_question',
-                        study_code=study_code, name_question=question.question) }}';">
+                        study_code=study.code, name_question=question.question) }}';">
                             Delete Question
                         </button>
                     </td>
@@ -84,7 +84,7 @@
     {% endfor %}
 
     <button type="button" onclick="window.location.href='{{ url_for('new_study.use_standard_questions_questionnaire',
-    study_code=study_code) }}';">
+    study_code=study.code) }}';">
         Use Standard Questions
     </button>
 

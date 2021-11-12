@@ -275,9 +275,9 @@ def remove_relation(study_code, id_relation):
 #############################################################################################################
 
 
-@bp.route('/create_questionnaire/<study_code>', methods=['GET', 'POST'])
+@bp.route('/pre_questionnaire/<study_code>', methods=['GET', 'POST'])
 @login_required
-def create_questionnaire(study_code):
+def pre_questionnaire(study_code):
     # check authorization
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
@@ -287,6 +287,7 @@ def create_questionnaire(study_code):
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
+    # create questionnaire if no questionnaire exists yet
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     if Questionnaire.query.filter_by(study_id=study.id).first() is None:
         newquestionnaire = Questionnaire(study_id=study.id)
@@ -300,22 +301,6 @@ def create_questionnaire(study_code):
             db.session.add(questiongroup)
             db.session.commit()
 
-    return redirect(url_for('new_study.pre_questionnaire', study_code=study_code))
-
-
-@bp.route('/pre_questionnaire/<study_code>', methods=['GET', 'POST'])
-@login_required
-def pre_questionnaire(study_code):
-    # check authorization
-    study = Study.query.filter_by(code=study_code).first()
-    if current_user not in study.linked_users:
-        return redirect(url_for('main.not_authorized'))
-
-    # check access to stage
-    if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
-
-    model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     form = ScaleForm()
 
@@ -536,7 +521,7 @@ def study_underway(name_study, study_code):
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     if study.stage_1:
         return redirect(url_for('new_study.utaut', study_code=study_code))
-    link = '127.0.0.1:5000/e/e/{}'.format(study.code)
+    link = '127.0.0.1:5000/d/e/{}'.format(study.code)
 
     return render_template('new_study/study_underway.html', title="Underway: {}".format(name_study), study=study,
                            link=link, questionnaire=questionnaire)

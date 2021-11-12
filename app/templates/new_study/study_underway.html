@@ -11,7 +11,7 @@
 
     <p>The link to the page: {{ link }}</p>
 
-    <button type="button" onclick="window.location.href='{{ url_for('main.create_session', study_code=study_code) }}';">
+    <button type="button" onclick="window.location.href='{{ url_for('main.intro_questionlist', study_code=study.code) }}';">
         Go to Questionnaire
     </button>
 {% endblock %}

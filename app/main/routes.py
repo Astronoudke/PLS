@@ -169,18 +169,12 @@ def invalid_session():
     return render_template("invalid_session.html", title='Invalid Session')
 
 
-@bp.route('/e/e/<study_code>', methods=['GET', 'POST'])
-def create_session(study_code):
-    if "user" in session:
-        return redirect(url_for('main.intro_questionlist', study_code=study_code))
-    session["user"] = str(uuid.uuid4())
-    session["study"] = study_code
-
-    return redirect(url_for('main.intro_questionlist', study_code=study_code))
-
-
 @bp.route('/d/e/<study_code>', methods=['GET', 'POST'])
 def intro_questionlist(study_code):
+    if "user" not in session:
+        session["user"] = str(uuid.uuid4())
+        session["study"] = study_code
+
     if session["user"] in [case.session_id for case in Case.query.all()]:
         flash('You are currently already in a session. Complete the questionnaire.')  # return eerste blok vragenpagina
         return redirect(url_for('main.questionlist', study_code=study_code, questionlist_number=0))

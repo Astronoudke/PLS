@@ -6,7 +6,7 @@
     <div class="title-box">
         <h1 class="title-header"> {{ study.name }}</h1>
     </div>
-    <button type="button" onclick="window.location.href='{{ url_for('new_study.edit_study', study_code=study_code) }}';">
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.edit_study', study_code=study.code) }}';">
         Edit Study
     </button>
     <div id="table-corevariables">
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <button type="button" onclick="window.location.href='{{ url_for('new_study.new_core_variable', study_code=study_code) }}';">
+        <button type="button" onclick="window.location.href='{{ url_for('new_study.new_core_variable', study_code=study.code) }}';">
             Create New Variable
         </button>
     </div>
@@ -45,11 +45,11 @@
             {% endfor %}
         </table>
     </div>
-    <button type="button" onclick="window.location.href='{{ url_for('new_study.new_relation', study_code=study_code) }}';">
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.new_relation', study_code=study.code) }}';">
         Create New Relation
     </button>
 
-    <button type="button" onclick="window.location.href='{{ url_for('new_study.create_questionnaire', study_code=study_code) }}';">
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.pre_questionnaire', study_code=study.code) }}';">
         Go To Questionnaire
     </button>
 
