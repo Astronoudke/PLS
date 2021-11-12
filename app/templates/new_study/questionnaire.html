@@ -78,7 +78,7 @@
         </div>
 
         <button type="button" onclick="window.location.href='{{ url_for('new_study.new_question',
-        name_questiongroup=questiongroup.title, study_code=study_code) }}';">
+        name_questiongroup=questiongroup.title, study_code=study.code) }}';">
             Create New Question for {{ questiongroup.title }}
         </button>
     {% endfor %}
@@ -88,11 +88,11 @@
         Use Standard Questions
     </button>
 
-    <button type="button" onclick="window.location.href='{{ url_for('new_study.utaut', study_code=study_code) }}';">
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.utaut', study_code=study.code) }}';">
         Go Back to UTAUT
     </button>
 
-    <button type="button" onclick="window.location.href='{{ url_for('new_study.start_study', study_code=study_code) }}';">
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.check_questionnaire', study_code=study.code) }}';">
         Start Study
     </button>
 {% endblock %}

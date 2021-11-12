@@ -66,8 +66,6 @@ import weakref
 
 from pip._vendor import six
 
-from .. import util
-from ..util.ssl_ import PROTOCOL_TLS_CLIENT
 from ._securetransport.bindings import CoreFoundation, Security, SecurityConst
 from ._securetransport.low_level import (
     _assert_no_error,
@@ -77,6 +75,8 @@ from ._securetransport.low_level import (
     _load_client_cert_chain,
     _temporary_keychain,
 )
+from .. import util
+from ..util.ssl_ import PROTOCOL_TLS_CLIENT
 
 try:  # Platform-specific: Python 2
     from socket import _fileobject

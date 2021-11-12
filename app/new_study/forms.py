@@ -1,9 +1,10 @@
-from flask import request
+from flask_wtf import FlaskForm
+from flask_login import current_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, SelectField, IntegerField
 from wtforms.validators import ValidationError, DataRequired, Length
-from app.models import UTAUTmodel, User
-from flask_login import current_user
+
+from app.models import User
 
 
 class CreateNewStudyForm(FlaskForm):

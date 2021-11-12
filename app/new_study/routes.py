@@ -1,15 +1,13 @@
-from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request, g, \
-    jsonify, current_app
+from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
+
 from app import db
+from app.models import User, Study, UTAUTmodel, CoreVariable, Relation, Questionnaire, Question, StandardQuestion, \
+    QuestionGroup, Demographic
+from app.new_study import bp
 from app.new_study.forms import CreateNewStudyForm, CreateNewCoreVariableForm, CreateNewRelationForm, \
     CreateNewQuestion, ChooseNewModel, AddCoreVariable, EditStudyForm, AddDemographic, AddUserForm, ScaleForm
-from app.models import User, Study, UTAUTmodel, CoreVariable, Relation, Questionnaire, Question, StandardQuestion, \
-    QuestionGroup, Case, Demographic
-from app.new_study import bp
-from app.new_study.functions import check_authorization, check_stages
-from wtforms import StringField
+from sqlalchemy import or_
 
 
 @bp.route('/new_study', methods=['GET', 'POST'])
@@ -132,7 +130,9 @@ def utaut(study_code):
 
     form_add_variable = AddCoreVariable()
     form_add_variable.add_variable.choices = [(core_variable.id, core_variable.name) for core_variable in
-                                              CoreVariable.query.all()]
+                                              CoreVariable.query.filter_by(user_id=current_user.id)] + \
+                                             [(core_variable.id, core_variable.name) for core_variable in
+                                              CoreVariable.query.filter_by(user_id=None)]
 
     form = ChooseNewModel()
     form.new_model.choices = [(utautmodel.id, utautmodel.name) for utautmodel in
@@ -171,7 +171,8 @@ def new_core_variable(study_code):
         study = Study.query.filter_by(code=study_code).first()
         new_corevariable = CoreVariable(name=form.name_corevariable.data,
                                         abbreviation=form.abbreviation_corevariable.data,
-                                        description=form.description_corevariable.data)
+                                        description=form.description_corevariable.data,
+                                        user_id=current_user.id)
         db.session.add(new_corevariable)
         db.session.commit()
 
@@ -482,7 +483,31 @@ def remove_demographic(study_code, name_demographic):
     demographic.unlink(questionnaire)
     db.session.commit()
 
-    return redirect(url_for('new_study.questionnaire', study_code=study_code))
+    return redirect(url_for('new_study.questionnaire', study_code=study.code))
+
+
+@bp.route('/check_questionnaire/<study_code>', methods=['GET', 'POST'])
+@login_required
+def check_questionnaire(study_code):
+    # check authorization
+    study = Study.query.filter_by(code=study_code).first()
+    if current_user not in study.linked_users:
+        return redirect(url_for('main.not_authorized'))
+
+    # check access to stage
+    if study.stage_2:
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
+
+    questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+    questiongroups = [questiongroup for questiongroup in questionnaire.linked_questiongroups]
+
+    for questiongroup in questiongroups:
+        if Question.query.filter_by(questiongroup_id=questiongroup.id).count() == 0:
+            flash('One or more of the core variables does not have questions yet. Please add at least one question to '
+                  'each core variable.')
+            return redirect(url_for('new_study.questionnaire', study_code=study.code))
+
+    return redirect(url_for('new_study.start_study', study_code=study.code))
 
 
 #############################################################################################################
@@ -490,7 +515,7 @@ def remove_demographic(study_code, name_demographic):
 #############################################################################################################
 
 
-@bp.route('/start_study/<study_code>/', methods=['GET', 'POST'])
+@bp.route('/start_study/<study_code>', methods=['GET', 'POST'])
 @login_required
 def start_study(study_code):
     # check authorization

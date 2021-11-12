@@ -1,7 +1,7 @@
-from flask import render_template, flash, redirect, url_for, request, g, \
-    jsonify, current_app
-from flask_login import current_user, login_required
-from app.models import User, Study, UTAUTmodel, CoreVariable, Relation, Questionnaire, Question, StandardQuestion
+from flask import redirect, url_for
+from flask_login import current_user
+
+from app.models import Study
 
 
 def check_authorization(name_study):

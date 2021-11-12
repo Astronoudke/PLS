@@ -1,75 +1,11 @@
-2021-11-12 09:52:04,320 ERROR: Exception on /index [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
+2021-11-12 15:19:56,102 ERROR: Exception on /new_study/utaut/4404559d-04bf-4c91-8e64-4c8d52ee1630 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 34, in index
-    return render_template("index.html", title='Home Page')
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 147, in render_template
-    return _render(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 128, in _render
-    rv = template.render(context)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\jinja2\environment.py", line 1291, in render
-    self.environment.handle_exception()
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\index.html", line 2, in top-level template code
-    {% from 'bootstrap/form.html' import render_form, render_field %}
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 59, in get_source
-    return self._get_source_fast(environment, template)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 95, in _get_source_fast
-    raise TemplateNotFound(template)
-jinja2.exceptions.TemplateNotFound: bootstrap/form.html
-2021-11-12 09:52:04,589 ERROR: Exception on /index [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 34, in index
-    return render_template("index.html", title='Home Page')
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 147, in render_template
-    return _render(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 128, in _render
-    rv = template.render(context)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\jinja2\environment.py", line 1291, in render
-    self.environment.handle_exception()
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\index.html", line 2, in top-level template code
-    {% from 'bootstrap/form.html' import render_form, render_field %}
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 59, in get_source
-    return self._get_source_fast(environment, template)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\templating.py", line 95, in _get_source_fast
-    raise TemplateNotFound(template)
-jinja2.exceptions.TemplateNotFound: bootstrap/form.html
-2021-11-12 09:53:48,313 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 09:57:53,886 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 09:58:12,402 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 10:11:37,099 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 10:12:12,736 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 10:12:19,037 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 10:20:21,261 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 10:20:40,611 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 10:26:28,336 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 10:27:13,677 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 10:31:25,580 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 10:33:30,634 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 10:43:55,306 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 10:44:21,802 ERROR: Exception on /new_study/questionnaire/use_standard_questions_questionnaire [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\sql\base.py", line 1690, in _entity_namespace_key
+    return getattr(ns, key)
+AttributeError: type object 'CoreVariable' has no attribute 'user_id'
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -81,9 +17,22 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-TypeError: use_standard_questions_questionnaire() missing 1 required positional argument: 'study_code'
-2021-11-12 10:53:37,070 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 11:06:59,709 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 11:11:31,360 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 11:12:36,305 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-12 11:13:39,051 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 133, in utaut
+    CoreVariable.query.filter_by(user_id=current_user.id)] + \
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\orm\query.py", line 1793, in filter_by
+    clauses = [
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\orm\query.py", line 1794, in <listcomp>
+    _entity_namespace_key(from_entity, key) == value
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\sql\base.py", line 1692, in _entity_namespace_key
+    util.raise_(
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
+    raise exception
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "core_variable" has no property "user_id"
+2021-11-12 15:20:20,577 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-12 15:20:22,858 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-12 15:21:42,282 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-12 15:21:48,473 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-12 15:21:52,939 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-12 15:21:55,329 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-12 15:21:59,754 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-12 15:25:21,657 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]

@@ -1,9 +1,8 @@
-from flask import request
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, SelectField, RadioField, Label
+from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import ValidationError, DataRequired, Length
-from app.models import User, CoreVariable
-from flask_login import current_user
+
+from app.models import User
 
 
 class EditProfileForm(FlaskForm):
@@ -38,12 +37,6 @@ class GoToStartQuestionlist(FlaskForm):
 # _______________________________________________________________________________________________________
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # _______________________________________________________________________________________________________
-
-
-class DemographicsForm(FlaskForm):
-    sex = SelectField(u'Sex')
-    age = StringField('Age')
-    submit = SubmitField('Create Case')
 
 
 def DynamicTestForm(questions, *args, **kwargs):

@@ -1,16 +1,16 @@
-from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request, g, \
-    jsonify, current_app, session
-from flask_login import current_user, login_required
-from app import db
-from app.main.forms import EditProfileForm, EmptyForm, CreateNewQuestionUser, DemographicsForm, GoToStartQuestionlist, DynamicTestForm
-from app.models import User, Study, UTAUTmodel, CoreVariable, Relation, Questionnaire, StandardQuestion, Case, \
-    QuestionGroup, Question, Answer, DemographicAnswer, Demographic
-from app.main import bp
-from app.main.functions import reverse_value
-from random import randint
 import uuid
-from wtforms import StringField, RadioField, Label
+from datetime import datetime
+
+from flask import render_template, flash, redirect, url_for, request, session
+from flask_login import current_user, login_required
+from wtforms import RadioField
+
+from app import db
+from app.main import bp
+from app.main.forms import EditProfileForm, EmptyForm, CreateNewQuestionUser, GoToStartQuestionlist, DynamicTestForm
+from app.main.functions import reverse_value
+from app.models import User, Study, CoreVariable, Questionnaire, StandardQuestion, Case, \
+    QuestionGroup, Question, Answer, DemographicAnswer
 
 
 @bp.before_app_request
@@ -239,9 +239,6 @@ def start_questionlist(study_code):
 def questionlist(study_code, questionlist_number):
     if int(questionlist_number) >= session['questionlist_maxamount']:
         return redirect(url_for('main.ending_questionlist', study_code=study_code))
-
-    print(session["answers"])
-    print(session["user"])
 
     study = Study.query.filter_by(code=study_code).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()

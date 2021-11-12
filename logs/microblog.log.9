@@ -1,4 +1,4 @@
-2021-11-10 10:33:45,435 ERROR: Exception on /new_study/utaut/Drivers of Recreational Online Gambling Intentions: A UTAUT2 Perspective, Enhancements, Results, and Implications [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
+2021-11-10 12:03:48,222 ERROR: Exception on /new_study/add_user/Jesus Christ [POST] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -10,23 +10,12 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 74, in utaut
-    if current_user not in study.linked_users:
-AttributeError: 'NoneType' object has no attribute 'linked_users'
-2021-11-10 10:35:43,853 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-10 10:37:29,757 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-10 10:43:15,507 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-10 11:04:45,830 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
-2021-11-10 11:05:15,535 ERROR: Exception on /new_study/new_study [POST] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1799, in _execute_context
-    self.dialect.do_execute(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
-    cursor.execute(statement, parameters)
-sqlite3.IntegrityError: UNIQUE constraint failed: utau_tmodel.name
-
-The above exception was the direct cause of the following exception:
-
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 101, in add_user
+    form.validate_username()
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\forms.py", line 32, in validate_username
+    raise ValidationError('This user does not exist.')
+wtforms.validators.ValidationError: This user does not exist.
+2021-11-10 12:04:08,368 ERROR: Exception on /new_study/add_user/Jesus Christ [POST] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -38,51 +27,79 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 22, in new_study
-    db.session.commit()
-  File "<string>", line 2, in commit
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\session.py", line 1428, in commit
-    self._transaction.commit(_to_root=self.future)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\session.py", line 829, in commit
-    self._prepare_impl()
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\session.py", line 808, in _prepare_impl
-    self.session.flush()
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\session.py", line 3340, in flush
-    self._flush(objects)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\session.py", line 3480, in _flush
-    transaction.rollback(_capture_exception=True)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\util\langhelpers.py", line 70, in __exit__
-    compat.raise_(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
-    raise exception
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\session.py", line 3440, in _flush
-    flush_context.execute()
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\unitofwork.py", line 456, in execute
-    rec.execute(self)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\unitofwork.py", line 630, in execute
-    util.preloaded.orm_persistence.save_obj(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\persistence.py", line 244, in save_obj
-    _emit_insert_statements(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\orm\persistence.py", line 1221, in _emit_insert_statements
-    result = connection._execute_20(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1611, in _execute_20
-    return meth(self, args_10style, kwargs_10style, execution_options)
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\sql\elements.py", line 325, in _execute_on_connection
-    return connection._execute_clauseelement(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1478, in _execute_clauseelement
-    ret = self._execute_context(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1842, in _execute_context
-    self._handle_dbapi_exception(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\base.py", line 2023, in _handle_dbapi_exception
-    util.raise_(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
-    raise exception
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\base.py", line 1799, in _execute_context
-    self.dialect.do_execute(
-  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\sqlalchemy\engine\default.py", line 717, in do_execute
-    cursor.execute(statement, parameters)
-sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: utau_tmodel.name
-[SQL: INSERT INTO utau_tmodel (name) VALUES (?)]
-[parameters: ('UTAUT',)]
-(Background on this error at: https://sqlalche.me/e/14/gkpj)
-2021-11-10 11:05:47,150 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 101, in add_user
+    form.validate_username()
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\forms.py", line 32, in validate_username
+    raise ValidationError('This user does not exist.')
+wtforms.validators.ValidationError: This user does not exist.
+2021-11-10 12:46:38,966 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 12:47:34,683 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 13:06:16,694 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 13:06:19,214 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 13:09:20,942 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 13:21:52,669 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 13:42:06,266 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 13:43:13,621 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 13:43:25,767 ERROR: Exception on /new_study/pre_questionnaire/Jesus Christ [POST] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 340, in pre_questionnaire
+    if form.validate_on_submit():
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask_wtf\form.py", line 100, in validate_on_submit
+    return self.is_submitted() and self.validate()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\wtforms\form.py", line 318, in validate
+    return super(Form, self).validate(extra)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\wtforms\form.py", line 150, in validate
+    if not field.validate(self, extra):
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\wtforms\fields\core.py", line 226, in validate
+    stop_validation = self._run_validation_chain(form, chain)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\wtforms\fields\core.py", line 246, in _run_validation_chain
+    validator(form, self)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\wtforms\validators.py", line 104, in __call__
+    l = field.data and len(field.data) or 0
+TypeError: object of type 'int' has no len()
+2021-11-10 13:44:58,396 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 13:49:20,394 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 14:24:57,254 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 14:25:12,720 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 14:25:27,035 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 14:26:25,207 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 14:27:25,119 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 14:30:01,328 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 14:30:05,467 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 14:30:26,988 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 14:31:21,843 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 14:34:02,716 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 14:48:55,916 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 15:00:45,375 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 15:03:09,800 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 15:03:59,298 ERROR: Exception on /d/e/832229c1-018e-4c2d-945b-1a511e48ce90 [GET] [in C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\PLS\venv\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 189, in intro_questionlist
+    questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+AttributeError: 'NoneType' object has no attribute 'id'
+2021-11-10 19:19:05,550 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 20:38:55,540 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 20:43:42,753 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 20:44:15,074 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 20:45:46,251 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-10 20:50:10,205 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 10:14:01,584 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]
+2021-11-11 10:27:43,569 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:77]

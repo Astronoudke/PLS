@@ -1,15 +1,17 @@
+from hashlib import md5
+import uuid
 from datetime import datetime
 from hashlib import md5
 from time import time
-from datetime import datetime
+
 import jwt
 from flask import current_app
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-import uuid
+from wtforms import StringField, SelectField
+from wtforms.validators import DataRequired
+
 from app import db, login
-from wtforms import StringField, SubmitField, TextAreaField, SelectField
-from wtforms.validators import ValidationError, DataRequired, Length
 
 followers = db.Table('followers',
                      db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
@@ -184,13 +186,15 @@ class Demographic(db.Model):
         if self.questiontype_name == "open":
             if self.optional:
                 return StringField(self.name)
-            return StringField(self.name, validators=[DataRequired()])
+            required_name = self.name + '*'
+            return StringField(required_name, validators=[DataRequired()])
         elif self.questiontype_name == "multiplechoice":
             if self.optional:
                 choices = self.choices.split(',')
                 choices.append("No Answer")
                 return SelectField(u'{}'.format(self.name), choices=choices)
-            return SelectField(u'{}'.format(self.name), choices=self.choices.split(','))
+            required_name = self.name + '*'
+            return SelectField(u'{}'.format(required_name), choices=self.choices.split(','))
 
 
 class DemographicAnswer(db.Model):
@@ -260,6 +264,7 @@ class CoreVariable(db.Model):
     description = db.Column(db.String(1000))
     linked_models = db.relationship('UTAUTmodel', secondary=utautmodel_corevariable,
                                     backref=db.backref('models'), lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Core variable {}>'.format(self.name)
