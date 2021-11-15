@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from flask_login import current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, SelectField, IntegerField
+from wtforms import StringField, SubmitField, TextAreaField, SelectField, IntegerField, RadioField, BooleanField
 from wtforms.validators import ValidationError, DataRequired, Length
 
 from app.models import User
@@ -65,6 +65,10 @@ class ScaleForm(FlaskForm):
                          validators=[DataRequired()])
     submit = SubmitField('Go to questionnaire')
 
+    def __init__(self, original_score, *args, **kwargs):
+        super(ScaleForm, self).__init__(*args, **kwargs)
+        self.original_name = original_score
+
 
 class AddDemographic(FlaskForm):
     add_demographic = SelectField(u'Added Demographic')
@@ -93,3 +97,19 @@ class EditStudyForm(FlaskForm):
         self.original_name = original_name
         self.original_description = original_description
         self.original_technology = original_technology
+
+
+class CreateNewDemographicForm(FlaskForm):
+    style_name = {'style': 'width:175%;'}
+    name_of_demographic = StringField('Name of the demographic (max. 40 characters)',
+                                      validators=[DataRequired(), Length(min=0, max=40)], render_kw=style_name)
+    style_description = {'style': 'width:250%;', "rows": 20}
+    description_of_demographic = TextAreaField('Description of the demographic',
+                                               validators=[DataRequired(), Length(min=0, max=500)],
+                                               render_kw=style_description)
+    optionality_of_demographic = BooleanField('Is the demographic optional?')
+    type_of_demographic = RadioField('Relevant technology of the study (max. 75 letters)',
+                                     choices=['open', 'multiplechoice', 'radio'], validators=[DataRequired(),
+                                                                                                Length(min=0, max=75)])
+    choices_of_demographic = StringField('The choices that go with the question')
+    submit = SubmitField('Create Demographic')

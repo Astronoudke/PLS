@@ -3,10 +3,11 @@ from flask_login import current_user, login_required
 
 from app import db
 from app.models import User, Study, UTAUTmodel, CoreVariable, Relation, Questionnaire, Question, StandardQuestion, \
-    QuestionGroup, Demographic
+    QuestionGroup, Demographic, StandardDemographic
 from app.new_study import bp
 from app.new_study.forms import CreateNewStudyForm, CreateNewCoreVariableForm, CreateNewRelationForm, \
-    CreateNewQuestion, ChooseNewModel, AddCoreVariable, EditStudyForm, AddDemographic, AddUserForm, ScaleForm
+    CreateNewQuestion, ChooseNewModel, AddCoreVariable, EditStudyForm, AddDemographic, AddUserForm, ScaleForm, \
+    CreateNewDemographicForm
 from sqlalchemy import or_
 
 
@@ -15,7 +16,7 @@ from sqlalchemy import or_
 def new_study():
     form = CreateNewStudyForm()
     if form.validate_on_submit():
-        #Create new model
+        # Create new model
         new_model = UTAUTmodel(name="UTAUT")
         db.session.add(new_model)
         db.session.commit()
@@ -36,7 +37,7 @@ def new_study():
             db.session.add(newrelation)
             db.session.commit()
 
-        #Create new study
+        # Create new study
         new_study = Study(name=form.name_of_study.data, description=form.description_of_study.data,
                           technology=form.technology_of_study.data, model_id=new_model.id)
         new_study.create_code()
@@ -70,13 +71,13 @@ def edit_study(study_code):
         study.technology = form.technology_of_study.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('new_study.utaut', study_code=study_code))
+        return redirect(url_for('new_study.utaut', study_code=study.code))
     elif request.method == 'GET':
         form.name_of_study.data = study.name
         form.description_of_study.data = study.description
         form.technology_of_study.data = study.technology
     return render_template('new_study/edit_study.html', title='Edit Profile',
-                           form=form)
+                           form=form, study=study)
 
 
 @bp.route('/add_user/<study_code>', methods=['GET', 'POST'])
@@ -102,7 +103,7 @@ def add_user(study_code):
         return redirect(url_for('new_study.edit_study', study_code=study_code))
 
     return render_template('new_study/add_user.html', title='Edit Profile',
-                           form=form)
+                           form=form, study=study)
 
 
 #############################################################################################################
@@ -303,14 +304,15 @@ def pre_questionnaire(study_code):
             db.session.commit()
 
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
-    form = ScaleForm()
+    form = ScaleForm(questionnaire.scale)
 
     if form.validate_on_submit():
         questionnaire.scale = form.scale.data
         db.session.commit()
         return redirect(url_for('new_study.questionnaire', study_code=study_code))
 
-    return render_template("new_study/pre_questionnaire.html", title='Pre-questionnaire', study=study, model=model, form=form)
+    return render_template("new_study/pre_questionnaire.html", title='Pre-questionnaire', study=study, model=model,
+                           form=form)
 
 
 @bp.route('/questionnaire/<study_code>', methods=['GET', 'POST'])
@@ -327,9 +329,6 @@ def questionnaire(study_code):
 
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
-    form_add_demographic = AddDemographic()
-    form_add_demographic.add_demographic.choices = [(demographic.id, demographic.name) for demographic in
-                                                    Demographic.query.all()]
 
     for core_variable in model.linked_corevariables:
         if core_variable.id not in [questiongroup.corevariable_id for questiongroup
@@ -348,19 +347,11 @@ def questionnaire(study_code):
              Question.query.filter_by(questiongroup_id=questiongroup.id).all()])
     questiongroups_questions = dict(zip(questiongroups, questions))
 
-    if form_add_demographic.validate_on_submit():
-        demographic = Demographic.query.filter_by(id=form_add_demographic.add_demographic.data).first()
-        demographic.link(questionnaire)
-        db.session.commit()
-
-        return redirect(url_for('new_study.questionnaire', study_code=study_code))
-
-    demographics = [demographic for demographic in questionnaire.linked_demographics]
+    demographics = [demographic for demographic in Demographic.query.filter_by(questionnaire_id=questionnaire.id)]
 
     return render_template("new_study/questionnaire.html", title='Questionnaire', study=study, model=model,
                            questiongroups=questiongroups, questionnaire=questionnaire,
-                           questiongroups_questions=questiongroups_questions, form_add_demographic=form_add_demographic,
-                           demographics=demographics)
+                           questiongroups_questions=questiongroups_questions, demographics=demographics)
 
 
 @bp.route('/questionnaire/switch_reversed_score/<study_code>/<name_question>', methods=['GET', 'POST'])
@@ -418,6 +409,37 @@ def use_standard_questions_questionnaire(study_code):
     return redirect(url_for('new_study.questionnaire', study_code=study_code))
 
 
+@bp.route('/questionnaire/use_standard_demographics_questionnaire/<study_code>', methods=['GET', 'POST'])
+@login_required
+def use_standard_demographics_questionnaire(study_code):
+    # check authorization
+    study = Study.query.filter_by(code=study_code).first()
+    if current_user not in study.linked_users:
+        return redirect(url_for('main.not_authorized'))
+
+    # check access to stage
+    if study.stage_2:
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+
+    study = Study.query.filter_by(code=study_code).first()
+    user = User.query.filter_by(id=current_user.id).first()
+    questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+
+    standard_demographics = [standard_demographic for standard_demographic in
+                             StandardDemographic.query.filter_by(user_id=user.id)]
+    for standard_demographic in standard_demographics:
+        new_demographic = Demographic(name=standard_demographic.name,
+                                      description=standard_demographic.description,
+                                      choices=standard_demographic.choices,
+                                      optional=standard_demographic.optional,
+                                      questiontype_name=standard_demographic.questiontype_name,
+                                      questionnaire_id=questionnaire.id)
+        db.session.add(new_demographic)
+        db.session.commit()
+
+    return redirect(url_for('new_study.questionnaire', study_code=study_code))
+
+
 @bp.route('/questionnaire/new_question/<name_questiongroup>/<study_code>', methods=['GET', 'POST'])
 @login_required
 def new_question(name_questiongroup, study_code):
@@ -465,9 +487,39 @@ def remove_question(study_code, name_question):
     return redirect(url_for('new_study.questionnaire', study_code=study_code))
 
 
-@bp.route('/remove_demographic/<study_code>/<name_demographic>', methods=['GET', 'POST'])
+@bp.route('/questionnaire/new_demographic/<study_code>', methods=['GET', 'POST'])
 @login_required
-def remove_demographic(study_code, name_demographic):
+def new_demographic(study_code):
+    # check authorization
+    study = Study.query.filter_by(code=study_code).first()
+    if current_user not in study.linked_users:
+        return redirect(url_for('main.not_authorized'))
+
+    # check access to stage
+    if study.stage_2:
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+
+    questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+    form = CreateNewDemographicForm()
+
+    if form.validate_on_submit():
+        new_demographic = Demographic(name=form.name_of_demographic.data,
+                                      description=form.description_of_demographic.data,
+                                      choices=form.choices_of_demographic.data,
+                                      optional=form.optionality_of_demographic.data,
+                                      questiontype_name=form.type_of_demographic.data,
+                                      questionnaire_id=questionnaire.id)
+        db.session.add(new_demographic)
+        db.session.commit()
+
+        return redirect(url_for("new_study.questionnaire", study_code=study_code))
+
+    return render_template("new_study/new_demographic.html", title="New Question", form=form)
+
+
+@bp.route('/remove_demographic/<study_code>/<id_demographic>', methods=['GET', 'POST'])
+@login_required
+def remove_demographic(study_code, id_demographic):
     # check authorization
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
@@ -477,10 +529,7 @@ def remove_demographic(study_code, name_demographic):
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
 
-    questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
-    demographic = Demographic.query.filter_by(name=name_demographic).first()
-
-    demographic.unlink(questionnaire)
+    Demographic.query.filter_by(id=id_demographic).delete()
     db.session.commit()
 
     return redirect(url_for('new_study.questionnaire', study_code=study.code))

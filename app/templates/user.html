@@ -15,6 +15,7 @@
                 {% if user == current_user %}
                 <p><a href="{{ url_for('main.edit_profile') }}">Edit your profile</a></p>
                 <p><a href="{{ url_for('main.standard_questions', username=user.username) }}">Edit standard questions</a></p>
+                <p><a href="{{ url_for('main.standard_demographics', username=user.username) }}">Edit standard demographics</a></p>
                 {% elif not current_user.is_following(user) %}
                 <p>
                     <form action="{{ url_for('main.follow', username=user.username) }}" method="post">

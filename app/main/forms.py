@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField
+from wtforms import StringField, SubmitField, TextAreaField, RadioField, BooleanField
 from wtforms.validators import ValidationError, DataRequired, Length
 
 from app.models import User
@@ -32,6 +32,23 @@ class CreateNewQuestionUser(FlaskForm):
 
 class GoToStartQuestionlist(FlaskForm):
     submit = SubmitField('Start Questionnaire')
+
+
+class CreateNewDemographicForm(FlaskForm):
+    style_name = {'style': 'width:175%;'}
+    name_of_demographic = StringField('Name of the demographic (max. 40 characters)',
+                                      validators=[DataRequired(), Length(min=0, max=40)], render_kw=style_name)
+    style_description = {'style': 'width:250%;', "rows": 20}
+    description_of_demographic = TextAreaField('Description of the demographic',
+                                               validators=[DataRequired(), Length(min=0, max=500)],
+                                               render_kw=style_description)
+    optionality_of_demographic = BooleanField('Is the demographic optional?')
+    type_of_demographic = RadioField('Relevant technology of the study (max. 75 letters)',
+                                     choices=['open', 'multiplechoice', 'radio'], validators=[DataRequired(),
+                                                                                                Length(min=0, max=75)])
+    choices_of_demographic = StringField('The choices that go with the question (separated with a comma, no space)')
+    submit = SubmitField('Create Demographic')
+
 
 
 # _______________________________________________________________________________________________________

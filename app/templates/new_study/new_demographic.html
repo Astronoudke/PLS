@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_edit_study.css') }}">
+    <h1>Create new demographic</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.name_of_demographic.label }}<br>
+            {{ form.name_of_demographic(size=32) }}<br>
+            {% for error in form.name_of_demographic.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.description_of_demographic.label }}<br>
+            {{ form.description_of_demographic(cols=50, rows=4) }}<br>
+            {% for error in form.description_of_demographic.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.optionality_of_demographic.label }}<br>
+            {{ form.optionality_of_demographic }}<br>
+            {% for error in form.optionality_of_demographic.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.type_of_demographic.label }}<br>
+            {{ form.type_of_demographic }}<br>
+            {% for error in form.type_of_demographic.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.choices_of_demographic.label }}<br>
+            {{ form.choices_of_demographic(size=64) }}<br>
+            {% for error in form.choices_of_demographic.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

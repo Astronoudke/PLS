@@ -7,10 +7,11 @@ from wtforms import RadioField
 
 from app import db
 from app.main import bp
-from app.main.forms import EditProfileForm, EmptyForm, CreateNewQuestionUser, GoToStartQuestionlist, DynamicTestForm
+from app.main.forms import EditProfileForm, EmptyForm, CreateNewQuestionUser, GoToStartQuestionlist, \
+    CreateNewDemographicForm, DynamicTestForm
 from app.main.functions import reverse_value
 from app.models import User, Study, CoreVariable, Questionnaire, StandardQuestion, Case, \
-    QuestionGroup, Question, Answer, DemographicAnswer
+    QuestionGroup, Question, Answer, DemographicAnswer, StandardDemographic
 
 
 @bp.before_app_request
@@ -116,7 +117,8 @@ def current_studies():
 def standard_questions(username):
     user = User.query.filter_by(username=username).first_or_404()
     studies = Study.query.all()
-    corevariables = CoreVariable.query.all()
+    corevariables = [core_variable for core_variable in CoreVariable.query.filter_by(user_id=current_user.id)] + \
+                    [core_variable for core_variable in CoreVariable.query.filter_by(user_id=None)]
     questions = StandardQuestion.query.filter_by(user_id=user.id)
 
     return render_template("standard_questions.html", title='New Study', user=user, studies=studies,
@@ -148,6 +150,52 @@ def new_question_user(name_corevariable, username):
 @login_required
 def remove_standard_question(id_question):
     StandardQuestion.query.filter_by(id=id_question).delete()
+    db.session.commit()
+
+    return redirect(url_for('main.standard_questions', username=current_user.username))
+
+
+@bp.route('/standard_demographics/<username>', methods=['GET', 'POST'])
+@login_required
+def standard_demographics(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    studies = Study.query.all()
+    demographics = [demographic for demographic in StandardDemographic.query.filter_by(user_id=current_user.id)]
+    questions = StandardQuestion.query.filter_by(user_id=user.id)
+
+    return render_template("standard_demographics.html", title='Standard demographics', user=user, studies=studies,
+                           demographics=demographics, questions=questions)
+
+
+@bp.route('/standard_questions/new_question_user', methods=['GET', 'POST'])
+@login_required
+def new_standard_demographic():
+    form = CreateNewDemographicForm()
+
+    if form.validate_on_submit():
+
+        new_demographic = StandardDemographic(name=form.name_of_demographic.data,
+                                              description=form.description_of_demographic.data,
+                                              choices=form.choices_of_demographic.data,
+                                              optional=form.optionality_of_demographic.data,
+                                              questiontype_name=form.type_of_demographic.data,
+                                              user_id=current_user.id)
+        db.session.add(new_demographic)
+        db.session.commit()
+
+        return redirect(url_for("main.standard_demographics", username=current_user.username))
+
+    return render_template("new_standard_demographic.html", title="New standard demographic", form=form)
+
+
+@bp.route('/remove_standard_demographic/<id_demographic>', methods=['GET', 'POST'])
+@login_required
+def remove_standard_demographic(id_demographic):
+    standard_question = StandardDemographic.query.filter_by(id=id_demographic).first()
+    if standard_question.user_id != current_user.id:
+        return redirect(url_for('main.not_authorized'))
+
+    StandardDemographic.query.filter_by(id=id_demographic).delete()
     db.session.commit()
 
     return redirect(url_for('main.standard_questions', username=current_user.username))
@@ -215,9 +263,9 @@ def start_questionlist(study_code):
 
         session["demographic_answers"] = []
         for (demographic, answer) in zip([demographic for demographic in demographics], form.data.values()):
-                demographic_answer = DemographicAnswer(answer=answer, demographic_id=demographic.id,
-                                                       case_id=Case.query.filter_by(session_id=session["user"]).first().id)
-                session["demographic_answers"].append(demographic_answer)
+            demographic_answer = DemographicAnswer(answer=answer, demographic_id=demographic.id,
+                                                   case_id=Case.query.filter_by(session_id=session["user"]).first().id)
+            session["demographic_answers"].append(demographic_answer)
 
         questiongroup_dict = {}
         questiongroups = [questiongroup for questiongroup in
@@ -245,8 +293,10 @@ def questionlist(study_code, questionlist_number):
     questions_dict = {}
     questionlist = session["questionlist_questiongroups"][int(questionlist_number)]
     questions = [question for question in Question.query.filter_by(questiongroup_id=questionlist.id)]
+
     for question in questions:
-        questions_dict[question.question] = RadioField(question.question, choices=[number for number in range(1, questionnaire.scale+1)])
+        questions_dict[question.question] = RadioField(question.question,
+                                                       choices=[number for number in range(1, questionnaire.scale + 1)])
     form = DynamicTestForm(questions_dict)
 
     next_questionlist_number = int(questionlist_number) + 1
@@ -281,6 +331,16 @@ def questionlist(study_code, questionlist_number):
 
 @bp.route('/g/e/<study_code>', methods=['GET', 'POST'])
 def ending_questionlist(study_code):
+    # Voor het geval de gebruiker probeert naar het einde te gaan zonder dat alle vragen zijn beantwoord.
+    study = Study.query.filter_by(code=study_code).first()
+    questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+    total_question_number = 0
+    for questiongroup in QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id):
+        total_question_number += Question.query.filter_by(questiongroup_id=questiongroup.id).count()
+    if len(session["answers"]) < total_question_number:
+        flash('You have not answered all of the questions yet. Finish the questions.')
+        return redirect(url_for('main.questionlist', study_code=study_code, questionlist_number=0))
+
     form = EmptyForm()
     if form.validate_on_submit():
         for answer in session["answers"]:
@@ -294,14 +354,3 @@ def ending_questionlist(study_code):
         session.clear()
         return "Thank you for participating."
     return render_template('ending_questionlist.html', title="Ending Questionnaire", form=form)
-
-
-@bp.route('/beren', methods=['GET', 'POST'])
-def test():
-    questions = {
-        'question_1': RadioField('Question 1', choices=[1, 2, 3, 4, 5]),
-        'question_2': RadioField('Question 2', choices=[1, 2, 3, 4, 5])
-    }
-
-    form = DynamicTestForm(questions)
-    return render_template('test.html', title="Test", form=form)

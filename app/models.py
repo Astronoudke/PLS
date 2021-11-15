@@ -3,14 +3,12 @@ import uuid
 from datetime import datetime
 from hashlib import md5
 from time import time
-
 import jwt
 from flask import current_app
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from wtforms import StringField, SelectField
 from wtforms.validators import DataRequired
-
 from app import db, login
 
 followers = db.Table('followers',
@@ -27,11 +25,6 @@ utautmodel_corevariable = db.Table('utautmodel_corevariable',
                                    db.Column('utau_tmodel_id', db.Integer, db.ForeignKey('utau_tmodel.id')),
                                    db.Column('core_variable_id', db.Integer, db.ForeignKey('core_variable.id'))
                                    )
-
-questionnaire_demographic = db.Table('questionnaire_demographic',
-                                     db.Column('questionnaire_id', db.Integer, db.ForeignKey('questionnaire.id')),
-                                     db.Column('demographic_id', db.Integer, db.ForeignKey('demographic.id'))
-                                     )
 
 
 class User(UserMixin, db.Model):
@@ -146,8 +139,6 @@ class Questionnaire(db.Model):
 
     linked_questiongroups = db.relationship('QuestionGroup', backref='questionnaire_questiongroup',
                                             lazy='dynamic')
-    linked_demographics = db.relationship('Demographic', secondary=questionnaire_demographic,
-                                          backref=db.backref('demographics'), lazy='dynamic')
 
     def __repr__(self):
         return '<Questionnaire {}>'.format(self.name)
@@ -160,27 +151,14 @@ class Questionnaire(db.Model):
 class Demographic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), index=True, unique=True)
-    questiontype_name = db.Column(db.String, db.ForeignKey('question_type.name'))
+    description = db.Column(db.String)
     choices = db.Column(db.String)
     optional = db.Column(db.Boolean, default=True)
-
-    linked_questionnaires = db.relationship('Questionnaire', secondary=questionnaire_demographic,
-                                            backref=db.backref('questionnaires'), lazy='dynamic')
+    questiontype_name = db.Column(db.String, db.ForeignKey('question_type.name'))
+    questionnaire_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
 
     def __repr__(self):
         return '<Demographic {}>'.format(self.name)
-
-    def link(self, questionnaire):
-        if not self.is_linked(questionnaire):
-            self.linked_questionnaires.append(questionnaire)
-
-    def unlink(self, questionnaire):
-        if self.is_linked(questionnaire):
-            self.linked_questionnaires.remove(questionnaire)
-
-    def is_linked(self, questionnaire):
-        return self.linked_questionnaires.filter(
-            questionnaire_demographic.c.questionnaire_id == questionnaire.id).count() > 0
 
     def return_field(self):
         if self.questiontype_name == "open":
@@ -206,6 +184,19 @@ class DemographicAnswer(db.Model):
     def __repr__(self):
         demographic = Demographic.query.filter_by(id=self.demographic_id).first()
         return '<{}: {}>'.format(demographic.name, self.answer)
+
+
+class StandardDemographic(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(40), index=True, unique=True)
+    description = db.Column(db.String)
+    choices = db.Column(db.String)
+    optional = db.Column(db.Boolean, default=True)
+    questiontype_name = db.Column(db.String, db.ForeignKey('question_type.name'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        return '<Demographic {}>'.format(self.name)
 
 
 class StandardQuestion(db.Model):

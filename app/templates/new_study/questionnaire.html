@@ -6,7 +6,7 @@
     <div class="title-box">
         <h1 class="title-header"> {{ study.name }}</h1>
     </div>
-    <button type="button" onclick="window.location.href='{{ url_for('new_study.edit_study', study_code=study_code) }}';">
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.edit_study', study_code=study.code) }}';">
         Edit Study
     </button>
     <div class="table-corevariable">
@@ -15,6 +15,7 @@
           <tr>
             <th>Name</th>
             <th>Type</th>
+            <th>Optional</th>
           </tr>
           {% for demographic in demographics %}
             <tr>
@@ -25,22 +26,21 @@
                     {{ demographic.questiontype_name }}
                 </td>
                 <td>
+                    {{ demographic.optional }}
+                </td>
+                <td>
                     <button type="button" onclick="window.location.href='{{ url_for('new_study.remove_demographic',
-                    study_code=study.code, name_demographic=demographic.name) }}';">
+                    study_code=study.code, id_demographic=demographic.id) }}';">
                         Delete Demographic
                     </button>
                 </td>
             </tr>
           {% endfor %}
         </table>
-        <div class="form-container">
-            <div class="row">
-                <div class="col-md-4">
-                    {{ render_form(form_add_demographic) }}
-                </div>
-            </div>
-        </div>
     </div>
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.new_demographic', study_code=study.code) }}';">
+        Create New Demographic
+    </button>
     {% for questiongroup in questiongroups_questions.keys() %}
         <div class="table-corevariable">
             <h1 class="table-header"> {{ questiongroup.title }}</h1>
@@ -86,6 +86,11 @@
     <button type="button" onclick="window.location.href='{{ url_for('new_study.use_standard_questions_questionnaire',
     study_code=study.code) }}';">
         Use Standard Questions
+    </button>
+
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.use_standard_demographics_questionnaire',
+    study_code=study.code) }}';">
+        Use Standard Demographics
     </button>
 
     <button type="button" onclick="window.location.href='{{ url_for('new_study.utaut', study_code=study.code) }}';">

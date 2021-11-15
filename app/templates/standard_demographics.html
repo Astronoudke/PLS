@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block app_content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_questionnaire.css') }}">
+    <div class="table-corevariable">
+        <h1 class="table-header">Your standard demographics</h1>
+        <table class="table-class">
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Optional</th>
+          </tr>
+          {% for demographic in demographics %}
+            <tr>
+                <td>
+                    {{ demographic.name }}
+                </td>
+                <td>
+                    {{ demographic.questiontype_name }}
+                </td>
+                <td>
+                    {{ demographic.optional }}
+                </td>
+                <td>
+                    <button type="button" onclick="window.location.href='{{ url_for('main.remove_standard_demographic',
+                    id_demographic=demographic.id) }}';">
+                        Delete Demographic
+                    </button>
+                </td>
+            </tr>
+          {% endfor %}
+        </table>
+    </div>
+    <button type="button" onclick="window.location.href='{{ url_for('main.new_standard_demographic') }}';">
+        Create New Demographic
+    </button>
+{% endblock %}
