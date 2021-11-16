@@ -14,4 +14,8 @@
     <button type="button" onclick="window.location.href='{{ url_for('main.intro_questionlist', study_code=study.code) }}';">
         Go to Questionnaire
     </button>
+
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.end_questionnaire', study_code=study.code) }}';">
+        End questionnaire
+    </button>
 {% endblock %}

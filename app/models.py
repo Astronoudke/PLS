@@ -150,7 +150,7 @@ class Questionnaire(db.Model):
 
 class Demographic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(40), index=True, unique=True)
+    name = db.Column(db.String(40), index=True)
     description = db.Column(db.String)
     choices = db.Column(db.String)
     optional = db.Column(db.Boolean, default=True)

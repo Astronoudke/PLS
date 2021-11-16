@@ -1,11 +1,4 @@
-2021-11-12 15:19:56,102 ERROR: Exception on /new_study/utaut/4404559d-04bf-4c91-8e64-4c8d52ee1630 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\sql\base.py", line 1690, in _entity_namespace_key
-    return getattr(ns, key)
-AttributeError: type object 'CoreVariable' has no attribute 'user_id'
-
-The above exception was the direct cause of the following exception:
-
+2021-11-15 15:11:13,792 ERROR: Exception on /new_study/remove_demographic/81e23d24-9cad-47ff-adb0-8112496718c7/Age [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -17,30 +10,25 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 133, in utaut
-    CoreVariable.query.filter_by(user_id=current_user.id)] + \
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\orm\query.py", line 1793, in filter_by
-    clauses = [
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\orm\query.py", line 1794, in <listcomp>
-    _entity_namespace_key(from_entity, key) == value
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\sql\base.py", line 1692, in _entity_namespace_key
-    util.raise_(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
-    raise exception
-sqlalchemy.exc.InvalidRequestError: Entity namespace for "core_variable" has no property "user_id"
-2021-11-12 15:20:20,577 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-12 15:20:22,858 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-12 15:21:42,282 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-12 15:21:48,473 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-12 15:21:52,939 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-12 15:21:55,329 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-12 15:21:59,754 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-12 15:25:21,657 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-15 10:25:22,608 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-15 11:16:44,094 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-15 11:20:14,085 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-15 11:20:53,894 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-15 11:21:05,368 ERROR: Exception on /new_study/edit_study/a86278dd-04f3-48a8-a69d-6facd8e06332 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 499, in remove_demographic
+    demographic.unlink(questionnaire)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\models.py", line 175, in unlink
+    return SelectField(u'{}'.format(required_name), choices=self.choices.split(','))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\models.py", line 179, in is_linked
+    id = db.Column(db.Integer, primary_key=True)
+AttributeError: 'Demographic' object has no attribute 'linked_questionnaires'
+2021-11-15 15:11:31,301 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-15 15:11:33,585 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-15 15:13:54,790 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-15 15:15:20,696 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-15 15:15:47,167 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-15 15:16:16,760 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-15 15:19:46,420 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-15 15:19:48,792 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-15 15:42:22,080 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-15 15:43:02,504 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-15 15:45:43,793 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-15 15:45:44,921 ERROR: Exception on /standard_demographics/Noudke [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -52,24 +40,8 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 57, in edit_study
-    study = Study.query.filter_by(code=study.code).first()
-UnboundLocalError: local variable 'study' referenced before assignment
-2021-11-15 11:21:21,858 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-15 11:21:55,760 ERROR: Exception on /new_study/edit_study/a86278dd-04f3-48a8-a69d-6facd8e06332 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 78, in edit_study
-    return render_template('new_study/edit_study.html', title='Edit Profile',
+  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 166, in standard_demographics
+    return render_template("standard_demographics.html", title='Standard demographics', user=user, studies=studies,
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
     return _render(
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
@@ -78,17 +50,56 @@ Traceback (most recent call last):
     self.environment.handle_exception()
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
     raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\edit_study.html", line 2, in top-level template code
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\standard_demographics.html", line 2, in top-level template code
     {% from 'bootstrap/form.html' import render_form, render_field %}
   File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 38, in top-level template code
     {% block content %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\edit_study.html", line 33, in block 'content'
-    <button type="button" onclick="window.location.href='{{ url_for('new_study.add_user',
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 49, in block 'content'
+    {% block app_content %}{% endblock %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\standard_demographics.html", line 35, in block 'app_content'
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.new_standard_demographic',
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\helpers.py", line 338, in url_for
     return appctx.app.handle_url_build_error(error, endpoint, values)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\helpers.py", line 325, in url_for
     rv = url_adapter.build(
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\werkzeug\routing.py", line 2305, in build
     raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'new_study.add_user' with values ['name_study']. Did you forget to specify values ['study_code']?
-2021-11-15 11:23:52,076 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+werkzeug.routing.BuildError: Could not build url for endpoint 'new_study.new_standard_demographic' with values ['username']. Did you mean 'new_study.new_demographic' instead?
+2021-11-15 15:45:47,145 ERROR: Exception on /standard_demographics/Noudke [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\main\routes.py", line 166, in standard_demographics
+    return render_template("standard_demographics.html", title='Standard demographics', user=user, studies=studies,
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
+    return _render(
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
+    rv = template.render(context)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 1291, in render
+    self.environment.handle_exception()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
+    raise rewrite_traceback_stack(source=source)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\standard_demographics.html", line 2, in top-level template code
+    {% from 'bootstrap/form.html' import render_form, render_field %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 38, in top-level template code
+    {% block content %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 49, in block 'content'
+    {% block app_content %}{% endblock %}
+  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\standard_demographics.html", line 35, in block 'app_content'
+    <button type="button" onclick="window.location.href='{{ url_for('new_study.new_standard_demographic',
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\helpers.py", line 338, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\helpers.py", line 325, in url_for
+    rv = url_adapter.build(
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\werkzeug\routing.py", line 2305, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'new_study.new_standard_demographic' with values ['username']. Did you mean 'new_study.new_demographic' instead?
+2021-11-15 15:46:25,819 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]

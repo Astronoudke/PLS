@@ -11,7 +11,7 @@ from app.main.forms import EditProfileForm, EmptyForm, CreateNewQuestionUser, Go
     CreateNewDemographicForm, DynamicTestForm
 from app.main.functions import reverse_value
 from app.models import User, Study, CoreVariable, Questionnaire, StandardQuestion, Case, \
-    QuestionGroup, Question, Answer, DemographicAnswer, StandardDemographic
+    QuestionGroup, Question, Answer, DemographicAnswer, StandardDemographic, Demographic
 
 
 @bp.before_app_request
@@ -128,7 +128,7 @@ def standard_questions(username):
 
 @bp.route('/standard_questions/new_question_user/<name_corevariable>/<username>', methods=['GET', 'POST'])
 @login_required
-def new_question_user(name_corevariable, username):
+def new_standard_question(name_corevariable, username):
     form = CreateNewQuestionUser()
 
     if form.validate_on_submit():
@@ -143,7 +143,7 @@ def new_question_user(name_corevariable, username):
 
         return redirect(url_for("main.standard_questions", username=username))
 
-    return render_template("new_question_user.html", title="New Question", form=form)
+    return render_template("new_standard_question.html", title="New Question", form=form)
 
 
 @bp.route('/remove_standard_question/<id_question>', methods=['GET', 'POST'])
@@ -230,7 +230,7 @@ def intro_questionlist(study_code):
     form = GoToStartQuestionlist()
     study = Study.query.filter_by(code=study_code).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
-    demographics = [demographic for demographic in questionnaire.linked_demographics]
+    demographics = [demographic for demographic in Demographic.query.filter_by(questionnaire_id=questionnaire.id)]
 
     if form.validate_on_submit():
         return redirect(url_for('main.start_questionlist', study_code=study_code))
@@ -245,7 +245,7 @@ def start_questionlist(study_code):
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
 
     demographics_dict = {}
-    demographics = [demographic for demographic in questionnaire.linked_demographics]
+    demographics = [demographic for demographic in Demographic.query.filter_by(questionnaire_id=questionnaire.id)]
     for demographic in demographics:
         demographics_dict[demographic.name] = demographic.return_field()
     form = DynamicTestForm(demographics_dict)

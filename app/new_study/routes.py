@@ -3,12 +3,17 @@ from flask_login import current_user, login_required
 
 from app import db
 from app.models import User, Study, UTAUTmodel, CoreVariable, Relation, Questionnaire, Question, StandardQuestion, \
-    QuestionGroup, Demographic, StandardDemographic
+    QuestionGroup, Demographic, StandardDemographic, Case, DemographicAnswer
 from app.new_study import bp
 from app.new_study.forms import CreateNewStudyForm, CreateNewCoreVariableForm, CreateNewRelationForm, \
     CreateNewQuestion, ChooseNewModel, AddCoreVariable, EditStudyForm, AddDemographic, AddUserForm, ScaleForm, \
     CreateNewDemographicForm
 from sqlalchemy import or_
+
+
+#############################################################################################################
+#                                        Setting up the study
+#############################################################################################################
 
 
 @bp.route('/new_study', methods=['GET', 'POST'])
@@ -107,9 +112,8 @@ def add_user(study_code):
 
 
 #############################################################################################################
-#                                              UTAUT
+#                                               UTAUT
 #############################################################################################################
-
 
 @bp.route('/utaut/<study_code>', methods=['GET', 'POST'])
 @login_required
@@ -273,7 +277,7 @@ def remove_relation(study_code, id_relation):
 
 
 #############################################################################################################
-#                                              Questionnaire
+#                                           Questionnaire
 #############################################################################################################
 
 
@@ -424,6 +428,7 @@ def use_standard_demographics_questionnaire(study_code):
     study = Study.query.filter_by(code=study_code).first()
     user = User.query.filter_by(id=current_user.id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+    demographics = [demographic.name for demographic in Demographic.query.filter_by(questionnaire_id=questionnaire.id)]
 
     standard_demographics = [standard_demographic for standard_demographic in
                              StandardDemographic.query.filter_by(user_id=user.id)]
@@ -434,8 +439,9 @@ def use_standard_demographics_questionnaire(study_code):
                                       optional=standard_demographic.optional,
                                       questiontype_name=standard_demographic.questiontype_name,
                                       questionnaire_id=questionnaire.id)
-        db.session.add(new_demographic)
-        db.session.commit()
+        if new_demographic.name not in demographics:
+            db.session.add(new_demographic)
+            db.session.commit()
 
     return redirect(url_for('new_study.questionnaire', study_code=study_code))
 
@@ -560,7 +566,7 @@ def check_questionnaire(study_code):
 
 
 #############################################################################################################
-#                                              Start Study
+#                                            Start Study
 #############################################################################################################
 
 
@@ -599,3 +605,68 @@ def study_underway(name_study, study_code):
 
     return render_template('new_study/study_underway.html', title="Underway: {}".format(name_study), study=study,
                            link=link, questionnaire=questionnaire)
+
+
+@bp.route('/end_questionnaire/<study_code>', methods=['GET', 'POST'])
+@login_required
+def end_questionnaire(study_code):
+    # check authorization
+    study = Study.query.filter_by(code=study_code).first()
+    if current_user not in study.linked_users:
+        return redirect(url_for('main.not_authorized'))
+
+    if study.stage_1:
+        return redirect(url_for('new_study.utaut', study_code=study_code))
+
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
+
+    study.stage_2 = False
+    study.stage_3 = True
+    db.session.commit()
+
+    return redirect(url_for('new_study.summary_results', study_code=study_code))
+
+#############################################################################################################
+#                                           Data Analysis
+#############################################################################################################
+
+
+@bp.route('/summary_results/<study_code>', methods=['GET', 'POST'])
+@login_required
+def summary_results(study_code):
+    # check authorization
+    study = Study.query.filter_by(code=study_code).first()
+    if current_user not in study.linked_users:
+        return redirect(url_for('main.not_authorized'))
+
+    # check access to stage
+    if study.stage_1:
+        return redirect(url_for('new_study.utaut', study_code=study_code))
+    if study.stage_2:
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+
+    questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+    demographics = [demographic for demographic in Demographic.query.filter_by(questionnaire_id=questionnaire.id)]
+    total_cases = [case for case in Case.query.filter_by(questionnaire_id=questionnaire.id)]
+
+    # Creëer ZIP-lijst voor tonen tabel met uitslagen
+    cases = []
+    for case in total_cases:
+        for i in range(len(demographics)):
+            cases.append(case.id)
+    demos = []
+    for case in total_cases:
+        for demographic in demographics:
+            demos.append(demographic.name)
+    demo_answers = []
+    for (case_id, demo_name) in zip(cases, demos):
+        demo = Demographic.query.filter_by(name=demo_name).first()
+        answer = DemographicAnswer.query.filter_by(demographic_id=demo.id).first()
+        if answer is not None:
+            demo_answers.append(answer.answer)
+        else:
+            demo_answers.append(None)
+    library = zip(cases, demos, demo_answers)
+
+    return render_template('new_study/summary_results.html', study_code=study_code, library=library)
