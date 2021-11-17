@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 
 from app import db
 from app.models import User, Study, UTAUTmodel, CoreVariable, Relation, Questionnaire, Question, StandardQuestion, \
-    QuestionGroup, Demographic, StandardDemographic, Case, DemographicAnswer
+    QuestionGroup, Demographic, StandardDemographic, Case, DemographicAnswer, Answer
 from app.new_study import bp
 from app.new_study.forms import CreateNewStudyForm, CreateNewCoreVariableForm, CreateNewRelationForm, \
     CreateNewQuestion, ChooseNewModel, AddCoreVariable, EditStudyForm, AddDemographic, AddUserForm, ScaleForm, \
@@ -425,8 +425,17 @@ def use_standard_questions_questionnaire(study_code):
         replaced_name_question = replaced_name_question.replace('(…)', study.technology)
         corresponding_questiongroup = QuestionGroup.query.filter_by(
             corevariable_id=standard_question.corevariable_id, questionnaire_id=questionnaire.id).first()
+
+        corevariable = CoreVariable.query.filter_by(name=corresponding_questiongroup.title, user_id=current_user.id).first()
+        if corevariable is None:
+            corevariable = CoreVariable.query.filter_by(name=corresponding_questiongroup.title, user_id=None).first()
+        abbreviation_corevariable = corevariable.abbreviation
+        new_code = abbreviation_corevariable + str(len([question for question in
+                                                        Question.query.filter_by(
+                                                            questiongroup_id=corresponding_questiongroup.id)]) + 1)
         newquestion = Question(question=replaced_name_question,
-                               questiongroup_id=corresponding_questiongroup.id)
+                               questiongroup_id=corresponding_questiongroup.id,
+                               question_code=new_code)
         db.session.add(newquestion)
         db.session.commit()
 
@@ -489,8 +498,17 @@ def new_question(name_questiongroup, study_code):
         questiongroup = QuestionGroup.query.filter_by(title=name_questiongroup,
                                                       questionnaire_id=questionnaire.id).first()
 
+        corevariable = CoreVariable.query.filter_by(name=questiongroup.title, user_id=current_user.id).first()
+        if corevariable is None:
+            corevariable = CoreVariable.query.filter_by(name=questiongroup.title, user_id=None).first()
+
+        abbreviation_corevariable = corevariable.abbreviation
+        new_code = abbreviation_corevariable + str(len([question for question in
+                                                        Question.query.filter_by(
+                                                            questiongroup_id=questiongroup.id)]) + 1)
         new_question = Question(question=form.name_question.data,
-                                questiongroup_id=questiongroup.id)
+                                questiongroup_id=questiongroup.id,
+                                question_code=new_code)
         db.session.add(new_question)
         db.session.commit()
 
@@ -684,7 +702,7 @@ def summary_results(study_code):
     demographics = [demographic for demographic in Demographic.query.filter_by(questionnaire_id=questionnaire.id)]
     total_cases = [case for case in Case.query.filter_by(questionnaire_id=questionnaire.id)]
 
-    # Creëer ZIP-lijst voor tonen tabel met uitslagen
+    # Summary van de demografische resultaten
     cases = []
     for case in total_cases:
         for i in range(len(demographics)):
@@ -693,27 +711,48 @@ def summary_results(study_code):
     for case in total_cases:
         for demographic in demographics:
             demos.append(demographic.name)
-    demo_answers = []
-    for (case_id, demo_name) in zip(cases, demos):
-        demo = Demographic.query.filter_by(name=demo_name).first()
-        answer = DemographicAnswer.query.filter_by(demographic_id=demo.id).first()
-        if answer is not None:
-            demo_answers.append(answer.answer)
-        else:
-            demo_answers.append(None)
 
-    library = zip(cases, demos, demo_answers)
-    dct = {}
+    dct_demographics = {}
     for case in cases:
-        dct[case] = []
+        dct_demographics[case] = []
     for (case_id, demo_name) in zip(cases, demos):
         demo = Demographic.query.filter_by(name=demo_name).first()
         answer = DemographicAnswer.query.filter_by(demographic_id=demo.id).first()
         if answer is not None:
-            dct[case_id].append(answer.answer)
+            dct_demographics[case_id].append(answer.answer)
         else:
-            dct[case_id].append(None)
+            dct_demographics[case_id].append(None)
 
+    # Summary van de vragenlijstresultaten
+    questiongroups = [questiongroup for questiongroup in QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    questions = []
+    for questiongroup in questiongroups:
+        list_of_questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
+        for question in list_of_questions:
+            questions.append(question)
+    cases = []
+    for case in total_cases:
+        for i in range(len(questions)):
+            cases.append(case.id)
+    quests = []
+    for case in total_cases:
+        for question in questions:
+            quests.append(question.question)
 
-    return render_template('new_study/summary_results.html', study_code=study_code, library=library, demographics=demographics,
-                           cases=cases, dct=dct)
+    dct_questions = {}
+
+    for case in cases:
+        dct_questions[case] = []
+    for (case_id, quest_name) in zip(cases, quests):
+        for questiongroup in questiongroups:
+            quest = Question.query.filter_by(question=quest_name, questiongroup_id=questiongroup.id).first()
+            if quest is not None:
+                answer = Answer.query.filter_by(question_id=quest.id, case_id=case_id).first()
+                if answer is not None:
+                    dct_questions[case_id].append(answer.score)
+                else:
+                    dct_questions[case_id].append(None)
+
+    return render_template('new_study/summary_results.html', study_code=study_code, demographics=demographics,
+                           cases=cases, dct_demographics=dct_demographics, dct_questions=dct_questions, questions=questions,
+                           )

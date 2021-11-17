@@ -7,7 +7,7 @@ import jwt
 from flask import current_app
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-from wtforms import StringField, SelectField
+from wtforms import StringField, SelectField, RadioField
 from wtforms.validators import DataRequired
 from app import db, login
 
@@ -173,6 +173,13 @@ class Demographic(db.Model):
                 return SelectField(u'{}'.format(self.name), choices=choices)
             required_name = self.name + '*'
             return SelectField(u'{}'.format(required_name), choices=self.choices.split(','))
+        elif self.questiontype_name == "radio":
+            if self.optional:
+                choices = self.choices.split(',')
+                choices.append("No Answer")
+                return RadioField(u'{}'.format(self.name), choices=choices)
+            required_name = self.name + '*'
+            return RadioField(u'{}'.format(required_name), choices=self.choices.split(','))
 
 
 class DemographicAnswer(db.Model):
@@ -232,6 +239,7 @@ class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(100))
     reversed_score = db.Column(db.Boolean, default=False)
+    question_code = db.Column(db.String(10))
     questiongroup_id = db.Column(db.Integer, db.ForeignKey('question_group.id'))
 
     answer_question = db.relationship('Answer', backref='answered_question',
@@ -297,7 +305,6 @@ class Case(db.Model):
     def print_demographics(self):
         for demographic_answer in [demographic for demographic in DemographicAnswer.query.filter_by(case_id=self.id)]:
             demographic = Demographic.query.filter_by(id=demographic_answer.demographic_id).first()
-            print('{}: {}'.format(demographic.name, demographic_answer.answer))
 
 
 @login.user_loader

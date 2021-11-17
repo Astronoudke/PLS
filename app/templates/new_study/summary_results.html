@@ -24,10 +24,46 @@
       <div class="tbl-content">
         <table cellpadding="0" cellspacing="0" border="0">
           <tbody>
-            {% set dictionary = dct %}
+            {% set dictionary = dct_demographics %}
             {% for i in dictionary %}
                 <tr>
-                  <td>{{ i }}</td>
+                  <td style="font-weight: bold;">{{ i }}</td>
+                  {% for k in dictionary[i] %}
+                    {% if k %}
+                        <td>{{ k }}</td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+                  {% endfor %}
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <!--for demo wrap-->
+      <h1>All questionnaire results</h1>
+      <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              {% for question in questions %}
+                <th>{{ question.question_code }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tbody>
+            {% set dictionary = dct_questions %}
+            {% for i in dictionary %}
+                <tr>
+                  <td style="font-weight: bold;">{{ i }}</td>
                   {% for k in dictionary[i] %}
                     {% if k %}
                         <td>{{ k }}</td>
