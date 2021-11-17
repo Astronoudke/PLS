@@ -62,12 +62,13 @@ def edit_study(study_code):
     # check authorization
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     form = EditStudyForm(study.name, study.description, study.technology)
     if form.validate_on_submit():
@@ -91,12 +92,13 @@ def add_user(study_code):
     # check authorization
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
-        print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     form = AddUserForm()
     if form.validate_on_submit():
@@ -127,6 +129,8 @@ def utaut(study_code):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     core_variables = [corevariable for corevariable in model.linked_corevariables]
@@ -169,6 +173,8 @@ def new_core_variable(study_code):
     study = Study.query.filter_by(code=study_code).first()
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     form = CreateNewCoreVariableForm()
 
@@ -202,6 +208,8 @@ def remove_core_variable(study_code, name_core_variable):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
@@ -236,6 +244,8 @@ def new_relation(study_code):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     form = CreateNewRelationForm()
 
@@ -269,6 +279,8 @@ def remove_relation(study_code, id_relation):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     Relation.query.filter_by(id=id_relation).delete()
     db.session.commit()
@@ -292,6 +304,8 @@ def pre_questionnaire(study_code):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     # create questionnaire if no questionnaire exists yet
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
@@ -330,6 +344,8 @@ def questionnaire(study_code):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
@@ -369,6 +385,8 @@ def switch_reversed_score(study_code, name_question):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     user = User.query.filter_by(id=current_user.id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
@@ -394,6 +412,8 @@ def use_standard_questions_questionnaire(study_code):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     study = Study.query.filter_by(code=study_code).first()
     user = User.query.filter_by(id=current_user.id).first()
@@ -424,6 +444,8 @@ def use_standard_demographics_questionnaire(study_code):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     study = Study.query.filter_by(code=study_code).first()
     user = User.query.filter_by(id=current_user.id).first()
@@ -457,6 +479,8 @@ def new_question(name_questiongroup, study_code):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     form = CreateNewQuestion()
 
@@ -486,6 +510,8 @@ def remove_question(study_code, name_question):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     Question.query.filter_by(question=name_question).delete()
     db.session.commit()
@@ -504,6 +530,8 @@ def new_demographic(study_code):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     form = CreateNewDemographicForm()
@@ -534,6 +562,8 @@ def remove_demographic(study_code, id_demographic):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     Demographic.query.filter_by(id=id_demographic).delete()
     db.session.commit()
@@ -552,6 +582,8 @@ def check_questionnaire(study_code):
     # check access to stage
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     questiongroups = [questiongroup for questiongroup in questionnaire.linked_questiongroups]
@@ -568,7 +600,6 @@ def check_questionnaire(study_code):
 #############################################################################################################
 #                                            Start Study
 #############################################################################################################
-
 
 @bp.route('/start_study/<study_code>', methods=['GET', 'POST'])
 @login_required
@@ -601,6 +632,8 @@ def study_underway(name_study, study_code):
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     if study.stage_1:
         return redirect(url_for('new_study.utaut', study_code=study_code))
+    if study.stage_3:
+        return redirect(url_for('new_study.summary_results', study_code=study_code))
     link = '127.0.0.1:5000/d/e/{}'.format(study.code)
 
     return render_template('new_study/study_underway.html', title="Underway: {}".format(name_study), study=study,
@@ -626,6 +659,7 @@ def end_questionnaire(study_code):
     db.session.commit()
 
     return redirect(url_for('new_study.summary_results', study_code=study_code))
+
 
 #############################################################################################################
 #                                           Data Analysis
@@ -667,6 +701,19 @@ def summary_results(study_code):
             demo_answers.append(answer.answer)
         else:
             demo_answers.append(None)
-    library = zip(cases, demos, demo_answers)
 
-    return render_template('new_study/summary_results.html', study_code=study_code, library=library)
+    library = zip(cases, demos, demo_answers)
+    dct = {}
+    for case in cases:
+        dct[case] = []
+    for (case_id, demo_name) in zip(cases, demos):
+        demo = Demographic.query.filter_by(name=demo_name).first()
+        answer = DemographicAnswer.query.filter_by(demographic_id=demo.id).first()
+        if answer is not None:
+            dct[case_id].append(answer.answer)
+        else:
+            dct[case_id].append(None)
+
+
+    return render_template('new_study/summary_results.html', study_code=study_code, library=library, demographics=demographics,
+                           cases=cases, dct=dct)
