@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block app_content %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_summary_results.css') }}">
+    <div class="title-box">
+        <h1>Summary Results</h1>
+    </div>
+    <section>
+      <!--for demo wrap-->
+      <h1>All demographic results</h1>
+      <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              {% for demographic in demographics %}
+                <th>{{ demographic.name }}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tbody>
+            {% set dictionary = dct %}
+            {% for i in dictionary %}
+                <tr>
+                  <td>{{ i }}</td>
+                  {% for k in dictionary[i] %}
+                    {% if k %}
+                        <td>{{ k }}</td>
+                    {% else %}
+                        <td>-</td>
+                    {% endif %}
+                  {% endfor %}
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+{% endblock %}
