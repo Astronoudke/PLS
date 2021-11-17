@@ -426,7 +426,8 @@ def use_standard_questions_questionnaire(study_code):
         corresponding_questiongroup = QuestionGroup.query.filter_by(
             corevariable_id=standard_question.corevariable_id, questionnaire_id=questionnaire.id).first()
 
-        corevariable = CoreVariable.query.filter_by(name=corresponding_questiongroup.title, user_id=current_user.id).first()
+        corevariable = CoreVariable.query.filter_by(name=corresponding_questiongroup.title,
+                                                    user_id=current_user.id).first()
         if corevariable is None:
             corevariable = CoreVariable.query.filter_by(name=corresponding_questiongroup.title, user_id=None).first()
         abbreviation_corevariable = corevariable.abbreviation
@@ -723,8 +724,9 @@ def summary_results(study_code):
         else:
             dct_demographics[case_id].append(None)
 
-    # Summary van de vragenlijstresultaten
-    questiongroups = [questiongroup for questiongroup in QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    # Summary van de vragenlijstresultaten voor iedere case
+    questiongroups = [questiongroup for questiongroup in
+                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
     questions = []
     for questiongroup in questiongroups:
         list_of_questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
@@ -739,20 +741,39 @@ def summary_results(study_code):
         for question in questions:
             quests.append(question.question)
 
-    dct_questions = {}
+    dct_answers = {}
 
     for case in cases:
-        dct_questions[case] = []
+        dct_answers[case] = []
     for (case_id, quest_name) in zip(cases, quests):
         for questiongroup in questiongroups:
             quest = Question.query.filter_by(question=quest_name, questiongroup_id=questiongroup.id).first()
             if quest is not None:
                 answer = Answer.query.filter_by(question_id=quest.id, case_id=case_id).first()
                 if answer is not None:
-                    dct_questions[case_id].append(answer.score)
+                    dct_answers[case_id].append(answer.score)
                 else:
-                    dct_questions[case_id].append(None)
+                    dct_answers[case_id].append(None)
+
+    # Summary van de vragenlijstresultaten voor iedere vraag
+    questiongroups = [questiongroup for questiongroup in
+                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+
+    dct_questions = {}
+    for questiongroup in questiongroups:
+        for question in [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]:
+            dct_questions[question] = []
+
+    for case in [case for case in Case.query.filter_by(questionnaire_id=questionnaire.id)]:
+        for answer in [answer for answer in Answer.query.filter_by(case_id=case.id)]:
+            for questiongroup in questiongroups:
+                corresponding_question = Question.query.filter_by(id=answer.question_id,
+                                                                  questiongroup_id=questiongroup.id).first()
+                if corresponding_question:
+                    dct_questions[corresponding_question].append(answer)
+
+    dct_averages_questions = {}
 
     return render_template('new_study/summary_results.html', study_code=study_code, demographics=demographics,
-                           cases=cases, dct_demographics=dct_demographics, dct_questions=dct_questions, questions=questions,
-                           )
+                           cases=cases, dct_demographics=dct_demographics, dct_answers=dct_answers, questions=questions,
+                           dct_questions=dct_questions)

@@ -83,3 +83,5 @@ AttributeError: 'NoneType' object has no attribute 'id'
 2021-11-17 14:52:16,275 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
 2021-11-17 14:54:53,622 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
 2021-11-17 15:00:42,597 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 15:29:02,146 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 15:32:38,418 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]

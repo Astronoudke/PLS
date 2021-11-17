@@ -60,7 +60,7 @@
       <div class="tbl-content">
         <table cellpadding="0" cellspacing="0" border="0">
           <tbody>
-            {% set dictionary = dct_questions %}
+            {% set dictionary = dct_answers %}
             {% for i in dictionary %}
                 <tr>
                   <td style="font-weight: bold;">{{ i }}</td>
@@ -71,6 +71,34 @@
                         <td>-</td>
                     {% endif %}
                   {% endfor %}
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <!--for demo wrap-->
+      <h1>Average and standard deviation questions</h1>
+      <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Question</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tbody>
+            {% set dictionary = dct_questions %}
+            {% for question in dictionary %}
+                <tr>
+                  <td style="font-weight: bold;">{{ question.question_code }}</td>
+                  <td style="font-weight: bold;">{{ question.question }}</td>
                 </tr>
             {% endfor %}
           </tbody>
