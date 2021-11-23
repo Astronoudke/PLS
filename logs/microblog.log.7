@@ -1,11 +1,4 @@
-2021-11-17 14:24:56,795 ERROR: Exception on /new_study/summary_results/a13a3037-1e65-4b4b-896e-c06a397e24d5 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\sql\base.py", line 1690, in _entity_namespace_key
-    return getattr(ns, key)
-AttributeError: type object 'Question' has no attribute 'questionnaire_id'
-
-The above exception was the direct cause of the following exception:
-
+2021-11-18 16:51:14,199 ERROR: Exception on /new_study/data_analysis/7431d4a5-bbe8-47c2-828f-877210b9cceb [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -17,26 +10,13 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 739, in summary_results
-    quest = Question.query.filter_by(question=quest_name, questionnaire_id=questionnaire.id).first()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\orm\query.py", line 1793, in filter_by
-    clauses = [
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\orm\query.py", line 1794, in <listcomp>
-    _entity_namespace_key(from_entity, key) == value
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\sql\base.py", line 1692, in _entity_namespace_key
-    util.raise_(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
-    raise exception
-sqlalchemy.exc.InvalidRequestError: Entity namespace for "question" has no property "questionnaire_id"
-2021-11-17 14:30:30,625 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 14:30:34,415 ERROR: Exception on /new_study/summary_results/a13a3037-1e65-4b4b-896e-c06a397e24d5 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\sql\base.py", line 1690, in _entity_namespace_key
-    return getattr(ns, key)
-AttributeError: type object 'Answer' has no attribute 'user_id'
-
-The above exception was the direct cause of the following exception:
-
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 831, in data_analysis
+    plspm_calc = Plspm(df, config, Scheme.CENTROID)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\plspm\plspm.py", line 65, in __init__
+    correction = np.sqrt(filtered_data.shape[0] / (filtered_data.shape[0] - 1))
+ZeroDivisionError: division by zero
+2021-11-18 17:12:02,993 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 17:12:03,153 ERROR: Exception on /new_study/data_analysis/7431d4a5-bbe8-47c2-828f-877210b9cceb [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -48,19 +28,11 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 741, in summary_results
-    answer = Answer.query.filter_by(question_id=quest.id, user_id=current_user.id).first()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\orm\query.py", line 1793, in filter_by
-    clauses = [
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\orm\query.py", line 1794, in <listcomp>
-    _entity_namespace_key(from_entity, key) == value
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\sql\base.py", line 1692, in _entity_namespace_key
-    util.raise_(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
-    raise exception
-sqlalchemy.exc.InvalidRequestError: Entity namespace for "answer" has no property "user_id"
-2021-11-17 14:30:59,476 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 14:30:59,735 ERROR: Exception on /new_study/summary_results/a13a3037-1e65-4b4b-896e-c06a397e24d5 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 823, in data_analysis
+    influenced_variables.append(influenced.abbreviation)
+AttributeError: 'BaseQuery' object has no attribute 'abbreviation'
+2021-11-18 17:12:19,544 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 17:12:19,878 ERROR: Exception on /new_study/data_analysis/7431d4a5-bbe8-47c2-828f-877210b9cceb [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -72,22 +44,15 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 741, in summary_results
-    answer = Answer.query.filter_by(question_id=quest.id, case_id=case_id).first()
-AttributeError: 'NoneType' object has no attribute 'id'
-2021-11-17 14:31:42,313 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 14:32:24,368 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 14:42:59,938 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 14:44:25,677 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 14:51:17,976 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 14:52:16,275 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 14:54:53,622 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 15:00:42,597 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 15:29:02,146 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 15:32:38,418 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-18 09:23:24,847 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-18 09:35:18,133 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-18 09:35:19,299 ERROR: Exception on /new_study/summary_results/7431d4a5-bbe8-47c2-828f-877210b9cceb [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 824, in data_analysis
+    structure.add_path([corevariable.abbreviation], [influenced_variables])
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\plspm\config.py", line 49, in add_path
+    self.__toposort.append(element[0], element[1])
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\plspm\util.py", line 137, in append
+    self.__indegree[dest] += 1
+TypeError: unhashable type: 'list'
+2021-11-18 17:13:51,165 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 17:13:52,056 ERROR: Exception on /new_study/data_analysis/7431d4a5-bbe8-47c2-828f-877210b9cceb [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -99,13 +64,51 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 770, in summary_results
-    answer_scores.append(int(answer))
-TypeError: int() argument must be a string, a bytes-like object or a number, not 'Answer'
-2021-11-18 09:35:43,918 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-18 09:39:16,971 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-18 09:39:40,511 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-18 10:46:22,910 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-18 11:24:29,052 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-18 11:26:38,777 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-18 11:33:59,807 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 825, in data_analysis
+    structure.add_path([corevariable.abbreviation], [influenced_variables])
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\plspm\config.py", line 49, in add_path
+    self.__toposort.append(element[0], element[1])
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\plspm\util.py", line 137, in append
+    self.__indegree[dest] += 1
+TypeError: unhashable type: 'list'
+2021-11-18 17:14:50,176 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 17:14:51,785 ERROR: Exception on /new_study/data_analysis/7431d4a5-bbe8-47c2-828f-877210b9cceb [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 826, in data_analysis
+    structure.add_path([corevariable.abbreviation], [influenced_variables])
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\plspm\config.py", line 49, in add_path
+    self.__toposort.append(element[0], element[1])
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\plspm\util.py", line 137, in append
+    self.__indegree[dest] += 1
+TypeError: unhashable type: 'list'
+2021-11-18 17:15:35,182 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 17:15:35,503 ERROR: Exception on /new_study/data_analysis/7431d4a5-bbe8-47c2-828f-877210b9cceb [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 827, in data_analysis
+    structure.add_path([corevariable.abbreviation], [influenced_variables])
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\plspm\config.py", line 49, in add_path
+    self.__toposort.append(element[0], element[1])
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\plspm\util.py", line 137, in append
+    self.__indegree[dest] += 1
+TypeError: unhashable type: 'list'
+2021-11-18 17:17:54,759 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]

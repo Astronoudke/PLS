@@ -13,7 +13,7 @@ from app.new_study import bp
 from app.new_study.forms import CreateNewStudyForm, CreateNewCoreVariableForm, CreateNewRelationForm, \
     CreateNewQuestion, ChooseNewModel, AddCoreVariable, EditStudyForm, AddDemographic, AddUserForm, ScaleForm, \
     CreateNewDemographicForm
-from app.new_study.functions import variance, cronbachs_alpha
+from app.new_study.functions import variance, cronbachs_alpha, composite_reliability, average_variance_extracted
 
 
 #############################################################################################################
@@ -841,19 +841,17 @@ def data_analysis(study_code):
     coefficients = plspm_calc.path_coefficients()
 
     ################
-    print(coefficients.loc['HM'])
 
     print(model1['loading'])
+    print(type(model1['loading']))
 
-    for i in model1['loading']:
-        print(i)
-
-    corevar = CoreVariable.query.filter_by(abbreviation='EE').first()
-    print(variance(['EE1'], df))
+    corevar = CoreVariable.query.filter_by(abbreviation='HM').first()
 
     items = [i for i in [question for question in df]]
     print(items)
     print(df)
     print(cronbachs_alpha(corevar, df))
+    print(composite_reliability(corevar, df, config, Scheme.CENTROID))
+    print(average_variance_extracted(corevar, df, config, Scheme.CENTROID))
 
     return render_template('new_study/data_analysis.html', study_code=study_code)

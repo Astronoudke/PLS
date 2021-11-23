@@ -1,4 +1,11 @@
-2021-11-17 11:54:29,836 ERROR: Exception on /new_study/summary_results/81e23d24-9cad-47ff-adb0-8112496718c7 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+2021-11-17 14:24:56,795 ERROR: Exception on /new_study/summary_results/a13a3037-1e65-4b4b-896e-c06a397e24d5 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\sql\base.py", line 1690, in _entity_namespace_key
+    return getattr(ns, key)
+AttributeError: type object 'Question' has no attribute 'questionnaire_id'
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -10,27 +17,26 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 709, in summary_results
-    return render_template('new_study/summary_results.html', study_code=study_code, library=library, demographics=demographics,
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 148, in render_template
-    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 1068, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 997, in get_template
-    return self._load_template(name, globals)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 958, in _load_template
-    template = self.loader.load(self, name, self.make_globals(globals))
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\loaders.py", line 137, in load
-    code = environment.compile(source, name, filename)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 757, in compile
-    self.handle_exception(source=source_hint)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\summary_results.html", line 28, in template
-    {% if case.id is 2 %}
-jinja2.exceptions.TemplateSyntaxError: expected token 'name', got 'integer'
-2021-11-17 11:54:48,963 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 11:54:49,603 ERROR: Exception on /new_study/summary_results/81e23d24-9cad-47ff-adb0-8112496718c7 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 739, in summary_results
+    quest = Question.query.filter_by(question=quest_name, questionnaire_id=questionnaire.id).first()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\orm\query.py", line 1793, in filter_by
+    clauses = [
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\orm\query.py", line 1794, in <listcomp>
+    _entity_namespace_key(from_entity, key) == value
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\sql\base.py", line 1692, in _entity_namespace_key
+    util.raise_(
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
+    raise exception
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "question" has no property "questionnaire_id"
+2021-11-17 14:30:30,625 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 14:30:34,415 ERROR: Exception on /new_study/summary_results/a13a3037-1e65-4b4b-896e-c06a397e24d5 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\sql\base.py", line 1690, in _entity_namespace_key
+    return getattr(ns, key)
+AttributeError: type object 'Answer' has no attribute 'user_id'
+
+The above exception was the direct cause of the following exception:
+
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -42,28 +48,19 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 709, in summary_results
-    return render_template('new_study/summary_results.html', study_code=study_code, library=library, demographics=demographics,
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 148, in render_template
-    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 1068, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 997, in get_template
-    return self._load_template(name, globals)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 958, in _load_template
-    template = self.loader.load(self, name, self.make_globals(globals))
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\loaders.py", line 137, in load
-    code = environment.compile(source, name, filename)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 757, in compile
-    self.handle_exception(source=source_hint)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\summary_results.html", line 28, in template
-    {% if case.id is '2' %}
-jinja2.exceptions.TemplateSyntaxError: expected token 'name', got 'string'
-2021-11-17 11:55:29,451 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 11:55:59,752 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 11:56:00,322 ERROR: Exception on /new_study/summary_results/81e23d24-9cad-47ff-adb0-8112496718c7 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 741, in summary_results
+    answer = Answer.query.filter_by(question_id=quest.id, user_id=current_user.id).first()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\orm\query.py", line 1793, in filter_by
+    clauses = [
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\orm\query.py", line 1794, in <listcomp>
+    _entity_namespace_key(from_entity, key) == value
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\sql\base.py", line 1692, in _entity_namespace_key
+    util.raise_(
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\sqlalchemy\util\compat.py", line 207, in raise_
+    raise exception
+sqlalchemy.exc.InvalidRequestError: Entity namespace for "answer" has no property "user_id"
+2021-11-17 14:30:59,476 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 14:30:59,735 ERROR: Exception on /new_study/summary_results/a13a3037-1e65-4b4b-896e-c06a397e24d5 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -75,33 +72,40 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 709, in summary_results
-    return render_template('new_study/summary_results.html', study_code=study_code, library=library, demographics=demographics,
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
-    return _render(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
-    rv = template.render(context)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 1291, in render
-    self.environment.handle_exception()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\summary_results.html", line 2, in top-level template code
-    {% from 'bootstrap/form.html' import render_form, render_field %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 38, in top-level template code
-    {% block content %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 49, in block 'content'
-    {% block app_content %}{% endblock %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\summary_results.html", line 28, in block 'app_content'
-    <td>{{ str(case.id) }}</td>
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\utils.py", line 84, in from_obj
-    if hasattr(obj, "jinja_pass_arg"):
-jinja2.exceptions.UndefinedError: 'str' is undefined
-2021-11-17 11:56:44,687 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 12:08:23,282 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 12:13:00,869 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 12:13:35,538 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 13:09:00,438 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 13:09:43,124 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 13:10:01,116 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 13:13:04,730 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-17 13:14:16,090 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 741, in summary_results
+    answer = Answer.query.filter_by(question_id=quest.id, case_id=case_id).first()
+AttributeError: 'NoneType' object has no attribute 'id'
+2021-11-17 14:31:42,313 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 14:32:24,368 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 14:42:59,938 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 14:44:25,677 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 14:51:17,976 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 14:52:16,275 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 14:54:53,622 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 15:00:42,597 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 15:29:02,146 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-17 15:32:38,418 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 09:23:24,847 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 09:35:18,133 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 09:35:19,299 ERROR: Exception on /new_study/summary_results/7431d4a5-bbe8-47c2-828f-877210b9cceb [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 770, in summary_results
+    answer_scores.append(int(answer))
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'Answer'
+2021-11-18 09:35:43,918 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 09:39:16,971 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 09:39:40,511 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 10:46:22,910 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 11:24:29,052 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 11:26:38,777 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-18 11:33:59,807 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
