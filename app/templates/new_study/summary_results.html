@@ -87,6 +87,8 @@
             <tr>
               <th>Code</th>
               <th>Question</th>
+              <th>AVG</th>
+              <th>SD</th>
             </tr>
           </thead>
         </table>
@@ -98,7 +100,9 @@
             {% for question in dictionary %}
                 <tr>
                   <td style="font-weight: bold;">{{ question.question_code }}</td>
-                  <td style="font-weight: bold;">{{ question.question }}</td>
+                  <td>{{ question.question }}</td>
+                  <td>{{ dictionary[question][0] }}</td>
+                  <td>{{ dictionary[question][1] }}</td>
                 </tr>
             {% endfor %}
           </tbody>

@@ -1,6 +1,11 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_required
-
+import numpy as np
+import pandas as pd
+import plspm.config as c
+from plspm.plspm import Plspm
+from plspm.scheme import Scheme
+from plspm.mode import Mode
 from app import db
 from app.models import User, Study, UTAUTmodel, CoreVariable, Relation, Questionnaire, Question, StandardQuestion, \
     QuestionGroup, Demographic, StandardDemographic, Case, DemographicAnswer, Answer
@@ -8,7 +13,7 @@ from app.new_study import bp
 from app.new_study.forms import CreateNewStudyForm, CreateNewCoreVariableForm, CreateNewRelationForm, \
     CreateNewQuestion, ChooseNewModel, AddCoreVariable, EditStudyForm, AddDemographic, AddUserForm, ScaleForm, \
     CreateNewDemographicForm
-from sqlalchemy import or_
+from app.new_study.functions import variance, cronbachs_alpha
 
 
 #############################################################################################################
@@ -197,9 +202,9 @@ def new_core_variable(study_code):
     return render_template("new_study/new_corevariable.html", title='New Core Variable', form=form)
 
 
-@bp.route('/remove_core_variable/<study_code>/<name_core_variable>', methods=['GET', 'POST'])
+@bp.route('/remove_core_variable/<study_code>/<corevariable_id>', methods=['GET', 'POST'])
 @login_required
-def remove_core_variable(study_code, name_core_variable):
+def remove_core_variable(study_code, corevariable_id):
     # check authorization
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
@@ -213,7 +218,7 @@ def remove_core_variable(study_code, name_core_variable):
 
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
-    corevariable = CoreVariable.query.filter_by(name=name_core_variable).first()
+    corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
 
     corevariable.unlink(model)
     db.session.commit()
@@ -223,11 +228,11 @@ def remove_core_variable(study_code, name_core_variable):
     db.session.commit()
 
     if questionnaire:
-        questiongroup = QuestionGroup.query.filter_by(title=name_core_variable,
+        questiongroup = QuestionGroup.query.filter_by(title=corevariable.name,
                                                       questionnaire_id=questionnaire.id).first()
         Question.query.filter_by(questiongroup_id=questiongroup.id).delete()
         db.session.commit()
-        QuestionGroup.query.filter_by(title=name_core_variable, questionnaire_id=questionnaire.id).delete()
+        QuestionGroup.query.filter_by(title=corevariable.name, questionnaire_id=questionnaire.id).delete()
         db.session.commit()
 
     return redirect(url_for('new_study.utaut', study_code=study_code))
@@ -430,15 +435,17 @@ def use_standard_questions_questionnaire(study_code):
                                                     user_id=current_user.id).first()
         if corevariable is None:
             corevariable = CoreVariable.query.filter_by(name=corresponding_questiongroup.title, user_id=None).first()
-        abbreviation_corevariable = corevariable.abbreviation
-        new_code = abbreviation_corevariable + str(len([question for question in
-                                                        Question.query.filter_by(
-                                                            questiongroup_id=corresponding_questiongroup.id)]) + 1)
-        newquestion = Question(question=replaced_name_question,
-                               questiongroup_id=corresponding_questiongroup.id,
-                               question_code=new_code)
-        db.session.add(newquestion)
-        db.session.commit()
+
+        if corevariable is not None:
+            abbreviation_corevariable = corevariable.abbreviation
+            new_code = abbreviation_corevariable + str(len([question for question in
+                                                            Question.query.filter_by(
+                                                                questiongroup_id=corresponding_questiongroup.id)]) + 1)
+            newquestion = Question(question=replaced_name_question,
+                                   questiongroup_id=corresponding_questiongroup.id,
+                                   question_code=new_code)
+            db.session.add(newquestion)
+            db.session.commit()
 
     return redirect(url_for('new_study.questionnaire', study_code=study_code))
 
@@ -718,15 +725,15 @@ def summary_results(study_code):
         dct_demographics[case] = []
     for (case_id, demo_name) in zip(cases, demos):
         demo = Demographic.query.filter_by(name=demo_name).first()
-        answer = DemographicAnswer.query.filter_by(demographic_id=demo.id).first()
+        answer = DemographicAnswer.query.filter_by(case_id=case_id, demographic_id=demo.id).first()
         if answer is not None:
             dct_demographics[case_id].append(answer.answer)
         else:
             dct_demographics[case_id].append(None)
 
+    print(dct_demographics)
     # Summary van de vragenlijstresultaten voor iedere case
-    questiongroups = [questiongroup for questiongroup in
-                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    questiongroups = [questiongroup for questiongroup in QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
     questions = []
     for questiongroup in questiongroups:
         list_of_questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
@@ -755,25 +762,98 @@ def summary_results(study_code):
                 else:
                     dct_answers[case_id].append(None)
 
-    # Summary van de vragenlijstresultaten voor iedere vraag
-    questiongroups = [questiongroup for questiongroup in
-                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    # Summary van de gemiddeldes en standaarddeviaties voor iedere vraag
+    questiongroups = [questiongroup for questiongroup in QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
 
     dct_questions = {}
     for questiongroup in questiongroups:
         for question in [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]:
             dct_questions[question] = []
 
-    for case in [case for case in Case.query.filter_by(questionnaire_id=questionnaire.id)]:
-        for answer in [answer for answer in Answer.query.filter_by(case_id=case.id)]:
-            for questiongroup in questiongroups:
-                corresponding_question = Question.query.filter_by(id=answer.question_id,
-                                                                  questiongroup_id=questiongroup.id).first()
-                if corresponding_question:
-                    dct_questions[corresponding_question].append(answer)
-
-    dct_averages_questions = {}
+    for question in dct_questions:
+        answer_scores = []
+        for answer in [answer for answer in Answer.query.filter_by(question_id=question.id)]:
+            answer_scores.append(int(answer.score))
+        array = np.array(answer_scores)
+        dct_questions[question].extend([round(np.average(array), 2), round(np.std(array), 2)])
 
     return render_template('new_study/summary_results.html', study_code=study_code, demographics=demographics,
                            cases=cases, dct_demographics=dct_demographics, dct_answers=dct_answers, questions=questions,
                            dct_questions=dct_questions)
+
+
+@bp.route('/data_analysis/<study_code>', methods=['GET', 'POST'])
+@login_required
+def data_analysis(study_code):
+    # check authorization
+    study = Study.query.filter_by(code=study_code).first()
+    if current_user not in study.linked_users:
+        return redirect(url_for('main.not_authorized'))
+
+    # check access to stage
+    if study.stage_1:
+        return redirect(url_for('new_study.utaut', study_code=study_code))
+    if study.stage_2:
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+
+    questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+    model = UTAUTmodel.query.filter_by(id=study.model_id).first()
+    corevariables = [corevariable for corevariable in model.linked_corevariables]
+
+    # Set up dataframe
+    list_of_questions = []
+    list_of_answers = []
+    questiongroups = [questiongroup for questiongroup in
+                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    for questiongroup in questiongroups:
+        questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
+        for question in questions:
+            list_of_questions.append(question.question_code)
+            answers_question = []
+            for answer in [answer for answer in Answer.query.filter_by(question_id=question.id)]:
+                answers_question.append(answer.score)
+            list_of_answers.append(answers_question)
+
+    df = pd.DataFrame(list_of_answers).transpose()
+    df.columns = list_of_questions
+
+    structure = c.Structure()
+
+    for corevariable in corevariables:
+        influenced_variables = []
+        for relation in [relation for relation in Relation.query.filter_by(model_id=model.id)]:
+            if relation.influencer_id == corevariable.id:
+                influenced = CoreVariable.query.filter_by(id=relation.influenced_id).first()
+                influenced_variables.append(influenced.abbreviation)
+        if len(influenced_variables) > 0:
+            structure.add_path([corevariable.abbreviation], influenced_variables)
+
+    config = c.Config(structure.path(), scaled=False)
+
+    for corevariable in corevariables:
+        config.add_lv_with_columns_named(corevariable.abbreviation, Mode.A, df, corevariable.abbreviation)
+
+    plspm_calc = Plspm(df, config, Scheme.CENTROID)
+    #print(plspm_calc.inner_summary())
+    #print(plspm_calc.path_coefficients())
+    model1 = plspm_calc.outer_model()
+
+    coefficients = plspm_calc.path_coefficients()
+
+    ################
+    print(coefficients.loc['HM'])
+
+    print(model1['loading'])
+
+    for i in model1['loading']:
+        print(i)
+
+    corevar = CoreVariable.query.filter_by(abbreviation='EE').first()
+    print(variance(['EE1'], df))
+
+    items = [i for i in [question for question in df]]
+    print(items)
+    print(df)
+    print(cronbachs_alpha(corevar, df))
+
+    return render_template('new_study/data_analysis.html', study_code=study_code)
