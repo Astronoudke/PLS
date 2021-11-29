@@ -13,7 +13,8 @@ from app.new_study import bp
 from app.new_study.forms import CreateNewStudyForm, CreateNewCoreVariableForm, CreateNewRelationForm, \
     CreateNewQuestion, ChooseNewModel, AddCoreVariable, EditStudyForm, AddDemographic, AddUserForm, ScaleForm, \
     CreateNewDemographicForm
-from app.new_study.functions import variance, cronbachs_alpha, composite_reliability, average_variance_extracted
+from app.new_study.functions import variance, cronbachs_alpha, composite_reliability, average_variance_extracted, covariance, \
+    pearson_correlation, correlation_matrix, heterotrait_monotrait, htmt_matrix
 
 
 #############################################################################################################
@@ -834,8 +835,10 @@ def data_analysis(study_code):
         config.add_lv_with_columns_named(corevariable.abbreviation, Mode.A, df, corevariable.abbreviation)
 
     plspm_calc = Plspm(df, config, Scheme.CENTROID)
-    #print(plspm_calc.inner_summary())
-    #print(plspm_calc.path_coefficients())
+    print(plspm_calc.inner_summary())
+    print(plspm_calc.path_coefficients())
+    print(plspm_calc.inner_model())
+    print(plspm_calc.outer_model())
     model1 = plspm_calc.outer_model()
 
     coefficients = plspm_calc.path_coefficients()
@@ -843,15 +846,18 @@ def data_analysis(study_code):
     ################
 
     print(model1['loading'])
-    print(type(model1['loading']))
-
-    corevar = CoreVariable.query.filter_by(abbreviation='HM').first()
 
     items = [i for i in [question for question in df]]
     print(items)
     print(df)
-    print(cronbachs_alpha(corevar, df))
-    print(composite_reliability(corevar, df, config, Scheme.CENTROID))
-    print(average_variance_extracted(corevar, df, config, Scheme.CENTROID))
+    print(pearson_correlation('BI1', 'EE1', df))
+    print(correlation_matrix(df))
+    #for corevar in corevariables:
+        #print(corevar.abbreviation)
+        #print(cronbachs_alpha(corevar, df))
+        #print(composite_reliability(corevar, df, config, Scheme.CENTROID))
+        #print(average_variance_extracted(corevar, df, config, Scheme.CENTROID))
+    given_cr = [corevariable for corevariable in corevariables if corevariable.abbreviation == "FC" or corevariable.abbreviation == "PE"]
+    print(heterotrait_monotrait(given_cr[0], given_cr[1], correlation_matrix(df), df))
 
     return render_template('new_study/data_analysis.html', study_code=study_code)

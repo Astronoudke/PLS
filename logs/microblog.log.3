@@ -1,4 +1,4 @@
-2021-11-23 14:19:32,918 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+2021-11-29 10:03:22,586 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -10,13 +10,15 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 857, in data_analysis
-    print(cronbachs_alpha(corevar, df))
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 46, in cronbachs_alpha
-    return (total_items / (total_items - 1)) * ((variance_total_column - sum(variance_questions)) / variance_total_column)
-TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'
-2021-11-23 14:21:09,966 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 14:21:17,243 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 861, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 206, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 168, in heterotrait_monotrait
+    length_abbreviation_var1 = len(var1.abbreviation)
+AttributeError: 'str' object has no attribute 'abbreviation'
+2021-11-29 10:06:24,597 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:06:26,956 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -28,13 +30,15 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 859, in data_analysis
-    print(cronbachs_alpha(corevar, df))
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 46, in cronbachs_alpha
-    return (total_items / (total_items - 1)) * ((variance_total_column - sum(variance_questions)) / variance_total_column)
-TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'
-2021-11-23 14:21:54,102 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 14:21:59,050 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 861, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 206, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 192, in heterotrait_monotrait
+    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
+ZeroDivisionError: division by zero
+2021-11-29 10:07:01,739 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:07:03,751 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -46,13 +50,15 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 858, in data_analysis
-    print(cronbachs_alpha(corevar, df))
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 46, in cronbachs_alpha
-    return (total_items / (total_items - 1)) * ((variance_total_column - sum(variance_questions)) / variance_total_column)
-TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'
-2021-11-23 14:23:50,933 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 14:23:53,570 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 861, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 207, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 192, in heterotrait_monotrait
+    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
+ZeroDivisionError: division by zero
+2021-11-29 10:07:22,777 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:07:24,906 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -64,13 +70,15 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 859, in data_analysis
-    print(cronbachs_alpha(corevar, df))
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 47, in cronbachs_alpha
-    return (total_items / (total_items - 1)) * ((variance_total_column - sum(variance_questions)) / variance_total_column)
-TypeError: unsupported operand type(s) for -: 'NoneType' and 'float'
-2021-11-23 14:32:57,911 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 14:33:10,574 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 861, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 208, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 192, in heterotrait_monotrait
+    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
+ZeroDivisionError: division by zero
+2021-11-29 10:07:57,558 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:07:59,657 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -82,15 +90,15 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 859, in data_analysis
-    print(cronbachs_alpha(corevar, df))
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 53, in cronbachs_alpha
-    variance_total_column = variance(questions, dataset)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 39, in variance
-    totals_per_case[row].append(dataset[question][row])
-KeyError: 1
-2021-11-23 14:34:28,749 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 14:34:46,633 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 861, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 208, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 192, in heterotrait_monotrait
+    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
+ZeroDivisionError: division by zero
+2021-11-29 10:09:28,745 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:09:30,803 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -102,11 +110,10 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 859, in data_analysis
-    print(cronbachs_alpha(corevar, df))
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 57, in cronbachs_alpha
-    variance_total_column = variance(questions, dataset)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 42, in variance
-    totals_per_case[row].append(dataset[question][row])
-KeyError: 1
-2021-11-23 14:35:36,941 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 861, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 209, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 192, in heterotrait_monotrait
+    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
+ZeroDivisionError: division by zero

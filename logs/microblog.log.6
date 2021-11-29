@@ -1,4 +1,4 @@
-2021-11-18 17:17:54,991 ERROR: Exception on /new_study/data_analysis/7431d4a5-bbe8-47c2-828f-877210b9cceb [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+2021-11-27 21:15:55,762 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -10,24 +10,19 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 836, in data_analysis
-    plspm_calc = Plspm(df, config, Scheme.CENTROID)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\plspm\plspm.py", line 65, in __init__
-    correction = np.sqrt(filtered_data.shape[0] / (filtered_data.shape[0] - 1))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 854, in data_analysis
+    correlation_matrix(df)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 135, in correlation_matrix
+    data[item] = [pearson_correlation(item, lv2, dataset) for lv2 in items]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 135, in <listcomp>
+    data[item] = [pearson_correlation(item, lv2, dataset) for lv2 in items]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 124, in pearson_correlation
+    covar = covariance(lv1, lv2, dataset)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 113, in covariance
+    avg_item2 = sum(scores_item2) / len(scores_item2)
 ZeroDivisionError: division by zero
-2021-11-19 08:38:53,363 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 08:40:47,960 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 08:49:28,998 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 08:49:53,902 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 09:14:03,883 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 09:18:19,608 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 09:19:15,689 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 09:46:07,854 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 10:05:06,838 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 10:07:31,474 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 10:10:19,252 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 12:04:27,298 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 12:08:22,793 ERROR: Exception on /new_study/questionnaire/use_standard_questions_questionnaire/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+2021-11-27 21:16:48,282 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:16:49,538 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -39,54 +34,33 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 433, in use_standard_questions_questionnaire
-    corevariable = CoreVariable.query.filter_by(name=corresponding_questiongroup.title,
-AttributeError: 'NoneType' object has no attribute 'title'
-2021-11-19 12:08:26,049 ERROR: Exception on /new_study/questionnaire/use_standard_questions_questionnaire/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 854, in data_analysis
+    correlation_matrix(df)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 136, in correlation_matrix
+    data[item] = [pearson_correlation(item, lv2, dataset) for lv2 in items]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 136, in <listcomp>
+    data[item] = [pearson_correlation(item, lv2, dataset) for lv2 in items]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 125, in pearson_correlation
+    covar = covariance(lv1, lv2, dataset)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 115, in covariance
+    avg_item2 = sum(scores_item2) / len(scores_item2)
+ZeroDivisionError: division by zero
+2021-11-27 21:18:05,494 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:20:21,216 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-28 10:20:01,032 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-28 10:20:02,693 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 433, in use_standard_questions_questionnaire
-    corevariable = CoreVariable.query.filter_by(name=corresponding_questiongroup.title,
-AttributeError: 'NoneType' object has no attribute 'title'
-2021-11-19 12:10:19,090 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 12:10:56,664 ERROR: Exception on /new_study/questionnaire/use_standard_questions_questionnaire/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 433, in use_standard_questions_questionnaire
-    corevariable = CoreVariable.query.filter_by(name=corresponding_questiongroup.title,
-AttributeError: 'NoneType' object has no attribute 'title'
-2021-11-19 14:20:55,056 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 14:21:19,196 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 14:21:45,024 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 14:21:47,505 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3361, in get_loc
-    return self._engine.get_loc(casted_key)
-  File "pandas\_libs\index.pyx", line 76, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5198, in pandas._libs.hashtable.PyObjectHashTable.get_item
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5206, in pandas._libs.hashtable.PyObjectHashTable.get_item
-KeyError: 0
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\internals\managers.py", line 1773, in create_block_manager_from_arrays
+    blocks = _form_blocks(arrays, names, axes, consolidate)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\internals\managers.py", line 1838, in _form_blocks
+    numeric_blocks = _multi_blockify(
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\internals\managers.py", line 1928, in _multi_blockify
+    values, placement = _stack_arrays(
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\internals\managers.py", line 1959, in _stack_arrays
+    stacked[i] = arr
+ValueError: could not broadcast input array from shape (34,) into shape (0,)
 
-The above exception was the direct cause of the following exception:
+During handling of the above exception, another exception occurred:
 
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
@@ -99,13 +73,17 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 843, in data_analysis
-    print(type(plspm_calc.inner_summary()[0]))
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\frame.py", line 3458, in __getitem__
-    indexer = self.columns.get_loc(key)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3363, in get_loc
-    raise KeyError(key) from err
-KeyError: 0
-2021-11-19 14:22:40,186 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-19 14:24:58,648 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-22 10:12:44,371 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 854, in data_analysis
+    correlation_matrix(df)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 148, in correlation_matrix
+    df = pd.DataFrame(data, index=[item for item in items])
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\frame.py", line 614, in __init__
+    mgr = dict_to_mgr(data, index, columns, dtype=dtype, copy=copy, typ=manager)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\internals\construction.py", line 464, in dict_to_mgr
+    return arrays_to_mgr(
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\internals\construction.py", line 135, in arrays_to_mgr
+    return create_block_manager_from_arrays(
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\internals\managers.py", line 1776, in create_block_manager_from_arrays
+    raise construction_error(len(arrays), arrays[0].shape, axes, e)
+ValueError: Empty data passed with indices specified.
+2021-11-28 10:20:43,877 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]

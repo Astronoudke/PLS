@@ -1,15 +1,4 @@
-2021-11-23 15:01:04,539 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3361, in get_loc
-    return self._engine.get_loc(casted_key)
-  File "pandas\_libs\index.pyx", line 76, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5198, in pandas._libs.hashtable.PyObjectHashTable.get_item
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5206, in pandas._libs.hashtable.PyObjectHashTable.get_item
-KeyError: 0
-
-The above exception was the direct cause of the following exception:
-
+2021-11-29 10:23:03,458 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -21,29 +10,15 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 848, in data_analysis
-    print(model1['loading'][i])
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\series.py", line 942, in __getitem__
-    return self._get_value(key)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\series.py", line 1051, in _get_value
-    loc = self.index.get_loc(label)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3363, in get_loc
-    raise KeyError(key) from err
-KeyError: 0.0
-2021-11-23 15:01:45,811 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:12:26,158 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:12:31,793 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3361, in get_loc
-    return self._engine.get_loc(casted_key)
-  File "pandas\_libs\index.pyx", line 76, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5198, in pandas._libs.hashtable.PyObjectHashTable.get_item
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5206, in pandas._libs.hashtable.PyObjectHashTable.get_item
-KeyError: 'loadings'
-
-The above exception was the direct cause of the following exception:
-
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 862, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 214, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 196, in heterotrait_monotrait
+    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
+ZeroDivisionError: division by zero
+2021-11-29 10:23:49,028 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:23:50,755 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -55,32 +30,15 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 855, in data_analysis
-    composite_reliability(corevar, df, config, Scheme.CENTROID)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 67, in composite_reliability
-    loadings = model['loadings']
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\frame.py", line 3458, in __getitem__
-    indexer = self.columns.get_loc(key)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3363, in get_loc
-    raise KeyError(key) from err
-KeyError: 'loadings'
-2021-11-23 15:13:04,051 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:14:32,619 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:15:04,122 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:15:46,473 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:17:16,323 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:17:18,898 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3361, in get_loc
-    return self._engine.get_loc(casted_key)
-  File "pandas\_libs\index.pyx", line 76, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5198, in pandas._libs.hashtable.PyObjectHashTable.get_item
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5206, in pandas._libs.hashtable.PyObjectHashTable.get_item
-KeyError: 1
-
-The above exception was the direct cause of the following exception:
-
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 862, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 210, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 192, in heterotrait_monotrait
+    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
+ZeroDivisionError: division by zero
+2021-11-29 10:26:00,327 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:26:02,679 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -92,23 +50,55 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 855, in data_analysis
-    composite_reliability(corevar, df, config, Scheme.CENTROID)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 69, in composite_reliability
-    print(loadings.loc[1])
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexing.py", line 931, in __getitem__
-    return self._getitem_axis(maybe_callable, axis=axis)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexing.py", line 1164, in _getitem_axis
-    return self._get_label(key, axis=axis)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexing.py", line 1113, in _get_label
-    return self.obj.xs(label, axis=axis)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\generic.py", line 3776, in xs
-    loc = index.get_loc(key)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3363, in get_loc
-    raise KeyError(key) from err
-KeyError: 1
-2021-11-23 15:19:48,178 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:20:33,522 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:20:54,057 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:23:55,674 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:24:44,826 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 862, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 203, in htmt_matrix
+    data[corevariable.abbreviation] = [pearson_correlation(corevariable, lv2, dataset) for lv2 in corevariables]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 203, in <listcomp>
+    data[corevariable.abbreviation] = [pearson_correlation(corevariable, lv2, dataset) for lv2 in corevariables]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 136, in pearson_correlation
+    covar = covariance(lv1, lv2, dataset)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 125, in covariance
+    avg_item1 = sum(scores_item1) / len(scores_item1)
+ZeroDivisionError: division by zero
+2021-11-29 10:26:39,319 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:26:40,557 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 862, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 203, in htmt_matrix
+    data[corevariable.abbreviation] = [heterotrait_monotrait(corevariable, lv2, dataset) for lv2 in corevariables]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 203, in <listcomp>
+    data[corevariable.abbreviation] = [heterotrait_monotrait(corevariable, lv2, dataset) for lv2 in corevariables]
+TypeError: heterotrait_monotrait() missing 1 required positional argument: 'dataset'
+2021-11-29 10:30:34,001 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:30:35,796 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 862, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 217, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 203, in heterotrait_monotrait
+    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
+ZeroDivisionError: division by zero
+2021-11-29 10:33:46,066 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
