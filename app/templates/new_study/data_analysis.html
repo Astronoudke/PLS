@@ -44,4 +44,32 @@
             </div>
         </div>
     </div>
+    <section class="wrapper">
+        <!-- Row title -->
+        <main class="row title">
+          <ul>
+            <li>LV Name</li>
+            <li>Cronbach's Alpha</li>
+            <li>Composite Reliability</li>
+            <li>AVE</li>
+          </ul>
+        </main>
+        <!-- Row 1 - fadeIn -->
+        {% set dictionary = data_construct_validity %}
+        {% for variable in dictionary %}
+        <section class="row-fadeIn-wrapper">
+          <article class="row fadeIn nfl">
+            <ul>
+              <li><a href="#"> {{ variable }} </a></li>
+              <li>{{ dictionary[variable][0] }}</li>
+              <li>{{ dictionary[variable][1] }}</li>
+              <li>{{ dictionary[variable][2] }}</li>
+            </ul>
+            <ul class="more-content">
+              <li>This 1665-player contest boasts a $300,000.00 prize pool and pays out the top 300 finishing positions. First place wins $100,000.00. Good luck!</li>
+            </ul>
+          </article>
+        </section>
+        {% endfor %}
+    </section>
 {% endblock %}
