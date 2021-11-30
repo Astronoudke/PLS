@@ -1,4 +1,7 @@
-2021-11-29 10:03:22,586 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+2021-11-29 10:11:22,849 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:11:58,917 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:14:55,605 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:15:01,100 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -10,110 +13,91 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 861, in data_analysis
-    print(htmt_matrix(df, model))
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 206, in htmt_matrix
-    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 168, in heterotrait_monotrait
-    length_abbreviation_var1 = len(var1.abbreviation)
-AttributeError: 'str' object has no attribute 'abbreviation'
-2021-11-29 10:06:24,597 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-29 10:06:26,956 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 861, in data_analysis
-    print(htmt_matrix(df, model))
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 206, in htmt_matrix
-    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 192, in heterotrait_monotrait
-    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
-ZeroDivisionError: division by zero
-2021-11-29 10:07:01,739 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-29 10:07:03,751 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 861, in data_analysis
-    print(htmt_matrix(df, model))
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 207, in htmt_matrix
-    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 192, in heterotrait_monotrait
-    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
-ZeroDivisionError: division by zero
-2021-11-29 10:07:22,777 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-29 10:07:24,906 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 861, in data_analysis
-    print(htmt_matrix(df, model))
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 208, in htmt_matrix
-    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 192, in heterotrait_monotrait
-    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
-ZeroDivisionError: division by zero
-2021-11-29 10:07:57,558 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-29 10:07:59,657 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 861, in data_analysis
-    print(htmt_matrix(df, model))
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 208, in htmt_matrix
-    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 192, in heterotrait_monotrait
-    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
-ZeroDivisionError: division by zero
-2021-11-29 10:09:28,745 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-29 10:09:30,803 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 861, in data_analysis
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 862, in data_analysis
     print(htmt_matrix(df, model))
   File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 209, in htmt_matrix
     if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
   File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 192, in heterotrait_monotrait
     avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
 ZeroDivisionError: division by zero
+2021-11-29 10:15:44,103 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:15:46,183 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 862, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 210, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 192, in heterotrait_monotrait
+    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
+ZeroDivisionError: division by zero
+2021-11-29 10:16:45,113 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:16:47,010 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 862, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 211, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 193, in heterotrait_monotrait
+    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
+ZeroDivisionError: division by zero
+2021-11-29 10:17:32,599 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:17:34,522 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 862, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 212, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 194, in heterotrait_monotrait
+    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
+ZeroDivisionError: division by zero
+2021-11-29 10:19:12,042 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-29 10:19:14,513 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 862, in data_analysis
+    print(htmt_matrix(df, model))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 214, in htmt_matrix
+    if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 196, in heterotrait_monotrait
+    avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
+ZeroDivisionError: division by zero
+2021-11-29 10:22:59,169 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]

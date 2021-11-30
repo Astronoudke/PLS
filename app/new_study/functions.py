@@ -189,6 +189,10 @@ def heterotrait_monotrait(var1, var2, corr_matrix, dataset):
             if item_2 in items_var2 and not math.isnan(corr_matrix[item_1][item_2]):
                 heterotrait_list.append(corr_matrix[item_1][item_2])
 
+            if item_2 in items_var2 and math.isnan(corr_matrix[item_1][item_2]):
+                if not math.isnan(corr_matrix[item_2][item_1]):
+                    heterotrait_list.append(corr_matrix[item_2][item_1])
+
     avg_heterotrait = sum(heterotrait_list) / len(heterotrait_list)
     avg_monotrait_var1 = sum(monotrait_var1_list) / len(monotrait_var1_list)
     avg_monotrait_var2 = sum(monotrait_var2_list) / len(monotrait_var2_list)
@@ -206,7 +210,7 @@ def htmt_matrix(dataset, model):
             if round(heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset), 4) == 1:
                 not_valuable = True
             if not_valuable:
-                data[corevariable.abbreviation].append(np.nan)
+                data[corevariable.abbreviation].append(' ')
             else:
                 data[corevariable.abbreviation].append(
                     heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset))

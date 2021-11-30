@@ -1,86 +1,4 @@
-2021-11-23 15:01:04,539 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3361, in get_loc
-    return self._engine.get_loc(casted_key)
-  File "pandas\_libs\index.pyx", line 76, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5198, in pandas._libs.hashtable.PyObjectHashTable.get_item
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5206, in pandas._libs.hashtable.PyObjectHashTable.get_item
-KeyError: 0
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 848, in data_analysis
-    print(model1['loading'][i])
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\series.py", line 942, in __getitem__
-    return self._get_value(key)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\series.py", line 1051, in _get_value
-    loc = self.index.get_loc(label)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3363, in get_loc
-    raise KeyError(key) from err
-KeyError: 0.0
-2021-11-23 15:01:45,811 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:12:26,158 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:12:31,793 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3361, in get_loc
-    return self._engine.get_loc(casted_key)
-  File "pandas\_libs\index.pyx", line 76, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5198, in pandas._libs.hashtable.PyObjectHashTable.get_item
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5206, in pandas._libs.hashtable.PyObjectHashTable.get_item
-KeyError: 'loadings'
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 855, in data_analysis
-    composite_reliability(corevar, df, config, Scheme.CENTROID)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 67, in composite_reliability
-    loadings = model['loadings']
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\frame.py", line 3458, in __getitem__
-    indexer = self.columns.get_loc(key)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3363, in get_loc
-    raise KeyError(key) from err
-KeyError: 'loadings'
-2021-11-23 15:13:04,051 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:14:32,619 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:15:04,122 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:15:46,473 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:17:16,323 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:17:18,898 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3361, in get_loc
-    return self._engine.get_loc(casted_key)
-  File "pandas\_libs\index.pyx", line 76, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5198, in pandas._libs.hashtable.PyObjectHashTable.get_item
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5206, in pandas._libs.hashtable.PyObjectHashTable.get_item
-KeyError: 1
-
-The above exception was the direct cause of the following exception:
-
+2021-11-23 15:24:46,169 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -95,20 +13,100 @@ Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 855, in data_analysis
     composite_reliability(corevar, df, config, Scheme.CENTROID)
   File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 69, in composite_reliability
-    print(loadings.loc[1])
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexing.py", line 931, in __getitem__
-    return self._getitem_axis(maybe_callable, axis=axis)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexing.py", line 1164, in _getitem_axis
-    return self._get_label(key, axis=axis)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexing.py", line 1113, in _get_label
-    return self.obj.xs(label, axis=axis)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\generic.py", line 3776, in xs
-    loc = index.get_loc(key)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3363, in get_loc
-    raise KeyError(key) from err
-KeyError: 1
-2021-11-23 15:19:48,178 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:20:33,522 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:20:54,057 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:23:55,674 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:24:44,826 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+    loadings = loadings.to_dict('dict')[0]
+KeyError: 0
+2021-11-23 15:25:06,117 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 15:25:07,516 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 855, in data_analysis
+    composite_reliability(corevar, df, config, Scheme.CENTROID)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 70, in composite_reliability
+    loadings = loadings[0]
+KeyError: 0
+2021-11-23 15:25:20,560 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 15:32:39,948 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 15:33:29,304 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 15:40:18,264 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 15:48:16,675 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 15:48:37,962 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 15:48:54,468 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 15:49:15,101 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 15:49:15,920 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 853, in data_analysis
+    print(cronbachs_alpha(corevar, df))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 59, in cronbachs_alpha
+    variance_total_column = variance(questions, dataset)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 39, in variance
+    scores = len([score for score in dataset[items[0]]])
+IndexError: list index out of range
+2021-11-23 15:49:27,998 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 19:05:40,351 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 19:05:46,494 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 857, in data_analysis
+    print(cronbachs_alpha(corevar, df))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 59, in cronbachs_alpha
+    variance_total_column = variance(questions, dataset)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 39, in variance
+    scores = len([score for score in dataset[items[0]]])
+IndexError: list index out of range
+2021-11-23 19:06:04,527 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 19:06:11,419 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 858, in data_analysis
+    print(cronbachs_alpha(corevar, df))
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 59, in cronbachs_alpha
+    variance_total_column = variance(questions, dataset)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 39, in variance
+    scores = len([score for score in dataset[items[0]]])
+IndexError: list index out of range
+2021-11-23 19:09:47,918 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-23 19:13:16,529 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-24 10:02:59,649 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-24 10:06:13,145 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-24 10:24:47,460 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-24 10:26:27,806 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-24 10:36:20,202 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-24 10:37:36,362 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-24 11:03:34,028 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]

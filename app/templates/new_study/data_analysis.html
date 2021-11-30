@@ -2,6 +2,46 @@
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
 {% block app_content %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='style_utaut.css') }}">
-    <h1>Create a New Core Variable</h1>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_data_analysis.css') }}">
+    <div class="evaluation">
+        <h1 class="evaluation-header">Evaluation of measurement model</h1>
+        <div class="evaluation-category">
+            <h2 class="evaluation-subheader">Construct Reliability and Validity</h2>
+            <div class="evaluation-criterium">
+                <div class="evaluation-criterium-arrowbox">
+                    <img class="evaluation-criterium-arrow" src="https://icons.veryicon.com/png/o/miscellaneous/general-icon-collection-face-right-angle/arrow-right-40.png">
+                </div>
+                <div class="evaluation-criterium-namebox">
+                    <h2 class="evaluation-criterium-name">Cronbach's Alpha</h2>
+                </div>
+            </div>
+            <div class="evaluation-criterium">
+                <div class="evaluation-criterium-arrowbox">
+                    <img class="evaluation-criterium-arrow" src="https://icons.veryicon.com/png/o/miscellaneous/general-icon-collection-face-right-angle/arrow-right-40.png">
+                </div>
+                <div class="evaluation-criterium-namebox">
+                    <h2 class="evaluation-criterium-name">Composite Reliability</h2>
+                </div>
+            </div>
+            <div class="evaluation-criterium">
+                <div class="evaluation-criterium-arrowbox">
+                    <img class="evaluation-criterium-arrow" src="https://icons.veryicon.com/png/o/miscellaneous/general-icon-collection-face-right-angle/arrow-right-40.png">
+                </div>
+                <div class="evaluation-criterium-namebox">
+                    <h2 class="evaluation-criterium-name">Average Variance Extracted (AVE)</h2>
+                </div>
+            </div>
+        </div>
+        <div class="evaluation-category">
+            <h2 class="evaluation-subheader">Discriminant Validity</h2>
+            <div class="evaluation-criterium">
+                <div class="evaluation-criterium-arrowbox">
+                    <img class="evaluation-criterium-arrow" src="https://icons.veryicon.com/png/o/miscellaneous/general-icon-collection-face-right-angle/arrow-right-40.png">
+                </div>
+                <div class="evaluation-criterium-namebox">
+                    <h2 class="evaluation-criterium-name">Heterotrait-Monotrait Ratio (HTMT)</h2>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
