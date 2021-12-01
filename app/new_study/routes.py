@@ -841,15 +841,14 @@ def data_analysis(study_code):
 
     data_construct_validity = {}
     for corevariable in corevariables:
-        data_construct_validity[corevariable.name] = [cronbachs_alpha(corevariable, df),
-                                                      composite_reliability(corevariable, df, config, Scheme.CENTROID),
-                                                      average_variance_extracted(corevariable, df, config, Scheme.CENTROID)]
-    print(pearson_correlation('BI1', 'EE1', df))
+        data_construct_validity[corevariable] = [round(cronbachs_alpha(corevariable, df),4),
+                                                      round(composite_reliability(corevariable, df, config, Scheme.CENTROID),4),
+                                                      round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID),4)]
+
+    print("Correlatie Matrix")
     print(correlation_matrix(df))
-    given_cr = [corevariable for corevariable in corevariables if
-                corevariable.abbreviation == "EE" or corevariable.abbreviation == "PE"]
-    print(heterotrait_monotrait(given_cr[0], given_cr[1], correlation_matrix(df), df))
+    print("HTMT Matrix")
     print(htmt_matrix(df, model))
     print(data_construct_validity)
 
-    return render_template('new_study/data_analysis.html', study_code=study_code)
+    return render_template('new_study/data_analysis.html', study_code=study_code, data_construct_validity=data_construct_validity)
