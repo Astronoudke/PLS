@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block app_content %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='style_corevariable_analysis.css') }}">
+  <div class="corevariable-infotable">
+    <div class="corevariable-namebox">
+      <p class="corevariable-name">{{ corevariable.name }}</p>
+    </div>
+    <div class="corevariable-abbreviationbox">
+      <p class="corevariable-abbreviation">({{ corevariable.abbreviation }})</p>
+    </div>
+    <div class="corevariable-descriptionbox">
+      <p class="corevariable-description">{{ corevariable.description }}</p>
+    </div>
+  </div>
+{% endblock %}

@@ -212,8 +212,8 @@ def htmt_matrix(dataset, model):
             if not_valuable:
                 data[corevariable.abbreviation].append(' ')
             else:
-                data[corevariable.abbreviation].append(
-                    heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset))
+                data[corevariable.abbreviation].append(round(
+                    heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset),4))
 
     df = pd.DataFrame(data, index=[corevariable.abbreviation for corevariable in corevariables])
     df = df.transpose()

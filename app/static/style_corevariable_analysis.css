@@ -1,0 +1,51 @@
+body {
+	 background-color: rgb(130,130,130);
+}
+
+.corevariable-infotable {
+  position: relative;
+  max-height: 400px;
+  width: 650px;
+  background-color: rgb(150,150,150);
+  border: 2px solid black;
+  margin-left: -50px;
+  margin-top: 30px;
+}
+
+.corevariable-namebox {
+  height: auto;
+  width: 95%;
+  text-align: center;
+}
+
+.corevariable-name {
+  color: black;
+  font-size: 45px;
+  font-weight: bold;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.corevariable-abbreviationbox {
+  height: auto;
+  width: 95%;
+  text-align: center;
+  margin-top: -13px;
+}
+
+.corevariable-abbreviation {
+  color: black;
+  font-size: 20px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.corevariable-descriptionbox {
+  height: auto;
+  width: 95%;
+  margin: auto;
+}
+
+.corevariable-description {
+  color: black;
+  font-size: 25px;
+  font-family: "Times New Roman", Times, serif;
+}

@@ -1,15 +1,4 @@
-2021-11-23 15:01:04,539 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3361, in get_loc
-    return self._engine.get_loc(casted_key)
-  File "pandas\_libs\index.pyx", line 76, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5198, in pandas._libs.hashtable.PyObjectHashTable.get_item
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5206, in pandas._libs.hashtable.PyObjectHashTable.get_item
-KeyError: 0
-
-The above exception was the direct cause of the following exception:
-
+2021-11-24 11:03:40,410 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -21,29 +10,24 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 848, in data_analysis
-    print(model1['loading'][i])
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\series.py", line 942, in __getitem__
-    return self._get_value(key)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\series.py", line 1051, in _get_value
-    loc = self.index.get_loc(label)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3363, in get_loc
-    raise KeyError(key) from err
-KeyError: 0.0
-2021-11-23 15:01:45,811 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:12:26,158 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:12:31,793 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3361, in get_loc
-    return self._engine.get_loc(casted_key)
-  File "pandas\_libs\index.pyx", line 76, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5198, in pandas._libs.hashtable.PyObjectHashTable.get_item
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5206, in pandas._libs.hashtable.PyObjectHashTable.get_item
-KeyError: 'loadings'
-
-The above exception was the direct cause of the following exception:
-
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 844, in data_analysis
+    df.to_csv(r'C:\Users\noudy\PycharmProjects\PLS\export.csv', index=False, header=True)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\generic.py", line 3466, in to_csv
+    return DataFrameRenderer(formatter).to_csv(
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\io\formats\format.py", line 1105, in to_csv
+    csv_formatter.save()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\io\formats\csvs.py", line 237, in save
+    with get_handle(
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\io\common.py", line 702, in get_handle
+    handle = open(
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\noudy\\PycharmProjects\\PLS\\export.csv'
+2021-11-24 11:03:59,479 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 20:24:09,101 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 20:30:37,847 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 20:31:13,317 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 20:32:47,739 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 20:49:06,950 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 20:49:10,188 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -55,32 +39,24 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 855, in data_analysis
-    composite_reliability(corevar, df, config, Scheme.CENTROID)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 67, in composite_reliability
-    loadings = model['loadings']
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\frame.py", line 3458, in __getitem__
-    indexer = self.columns.get_loc(key)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3363, in get_loc
-    raise KeyError(key) from err
-KeyError: 'loadings'
-2021-11-23 15:13:04,051 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:14:32,619 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:15:04,122 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:15:46,473 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:17:16,323 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:17:18,898 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3361, in get_loc
-    return self._engine.get_loc(casted_key)
-  File "pandas\_libs\index.pyx", line 76, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\index.pyx", line 108, in pandas._libs.index.IndexEngine.get_loc
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5198, in pandas._libs.hashtable.PyObjectHashTable.get_item
-  File "pandas\_libs\hashtable_class_helper.pxi", line 5206, in pandas._libs.hashtable.PyObjectHashTable.get_item
-KeyError: 1
-
-The above exception was the direct cause of the following exception:
-
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 852, in data_analysis
+    covariance('PE1', 'EE1', df)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 114, in covariance
+    avg_item2 = sum(scores_item2) / len(scores_item2)
+ZeroDivisionError: division by zero
+2021-11-27 20:50:13,957 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 20:51:39,755 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 20:59:08,450 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:00:20,932 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:01:03,656 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:01:46,145 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:02:12,103 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:02:42,547 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:02:58,890 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:07:58,866 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:13:54,889 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:14:21,059 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:14:25,819 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -92,23 +68,39 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 855, in data_analysis
-    composite_reliability(corevar, df, config, Scheme.CENTROID)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 69, in composite_reliability
-    print(loadings.loc[1])
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexing.py", line 931, in __getitem__
-    return self._getitem_axis(maybe_callable, axis=axis)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexing.py", line 1164, in _getitem_axis
-    return self._get_label(key, axis=axis)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexing.py", line 1113, in _get_label
-    return self.obj.xs(label, axis=axis)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\generic.py", line 3776, in xs
-    loc = index.get_loc(key)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\pandas\core\indexes\base.py", line 3363, in get_loc
-    raise KeyError(key) from err
-KeyError: 1
-2021-11-23 15:19:48,178 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:20:33,522 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:20:54,057 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:23:55,674 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-11-23 15:24:44,826 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 854, in data_analysis
+    correlation_matrix(df)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 134, in correlation_matrix
+    data[item] = [pearson_correlation(item, lv2, dataset) for lv2 in items]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 134, in <listcomp>
+    data[item] = [pearson_correlation(item, lv2, dataset) for lv2 in items]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 123, in pearson_correlation
+    covar = covariance(lv1, lv2, dataset)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 113, in covariance
+    avg_item2 = sum(scores_item2) / len(scores_item2)
+ZeroDivisionError: division by zero
+2021-11-27 21:15:19,553 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-11-27 21:15:20,606 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 854, in data_analysis
+    correlation_matrix(df)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 135, in correlation_matrix
+    data[item] = [pearson_correlation(item, lv2, dataset) for lv2 in items]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 135, in <listcomp>
+    data[item] = [pearson_correlation(item, lv2, dataset) for lv2 in items]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 123, in pearson_correlation
+    covar = covariance(lv1, lv2, dataset)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 113, in covariance
+    avg_item2 = sum(scores_item2) / len(scores_item2)
+ZeroDivisionError: division by zero
+2021-11-27 21:15:54,711 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]

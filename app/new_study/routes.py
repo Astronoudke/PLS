@@ -842,13 +842,32 @@ def data_analysis(study_code):
     data_construct_validity = {}
     for corevariable in corevariables:
         data_construct_validity[corevariable] = [round(cronbachs_alpha(corevariable, df),4),
-                                                      round(composite_reliability(corevariable, df, config, Scheme.CENTROID),4),
-                                                      round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID),4)]
+                                                 round(composite_reliability(corevariable, df, config, Scheme.CENTROID),4),
+                                                 round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID),4)]
 
-    print("Correlatie Matrix")
-    print(correlation_matrix(df))
-    print("HTMT Matrix")
-    print(htmt_matrix(df, model))
-    print(data_construct_validity)
+    data_htmt = htmt_matrix(df, model)
+    amount_of_variables = len(corevariables)
 
-    return render_template('new_study/data_analysis.html', study_code=study_code, data_construct_validity=data_construct_validity)
+    return render_template('new_study/data_analysis.html', study_code=study_code, data_construct_validity=data_construct_validity,
+                           data_htmt=data_htmt, amount_of_variables=amount_of_variables, study=study)
+
+
+@bp.route('/data_analysis/corevariable_analysis/<study_code>/<corevariable_id>', methods=['GET', 'POST'])
+@login_required
+def corevariable_analysis(study_code, corevariable_id):
+    study = Study.query.filter_by(code=study_code).first()
+    if current_user not in study.linked_users:
+        return redirect(url_for('main.not_authorized'))
+
+    # check access to stage
+    if study.stage_1:
+        return redirect(url_for('new_study.utaut', study_code=study_code))
+    if study.stage_2:
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+
+    questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+    model = UTAUTmodel.query.filter_by(id=study.model_id).first()
+    corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
+    corevariables = [corevariable for corevariable in model.linked_corevariables]
+
+    return render_template('new_study/corevariable_analysis.html', study_code=study_code, corevariable=corevariable)
