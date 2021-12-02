@@ -870,4 +870,42 @@ def corevariable_analysis(study_code, corevariable_id):
     corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
     corevariables = [corevariable for corevariable in model.linked_corevariables]
 
-    return render_template('new_study/corevariable_analysis.html', study_code=study_code, corevariable=corevariable)
+    # Set up dataframe
+    list_of_questions = []
+    list_of_answers = []
+    questiongroups = [questiongroup for questiongroup in
+                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    for questiongroup in questiongroups:
+        questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
+        for question in questions:
+            list_of_questions.append(question.question_code)
+            answers_question = []
+            for answer in [answer for answer in Answer.query.filter_by(question_id=question.id)]:
+                answers_question.append(answer.score)
+            list_of_answers.append(answers_question)
+
+    df = pd.DataFrame(list_of_answers).transpose()
+    df.columns = list_of_questions
+
+    structure = c.Structure()
+
+    for corevariable in corevariables:
+        influenced_variables = []
+        for relation in [relation for relation in Relation.query.filter_by(model_id=model.id)]:
+            if relation.influencer_id == corevariable.id:
+                influenced = CoreVariable.query.filter_by(id=relation.influenced_id).first()
+                influenced_variables.append(influenced.abbreviation)
+        if len(influenced_variables) > 0:
+            structure.add_path([corevariable.abbreviation], influenced_variables)
+
+    config = c.Config(structure.path(), scaled=False)
+
+    construct_data =[[round(cronbachs_alpha(corevariable, df),4),
+                      round(composite_reliability(corevariable, df, config, Scheme.CENTROID),4),
+                      round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID),4)]
+                     for corevariable in corevariables]
+
+    print(construct_data)
+
+    return render_template('new_study/corevariable_analysis.html', study_code=study_code, corevariable=corevariable,
+                           corevariables=corevariables)

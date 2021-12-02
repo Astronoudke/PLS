@@ -1,15 +1,14 @@
 body {
-	 background-color: rgb(130,130,130);
+	 background-color: rgb(230,230,230);
 }
 
 .corevariable-infotable {
   position: relative;
   max-height: 400px;
   width: 650px;
-  background-color: rgb(150,150,150);
-  border: 2px solid black;
   margin-left: -50px;
   margin-top: 30px;
+  margin-bottom: 100px;
 }
 
 .corevariable-namebox {
@@ -20,7 +19,7 @@ body {
 
 .corevariable-name {
   color: black;
-  font-size: 45px;
+  font-size: 55px;
   font-weight: bold;
   font-family: "Times New Roman", Times, serif;
 }
