@@ -17,6 +17,7 @@ from app.new_study.forms import CreateNewStudyForm, CreateNewCoreVariableForm, C
 from app.new_study.functions import variance, cronbachs_alpha, composite_reliability, average_variance_extracted, \
     covariance, \
     pearson_correlation, correlation_matrix, heterotrait_monotrait, htmt_matrix
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 
 
 #############################################################################################################
@@ -821,7 +822,17 @@ def data_analysis(study_code):
 
     df = pd.DataFrame(list_of_answers).transpose()
     df.columns = list_of_questions
+    print(df)
 
+    X = df[[i for i in df]]
+    vif_data = pd.DataFrame()
+    vif_data["feature"] = X.columns
+
+    # calculating VIF for each feature
+    vif_data["VIF"] = [variance_inflation_factor(X.values, i)
+                       for i in range(len(X.columns))]
+
+    print(vif_data)
     structure = c.Structure()
 
     for corevariable in corevariables:

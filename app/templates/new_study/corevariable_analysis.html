@@ -24,9 +24,6 @@
       </div>
     </div>
   </div>
-  <div class="graphic-fullscreen">
-
-  </div>
   <div class="graphics-box">
     <div class="graphic-box">
       <div class="graphic-namebox">
@@ -88,6 +85,11 @@
             }
           };
 
+          const DISPLAY = true;
+          const BORDER = true;
+          const CHART_AREA = true;
+          const TICKS = true;
+
           const config_ave = {
               type: 'bar',
               data: data_ave,
@@ -104,7 +106,16 @@
                   },
                   y: {
                     beginAtZero: true,
-                    max: 1
+                    max: 1,
+                    grid: {
+                      drawBorder: false,
+                      color: function(context) {
+                        if (context.tick.value == 0.5) {
+                          return '#009900';
+                        }
+                        return '#C2C2C2';
+                      },
+                    },
                   }
                 }
               },
@@ -164,7 +175,16 @@
                   },
                   y: {
                     beginAtZero: true,
-                    max: 1
+                    max: 1,
+                    grid: {
+                      drawBorder: false,
+                      color: function(context) {
+                        if (context.tick.value == 0.7) {
+                          return '#009900';
+                        }
+                        return '#C2C2C2';
+                      },
+                    },
                   }
                 }
               },
@@ -222,7 +242,16 @@
                   },
                   y: {
                     beginAtZero: true,
-                    max: 1
+                    max: 1,
+                    grid: {
+                      drawBorder: false,
+                      color: function(context) {
+                        if (context.tick.value == 0.7) {
+                          return '#009900';
+                        }
+                        return '#C2C2C2';
+                      },
+                    },
                   }
                 }
               },
