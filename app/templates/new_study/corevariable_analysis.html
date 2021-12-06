@@ -14,44 +14,223 @@
       <p class="corevariable-description">{{ corevariable.description }}</p>
     </div>
   </div>
-  <div>
-      <canvas id="myChart"></canvas>
+  <div class="graphics-box">
+    <div class="graphic-box">
+      <div class="graphic-namebox">
+        <p class="graphic-name">Average Variance Extracted</p>
+      </div>
+      <div class="graphic-graphbox">
+        <canvas id="chart_ave"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="graphic-fullscreen">
+
+  </div>
+  <div class="graphics-box">
+    <div class="graphic-box">
+      <div class="graphic-namebox">
+        <p class="graphic-name">Cronbach's Alpha</p>
+      </div>
+      <div class="graphic-graphbox">
+        <canvas id="chart_ca"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="graphics-box">
+    <div class="graphic-box">
+      <div class="graphic-namebox">
+        <p class="graphic-name">Composite Reliability</p>
+      </div>
+      <div class="graphic-graphbox">
+        <canvas id="chart_cr"></canvas>
+      </div>
+    </div>
   </div>
 
   <script>
-          const labels = [
-              'January',
-              'February',
-              'March',
-              'April',
-              'May',
-              'June',
+          var chartColors = {
+            red: 'rgb(255, 99, 132)',
+            green: 'rgb(75, 210, 70)',
+            yellow: 'rgb(255, 207, 64)',
+            darkred: 'rgb(212, 0, 0)',
+            darkgreen: 'rgb(0, 212, 0)'
+          };
+
+          var labels_ave = [
+              {% for corevariable in corevariable_names_js %}
+                '{{ corevariable.abbreviation }}',
+              {% endfor %}
           ];
-          const data = {
-              labels: labels,
+          var data_ave = {
+              labels: labels_ave,
               datasets: [{
-                label: 'My First dataset',
-                backgroundColor: 'rgb(255, 99, 132)',
+                label: 'AVE',
+                backgroundColor: [
+                  chartColors.green,
+                  chartColors.green,
+                  chartColors.green
+                ],
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
+                data: [{% for ave in corevariable_ave_js %} {{ ave }}, {% endfor %}],
               }]
           };
 
-          const config = {
+          var colorChangeValue = 0.50;
+          var dataset = data_ave.datasets[0];
+          for (var i = 0; i < dataset.data.length; i++) {
+            if (dataset.data[i] < colorChangeValue) {
+              dataset.backgroundColor[i] = chartColors.red;
+            }
+
+            if (labels_ave[i] == '{{ corevariable.abbreviation }}') {
+              dataset.backgroundColor[i] = chartColors.yellow;
+            }
+          };
+
+          const config_ave = {
               type: 'bar',
-              data: data,
+              data: data_ave,
               options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                maintainAspectRatio: false,
                 scales: {
+                  x: {
+                      barPercentage: 0.4
+                  },
                   y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    max: 1
                   }
                 }
               },
           };
 
-          const myChart = new Chart(
-            document.getElementById('myChart'),
-            config
+          const chart_ave = new Chart(
+            document.getElementById('chart_ave'),
+            config_ave
+          );
+
+
+          const labels_ca = [
+              {% for corevariable in corevariable_names_js %}
+                '{{ corevariable.abbreviation }}',
+              {% endfor %}
+          ];
+
+          var data_ca = {
+              labels: labels_ca,
+              datasets: [{
+                label: 'Cronbachs Alpha',
+                backgroundColor: [
+                  chartColors.green,
+                  chartColors.green,
+                  chartColors.green
+                ],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [{% for ca in corevariable_ca_js %} {{ ca }}, {% endfor %}],
+              }]
+          };
+
+          var colorChangeValue = 0.70; //set this to whatever is the deciding color change value
+          var dataset = data_ca.datasets[0];
+          for (var i = 0; i < dataset.data.length; i++) {
+            if (dataset.data[i] < colorChangeValue) {
+              dataset.backgroundColor[i] = chartColors.red;
+            }
+
+            if (labels_ave[i] == '{{ corevariable.abbreviation }}') {
+              dataset.backgroundColor[i] = chartColors.yellow;
+            }
+          };
+
+          const config_ca = {
+              type: 'bar',
+              data: data_ca,
+              options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                maintainAspectRatio: false,
+                scales: {
+                  x: {
+                      barPercentage: 0.4
+                  },
+                  y: {
+                    beginAtZero: true,
+                    max: 1
+                  }
+                }
+              },
+          };
+
+          const chart_ca = new Chart(
+            document.getElementById('chart_ca'),
+            config_ca
+          );
+
+          const labels_cr = [
+              {% for corevariable in corevariable_names_js %}
+                '{{ corevariable.abbreviation }}',
+              {% endfor %}
+          ];
+          var data_cr = {
+              labels: labels_cr,
+              datasets: [{
+                label: 'Composite Reliability',
+                backgroundColor: [
+                  chartColors.green,
+                  chartColors.green,
+                  chartColors.green
+                ],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [{% for cr in corevariable_cr_js %} {{ cr }}, {% endfor %}]
+              }]
+          };
+
+          var colorChangeValue = 0.70; //set this to whatever is the deciding color change value
+          var dataset = data_cr.datasets[0];
+          for (var i = 0; i < dataset.data.length; i++) {
+            if (dataset.data[i] < colorChangeValue) {
+              dataset.backgroundColor[i] = chartColors.red;
+            }
+
+            if (labels_ave[i] == '{{ corevariable.abbreviation }}') {
+              dataset.backgroundColor[i] = chartColors.yellow;
+            }
+          };
+
+          const config_cr = {
+              type: 'bar',
+              data: data_cr,
+              options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                maintainAspectRatio: false,
+                scales: {
+                  x: {
+                      barPercentage: 0.4
+                  },
+                  y: {
+                    beginAtZero: true,
+                    max: 1
+                  }
+                }
+              },
+          };
+
+          const chart_cr = new Chart(
+            document.getElementById('chart_cr'),
+            config_cr
           );
   </script>
 {% endblock %}

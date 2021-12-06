@@ -3,6 +3,7 @@ from flask_login import current_user, login_required
 import numpy as np
 import pandas as pd
 import plspm.config as c
+import json
 from plspm.plspm import Plspm
 from plspm.scheme import Scheme
 from plspm.mode import Mode
@@ -841,14 +842,17 @@ def data_analysis(study_code):
 
     data_construct_validity = {}
     for corevariable in corevariables:
-        data_construct_validity[corevariable] = [round(cronbachs_alpha(corevariable, df),4),
-                                                 round(composite_reliability(corevariable, df, config, Scheme.CENTROID),4),
-                                                 round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID),4)]
+        data_construct_validity[corevariable] = [round(cronbachs_alpha(corevariable, df), 4),
+                                                 round(composite_reliability(corevariable, df, config, Scheme.CENTROID),
+                                                       4),
+                                                 round(average_variance_extracted(corevariable, df, config,
+                                                                                  Scheme.CENTROID), 4)]
 
     data_htmt = htmt_matrix(df, model)
     amount_of_variables = len(corevariables)
 
-    return render_template('new_study/data_analysis.html', study_code=study_code, data_construct_validity=data_construct_validity,
+    return render_template('new_study/data_analysis.html', study_code=study_code,
+                           data_construct_validity=data_construct_validity,
                            data_htmt=data_htmt, amount_of_variables=amount_of_variables, study=study)
 
 
@@ -875,6 +879,7 @@ def corevariable_analysis(study_code, corevariable_id):
     list_of_answers = []
     questiongroups = [questiongroup for questiongroup in
                       QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+
     for questiongroup in questiongroups:
         questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
         for question in questions:
@@ -883,12 +888,10 @@ def corevariable_analysis(study_code, corevariable_id):
             for answer in [answer for answer in Answer.query.filter_by(question_id=question.id)]:
                 answers_question.append(answer.score)
             list_of_answers.append(answers_question)
-
     df = pd.DataFrame(list_of_answers).transpose()
     df.columns = list_of_questions
 
     structure = c.Structure()
-
     for corevariable in corevariables:
         influenced_variables = []
         for relation in [relation for relation in Relation.query.filter_by(model_id=model.id)]:
@@ -899,13 +902,52 @@ def corevariable_analysis(study_code, corevariable_id):
             structure.add_path([corevariable.abbreviation], influenced_variables)
 
     config = c.Config(structure.path(), scaled=False)
+    print(corevariable)
 
-    construct_data =[[round(cronbachs_alpha(corevariable, df),4),
-                      round(composite_reliability(corevariable, df, config, Scheme.CENTROID),4),
-                      round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID),4)]
-                     for corevariable in corevariables]
+    for corevariable in corevariables:
+        config.add_lv_with_columns_named(corevariable.abbreviation, Mode.A, df, corevariable.abbreviation)
 
-    print(construct_data)
+    plspm_calc = Plspm(df, config, Scheme.CENTROID)
+
+    construct_data = [[round(cronbachs_alpha(corevariable, df), 4),
+                       round(composite_reliability(corevariable, df, config, Scheme.CENTROID), 4),
+                       round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4)] for corevariable
+                      in corevariables]
+
+    # Voor alle kernvariabelen
+    corevariable_names_js = [corevariable.name for corevariable in model.linked_corevariables]
+    corevariable_ave_js = [round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4) for
+                           corevariable in corevariables]
+
+    # Voor drie kernvariabelen
+    corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
+    indexes_corevariables = []
+    for corevariable in corevariables:
+        if corevariable.id == int(corevariable_id):
+
+            if corevariables.index(corevariable) == 0:
+                indexes_corevariables = [0, 1, 2]
+            elif corevariables.index(corevariable) == len(corevariables) - 1:
+                indexes_corevariables = [len(corevariables) - 3, len(corevariables) - 2, len(corevariables) - 1]
+            else:
+                indexes_corevariables = [corevariables.index(corevariable) - 1, corevariables.index(corevariable),
+                                         corevariables.index(corevariable) + 1]
+
+    corevariable_names_js = [corevariable for corevariable in
+                             [corevariables[indexes_corevariables[0]], corevariables[indexes_corevariables[1]],
+                              corevariables[indexes_corevariables[2]]]]
+    corevariable_ave_js = [round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4) for
+                           corevariable in corevariables[indexes_corevariables[0]:indexes_corevariables[2] + 1]]
+    corevariable_ca_js = [round(cronbachs_alpha(corevariable, df), 4) for
+                          corevariable in corevariables[indexes_corevariables[0]:indexes_corevariables[2] + 1]]
+    corevariable_cr_js = [round(composite_reliability(corevariable, df, config, Scheme.CENTROID), 4) for
+                          corevariable in corevariables[indexes_corevariables[0]:indexes_corevariables[2] + 1]]
+
+    corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
+
+    print(corevariable)
 
     return render_template('new_study/corevariable_analysis.html', study_code=study_code, corevariable=corevariable,
-                           corevariables=corevariables)
+                           corevariables=corevariables, corevariable_names_js=corevariable_names_js,
+                           corevariable_ave_js=corevariable_ave_js, corevariable_ca_js=corevariable_ca_js,
+                           corevariable_cr_js=corevariable_cr_js)

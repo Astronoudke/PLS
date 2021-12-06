@@ -8,7 +8,7 @@ body {
   width: 650px;
   margin-left: -50px;
   margin-top: 30px;
-  margin-bottom: 100px;
+  margin-bottom: 40px;
 }
 
 .corevariable-namebox {
@@ -47,4 +47,48 @@ body {
   color: black;
   font-size: 25px;
   font-family: "Times New Roman", Times, serif;
+}
+
+.graphics-box {
+  display: inline-block;
+  height: auto;
+  width: auto;
+  margin-left: -30px;
+  margin-right: 40px;
+}
+
+.graphic-box {
+  height: auto;
+  width: 300px;
+  background-color: rgb(210,210,210);
+  border: 2px solid black;
+}
+
+.graphic-box:hover {
+  cursor: pointer;
+  background-color: rgb(200,200,200);
+}
+
+.graphic-box:active {
+  background-color: rgb(190,190,190);
+}
+
+.graphic-namebox {
+  height: 50px;
+  width: 100%;
+  text-align: center;
+}
+
+.graphic-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.graphic-graphbox {
+  position: relative;
+  height: 300px;
+  width: auto;
+  padding: 10px;
 }
