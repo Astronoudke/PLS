@@ -95,7 +95,7 @@
 
           var labels_ave_all = [
               {% for corevariable in corevariable_names_js_all %}
-                '{{ corevariable.abbreviation }}',
+                '{{ corevariable.name }}',
               {% endfor %}
           ];
 
@@ -120,7 +120,7 @@
               dataset.backgroundColor[i] = chartColors.red;
             }
 
-            if (labels_ave_all[i] == '{{ corevariable.abbreviation }}') {
+            if (labels_ave_all[i] == '{{ corevariable.name }}') {
               dataset.backgroundColor[i] = chartColors.yellow;
             }
           };
@@ -177,7 +177,7 @@
 
           var labels_ca_all = [
               {% for corevariable in corevariable_names_js_all %}
-                '{{ corevariable.abbreviation }}',
+                '{{ corevariable.name }}',
               {% endfor %}
           ];
 
@@ -202,7 +202,7 @@
               dataset.backgroundColor[i] = chartColors.red;
             }
 
-            if (labels_ca_all[i] == '{{ corevariable.abbreviation }}') {
+            if (labels_ca_all[i] == '{{ corevariable.name }}') {
               dataset.backgroundColor[i] = chartColors.yellow;
             }
           };
@@ -260,7 +260,7 @@
 
           var labels_cr_all = [
               {% for corevariable in corevariable_names_js_all %}
-                '{{ corevariable.abbreviation }}',
+                '{{ corevariable.name }}',
               {% endfor %}
           ];
 
@@ -285,7 +285,7 @@
               dataset.backgroundColor[i] = chartColors.red;
             }
 
-            if (labels_cr_all[i] == '{{ corevariable.abbreviation }}') {
+            if (labels_cr_all[i] == '{{ corevariable.name }}') {
               dataset.backgroundColor[i] = chartColors.yellow;
             }
           };
@@ -540,5 +540,6 @@
 
 
   </script>
+
 {% endblock %}
 
