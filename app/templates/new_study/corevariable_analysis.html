@@ -14,7 +14,7 @@
       <p class="corevariable-description">{{ corevariable.description }}</p>
     </div>
   </div>
-  <div class="graphics-box">
+  <div class="graphics-box" id="button-ave">
     <div class="graphic-box">
       <div class="graphic-namebox">
         <p class="graphic-name">Average Variance Extracted</p>
@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <div class="graphics-box">
+  <div class="graphics-box" id="button-ca">
     <div class="graphic-box">
       <div class="graphic-namebox">
         <p class="graphic-name">Cronbach's Alpha</p>
@@ -34,7 +34,7 @@
       </div>
     </div>
   </div>
-  <div class="graphics-box">
+  <div class="graphics-box" id="button-cr">
     <div class="graphic-box">
       <div class="graphic-namebox">
         <p class="graphic-name">Composite Reliability</p>
@@ -45,8 +45,38 @@
     </div>
   </div>
 
+  <div class="full-graphic-background" id="overlay-back-ave"></div>
+  <div class="full-graphic-box" id="overlay-ave">
+    <button style="display: none;" id="overlay-button-ave">Go back</button>
+    <div class="full-graphic" id="overlay-graphic-ave">
+      <canvas id="chart_ave_all"></canvas>
+    </div>
+  </div>
+
+  <div class="full-graphic-background" id="overlay-back-ca"></div>
+  <div class="full-graphic-box" id="overlay-ca">
+    <button style="display: none;" id="overlay-button-ca">Go back</button>
+    <div class="full-graphic" id="overlay-graphic-ca">
+      <canvas id="chart_ca_all"></canvas>
+    </div>
+  </div>
+
+  <div class="full-graphic-background" id="overlay-back-cr"></div>
+  <div class="full-graphic-box" id="overlay-cr">
+    <button style="display: none;" id="overlay-button-cr">Go back</button>
+    <div class="full-graphic" id="overlay-graphic-cr">
+      <canvas id="chart_cr_all"></canvas>
+    </div>
+  </div>
+
   <script>
-          var chartColors = {
+
+      const DISPLAY = true;
+      const BORDER = true;
+      const CHART_AREA = true;
+      const TICKS = true;
+
+      var chartColors = {
             red: 'rgb(255, 99, 132)',
             green: 'rgb(75, 210, 70)',
             yellow: 'rgb(255, 207, 64)',
@@ -54,6 +84,254 @@
             darkgreen: 'rgb(0, 212, 0)'
           };
 
+      /* AVE-all table */
+          $('#button-ave').on('click', function () {
+              $('#overlay-ave, #overlay-back-ave, #overlay-graphic-ave, #overlay-button-ave').fadeIn(500);
+          });
+
+          $('#overlay-button-ave').on('click', function () {
+              $('#overlay-ave, #overlay-back-ave, #overlay-graphic-ave, #overlay-button-ave').fadeOut(500);
+          });
+
+          var labels_ave_all = [
+              {% for corevariable in corevariable_names_js_all %}
+                '{{ corevariable.abbreviation }}',
+              {% endfor %}
+          ];
+
+          var data_ave_all = {
+              labels: labels_ave_all,
+              datasets: [{
+                label: 'Average Variance Extracted',
+                backgroundColor: [
+                  {% for corevariable in range(length_corevariables) %}
+                    chartColors.green,
+                  {% endfor %}
+                ],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [{% for ave in corevariable_ave_js_all %} {{ ave }}, {% endfor %}],
+              }]
+          };
+
+          var colorChangeValue = 0.50;
+          var dataset = data_ave_all.datasets[0];
+          for (var i = 0; i < dataset.data.length; i++) {
+            if (dataset.data[i] < colorChangeValue) {
+              dataset.backgroundColor[i] = chartColors.red;
+            }
+
+            if (labels_ave_all[i] == '{{ corevariable.abbreviation }}') {
+              dataset.backgroundColor[i] = chartColors.yellow;
+            }
+          };
+
+          const config_ave_all = {
+              type: 'bar',
+              data: data_ave_all,
+              options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Average Variance Extracted'
+                    },
+                    legend: {
+                        display: false,
+                    }
+                },
+                maintainAspectRatio: false,
+                scales: {
+                  x: {
+                      barPercentage: 0.4
+                  },
+                  y: {
+                    beginAtZero: true,
+                    max: 1,
+                    grid: {
+                      drawBorder: false,
+                      color: function(context) {
+                        if (context.tick.value == 0.5) {
+                          return '#009900';
+                        }
+                        return '#C2C2C2';
+                      },
+                    },
+                  }
+                }
+              },
+          };
+
+          const chart_ave_all = new Chart(
+            document.getElementById('chart_ave_all'),
+            config_ave_all
+          );
+
+
+      /* Cronbachs Alpha-all table */
+          $('#button-ca').on('click', function () {
+              $('#overlay-ca, #overlay-back-ca, #overlay-graphic-ca, #overlay-button-ca').fadeIn(500);
+          });
+
+          $('#overlay-button-ca').on('click', function () {
+              $('#overlay-ca, #overlay-back-ca, #overlay-graphic-ca, #overlay-button-ca').fadeOut(500);
+          });
+
+          var labels_ca_all = [
+              {% for corevariable in corevariable_names_js_all %}
+                '{{ corevariable.abbreviation }}',
+              {% endfor %}
+          ];
+
+          var data_ca_all = {
+              labels: labels_ca_all,
+              datasets: [{
+                label: 'Cronbachs Alpha',
+                backgroundColor: [
+                  {% for corevariable in range(length_corevariables) %}
+                    chartColors.green,
+                  {% endfor %}
+                ],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [{% for ave in corevariable_ca_js_all %} {{ ave }}, {% endfor %}],
+              }]
+          };
+
+          var colorChangeValue = 0.70;
+          var dataset = data_ca_all.datasets[0];
+          for (var i = 0; i < dataset.data.length; i++) {
+            if (dataset.data[i] < colorChangeValue) {
+              dataset.backgroundColor[i] = chartColors.red;
+            }
+
+            if (labels_ca_all[i] == '{{ corevariable.abbreviation }}') {
+              dataset.backgroundColor[i] = chartColors.yellow;
+            }
+          };
+
+          const config_ca_all = {
+              type: 'bar',
+              data: data_ca_all,
+              options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Cronbachs Alpha'
+                    },
+                    legend: {
+                        display: false,
+                    }
+                },
+                maintainAspectRatio: false,
+                scales: {
+                  x: {
+                      barPercentage: 0.4
+                  },
+                  y: {
+                    beginAtZero: true,
+                    max: 1,
+                    grid: {
+                      drawBorder: false,
+                      color: function(context) {
+                        if (context.tick.value == 0.7) {
+                          return '#009900';
+                        }
+                        return '#C2C2C2';
+                      },
+                    },
+                  }
+                }
+              },
+          };
+
+          const chart_ca_all = new Chart(
+            document.getElementById('chart_ca_all'),
+            config_ca_all
+          );
+
+
+
+      /* Composite Reliability-all table */
+          $('#button-cr').on('click', function () {
+              $('#overlay-cr, #overlay-back-cr, #overlay-graphic-cr, #overlay-button-cr').fadeIn(500);
+          });
+
+          $('#overlay-button-cr').on('click', function () {
+              $('#overlay-cr, #overlay-back-cr, #overlay-graphic-cr, #overlay-button-cr').fadeOut(500);
+          });
+
+          var labels_cr_all = [
+              {% for corevariable in corevariable_names_js_all %}
+                '{{ corevariable.abbreviation }}',
+              {% endfor %}
+          ];
+
+          var data_cr_all = {
+              labels: labels_cr_all,
+              datasets: [{
+                label: 'Composite Reliability',
+                backgroundColor: [
+                  {% for corevariable in range(length_corevariables) %}
+                    chartColors.green,
+                  {% endfor %}
+                ],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [{% for ave in corevariable_cr_js_all %} {{ ave }}, {% endfor %}],
+              }]
+          };
+
+          var colorChangeValue = 0.70;
+          var dataset = data_cr_all.datasets[0];
+          for (var i = 0; i < dataset.data.length; i++) {
+            if (dataset.data[i] < colorChangeValue) {
+              dataset.backgroundColor[i] = chartColors.red;
+            }
+
+            if (labels_cr_all[i] == '{{ corevariable.abbreviation }}') {
+              dataset.backgroundColor[i] = chartColors.yellow;
+            }
+          };
+
+          const config_cr_all = {
+              type: 'bar',
+              data: data_cr_all,
+              options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Composite Reliability'
+                    },
+                    legend: {
+                        display: false,
+                    }
+                },
+                maintainAspectRatio: false,
+                scales: {
+                  x: {
+                      barPercentage: 0.4
+                  },
+                  y: {
+                    beginAtZero: true,
+                    max: 1,
+                    grid: {
+                      drawBorder: false,
+                      color: function(context) {
+                        if (context.tick.value == 0.7) {
+                          return '#009900';
+                        }
+                        return '#C2C2C2';
+                      },
+                    },
+                  }
+                }
+              },
+          };
+
+          const chart_cr_all = new Chart(
+            document.getElementById('chart_cr_all'),
+            config_cr_all
+          );
+
+
+      /* AVE-corevariable table */
           var labels_ave = [
               {% for corevariable in corevariable_names_js %}
                 '{{ corevariable.abbreviation }}',
@@ -84,11 +362,6 @@
               dataset.backgroundColor[i] = chartColors.yellow;
             }
           };
-
-          const DISPLAY = true;
-          const BORDER = true;
-          const CHART_AREA = true;
-          const TICKS = true;
 
           const config_ave = {
               type: 'bar',
@@ -127,6 +400,7 @@
           );
 
 
+      /* Cronbachs Alpha-corevariable table */
           const labels_ca = [
               {% for corevariable in corevariable_names_js %}
                 '{{ corevariable.abbreviation }}',
@@ -195,6 +469,8 @@
             config_ca
           );
 
+
+      /* Composite Reliability-corevariable table */
           const labels_cr = [
               {% for corevariable in corevariable_names_js %}
                 '{{ corevariable.abbreviation }}',
@@ -261,6 +537,8 @@
             document.getElementById('chart_cr'),
             config_cr
           );
+
+
   </script>
 {% endblock %}
 

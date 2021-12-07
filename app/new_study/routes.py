@@ -913,7 +913,6 @@ def corevariable_analysis(study_code, corevariable_id):
             structure.add_path([corevariable.abbreviation], influenced_variables)
 
     config = c.Config(structure.path(), scaled=False)
-    print(corevariable)
 
     for corevariable in corevariables:
         config.add_lv_with_columns_named(corevariable.abbreviation, Mode.A, df, corevariable.abbreviation)
@@ -923,12 +922,17 @@ def corevariable_analysis(study_code, corevariable_id):
     construct_data = [[round(cronbachs_alpha(corevariable, df), 4),
                        round(composite_reliability(corevariable, df, config, Scheme.CENTROID), 4),
                        round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4)] for corevariable
-                      in corevariables]
+                       in corevariables]
 
     # Voor alle kernvariabelen
-    corevariable_names_js = [corevariable.name for corevariable in model.linked_corevariables]
-    corevariable_ave_js = [round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4) for
-                           corevariable in corevariables]
+    corevariable_names_js_all = [corevariable for corevariable in model.linked_corevariables]
+    corevariable_ave_js_all = [round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4) for
+                               corevariable in corevariables]
+    corevariable_ca_js_all = [round(cronbachs_alpha(corevariable, df), 4) for corevariable in corevariables]
+    corevariable_cr_js_all = [round(composite_reliability(corevariable, df, config, Scheme.CENTROID), 4) for corevariable
+                              in corevariables]
+
+    length_corevariables = len(corevariable_names_js_all)
 
     # Voor drie kernvariabelen
     corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
@@ -956,9 +960,9 @@ def corevariable_analysis(study_code, corevariable_id):
 
     corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
 
-    print(corevariable)
-
     return render_template('new_study/corevariable_analysis.html', study_code=study_code, corevariable=corevariable,
                            corevariables=corevariables, corevariable_names_js=corevariable_names_js,
                            corevariable_ave_js=corevariable_ave_js, corevariable_ca_js=corevariable_ca_js,
-                           corevariable_cr_js=corevariable_cr_js)
+                           corevariable_cr_js=corevariable_cr_js, corevariable_names_js_all=corevariable_names_js_all,
+                           corevariable_ave_js_all=corevariable_ave_js_all, corevariable_ca_js_all=corevariable_ca_js_all,
+                           corevariable_cr_js_all=corevariable_cr_js_all, length_corevariables=length_corevariables)
