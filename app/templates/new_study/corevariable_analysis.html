@@ -44,6 +44,16 @@
       </div>
     </div>
   </div>
+  <div class="graphics-box" id="button-vif">
+    <div class="graphic-box">
+      <div class="graphic-namebox">
+        <p class="graphic-name">VIF</p>
+      </div>
+      <div class="graphic-graphbox">
+        <canvas id="chart_vif"></canvas>
+      </div>
+    </div>
+  </div>
 
   <div class="full-graphic-background" id="overlay-back-ave"></div>
   <div class="full-graphic-box" id="overlay-ave">
@@ -538,6 +548,70 @@
             config_cr
           );
 
+
+      /* VIF-corevariable table */
+          const labels_vif = [
+              {% for item in items_lv %}
+                '{{ item }}',
+              {% endfor %}
+          ];
+          var data_vif = {
+              labels: labels_vif,
+              datasets: [{
+                label: 'Variance Inflation Factor',
+                backgroundColor: [
+                  {% for i in range(length_items_lv) %}
+                    chartColors.green,
+                  {% endfor %}
+                ],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [{% for vif in corevariable_vif_js %} {{ vif }}, {% endfor %}]
+              }]
+          };
+
+          var colorChangeValue = 5; //set this to whatever is the deciding color change value
+          var dataset = data_vif.datasets[0];
+          for (var i = 0; i < dataset.data.length; i++) {
+            if (dataset.data[i] > colorChangeValue) {
+              dataset.backgroundColor[i] = chartColors.red;
+            }
+          };
+
+          const config_vif = {
+              type: 'bar',
+              data: data_vif,
+              options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                maintainAspectRatio: false,
+                scales: {
+                  x: {
+                      barPercentage: 0.4
+                  },
+                  y: {
+                    beginAtZero: true,
+                    max: 15,
+                    grid: {
+                      drawBorder: false,
+                      color: function(context) {
+                        if (context.tick.value == 5) {
+                          return '#009900';
+                        }
+                        return '#C2C2C2';
+                      },
+                    },
+                  }
+                }
+              },
+          };
+
+          const chart_vif = new Chart(
+            document.getElementById('chart_vif'),
+            config_vif
+          );
 
   </script>
 

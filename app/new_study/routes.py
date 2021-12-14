@@ -15,8 +15,7 @@ from app.new_study.forms import CreateNewStudyForm, CreateNewCoreVariableForm, C
     CreateNewQuestion, ChooseNewModel, AddCoreVariable, EditStudyForm, AddDemographic, AddUserForm, ScaleForm, \
     CreateNewDemographicForm
 from app.new_study.functions import variance, cronbachs_alpha, composite_reliability, average_variance_extracted, \
-    covariance, \
-    pearson_correlation, correlation_matrix, heterotrait_monotrait, htmt_matrix
+    covariance, pearson_correlation, correlation_matrix, heterotrait_monotrait, htmt_matrix, outer_vif_values_dict
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.tools.tools import add_constant
 
@@ -862,33 +861,9 @@ def data_analysis(study_code):
     data_htmt = htmt_matrix(df, model)
     amount_of_variables = len(corevariables)
 
-    # Buitenste VIF-waarden worden hier beschikbaar gemaakt in een dictionary onder "data_outer_vif"
-    abbreviations_by_lv = []
-    questiongroups = [questiongroup for questiongroup in
-                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
-    for questiongroup in questiongroups:
-        questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
-        abbreviations_by_lv.append([question.question_code for question in questions])
-
-    dataframes_vif = []
-    for questiongroup in abbreviations_by_lv:
-        X = add_constant(df[questiongroup])
-        # VIF dataframe
-        vif_data = pd.DataFrame()
-        vif_data["feature"] = X.columns
-
-        # calculating VIF for each feature
-        vif_data["VIF"] = [variance_inflation_factor(X.values, i)
-                           for i in range(len(X.columns))]
-
-        dataframes_vif.append(vif_data)
-
-    result = pd.concat(dataframes_vif)
-    result_outer_vif = result[result.feature != 'const']
-
-    data_outer_vif = {}
-    for i in range(len(result_outer_vif)):
-        data_outer_vif[result_outer_vif.iloc[i]['feature']] = round(float(result_outer_vif.iloc[i]['VIF']), 4)
+    # Buitenste VIF-waarden worden hier beschikbaar gemaakt in een dictionary onder "data_outer_vif". Module bovenaan
+    # geïmporteerd.
+    data_outer_vif = outer_vif_values_dict(df, questionnaire)
 
     return render_template('new_study/data_analysis.html', study_code=study_code,
                            data_construct_validity=data_construct_validity, data_outer_vif=data_outer_vif,
@@ -913,12 +888,19 @@ def corevariable_analysis(study_code, corevariable_id):
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
     corevariables = [corevariable for corevariable in model.linked_corevariables]
-
+    questiongroups = [questiongroup for questiongroup in
+                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    length_abbreviation = len(corevariable.abbreviation)
+    items_lv = []
+    length_items_lv = len(items_lv)
+    for questiongroup in questiongroups:
+        for question in Question.query.filter_by(questiongroup_id=questiongroup.id):
+            if question.question_code[:length_abbreviation] == corevariable.abbreviation:
+                items_lv.append(question.question_code)
     # Set up dataframe
     list_of_questions = []
     list_of_answers = []
-    questiongroups = [questiongroup for questiongroup in
-                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+
 
     for questiongroup in questiongroups:
         questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
@@ -965,11 +947,16 @@ def corevariable_analysis(study_code, corevariable_id):
     length_corevariables = len(corevariable_names_js_all)
 
     # Voor drie kernvariabelen
+
+    # VIF-waarden
     corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
+    dct_of_all_vifs = outer_vif_values_dict(df, questionnaire)
+    corevariable_vif_js = [dct_of_all_vifs[key] for key in dct_of_all_vifs if key[:length_abbreviation] ==
+                           corevariable.abbreviation]
+
     indexes_corevariables = []
     for corevariable in corevariables:
         if corevariable.id == int(corevariable_id):
-
             if corevariables.index(corevariable) == 0:
                 indexes_corevariables = [0, 1, 2]
             elif corevariables.index(corevariable) == len(corevariables) - 1:
@@ -994,115 +981,7 @@ def corevariable_analysis(study_code, corevariable_id):
                            corevariables=corevariables, corevariable_names_js=corevariable_names_js,
                            corevariable_ave_js=corevariable_ave_js, corevariable_ca_js=corevariable_ca_js,
                            corevariable_cr_js=corevariable_cr_js, corevariable_names_js_all=corevariable_names_js_all,
-                           corevariable_ave_js_all=corevariable_ave_js_all,
-                           corevariable_ca_js_all=corevariable_ca_js_all,
+                           corevariable_ave_js_all=corevariable_ave_js_all, items_lv=items_lv, length_items_lv=length_items_lv,
+                           corevariable_ca_js_all=corevariable_ca_js_all, corevariable_vif_js=corevariable_vif_js,
                            corevariable_cr_js_all=corevariable_cr_js_all, length_corevariables=length_corevariables)
 
-
-@bp.route('/data_analysis/test/<study_code>/<corevariable_id>', methods=['GET', 'POST'])
-@login_required
-def test(study_code, corevariable_id):
-    study = Study.query.filter_by(code=study_code).first()
-    if current_user not in study.linked_users:
-        return redirect(url_for('main.not_authorized'))
-
-    # check access to stage
-    if study.stage_1:
-        return redirect(url_for('new_study.utaut', study_code=study_code))
-    if study.stage_2:
-        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
-
-    questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
-    model = UTAUTmodel.query.filter_by(id=study.model_id).first()
-    corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
-    corevariables = [corevariable for corevariable in model.linked_corevariables]
-
-    # Set up dataframe
-    list_of_questions = []
-    list_of_answers = []
-    questiongroups = [questiongroup for questiongroup in
-                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
-
-    for questiongroup in questiongroups:
-        questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
-        for question in questions:
-            list_of_questions.append(question.question_code)
-            answers_question = []
-            for answer in [answer for answer in Answer.query.filter_by(question_id=question.id)]:
-                answers_question.append(answer.score)
-            list_of_answers.append(answers_question)
-    df = pd.DataFrame(list_of_answers).transpose()
-    df.columns = list_of_questions
-
-    structure = c.Structure()
-    for corevariable in corevariables:
-        influenced_variables = []
-        for relation in [relation for relation in Relation.query.filter_by(model_id=model.id)]:
-            if relation.influencer_id == corevariable.id:
-                influenced = CoreVariable.query.filter_by(id=relation.influenced_id).first()
-                influenced_variables.append(influenced.abbreviation)
-        if len(influenced_variables) > 0:
-            structure.add_path([corevariable.abbreviation], influenced_variables)
-
-    config = c.Config(structure.path(), scaled=False)
-
-    for corevariable in corevariables:
-        config.add_lv_with_columns_named(corevariable.abbreviation, Mode.A, df, corevariable.abbreviation)
-
-    plspm_calc = Plspm(df, config, Scheme.CENTROID)
-
-    # Inner-VIF Values
-    abbreviations_by_lv = []
-    questiongroups = [questiongroup for questiongroup in
-                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
-    for questiongroup in questiongroups:
-        questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
-        abbreviations_by_lv.append([question.question_code for question in questions])
-
-    dataframes_vif = []
-    for questiongroup in abbreviations_by_lv:
-        X = add_constant(df[questiongroup])
-        # VIF dataframe
-        vif_data = pd.DataFrame()
-        vif_data["feature"] = X.columns
-
-        # calculating VIF for each feature
-        vif_data["VIF"] = [variance_inflation_factor(X.values, i)
-                           for i in range(len(X.columns))]
-
-        dataframes_vif.append(vif_data)
-
-    result = pd.concat(dataframes_vif)
-    result_outer_vif = result[result.feature != 'const']
-
-    # Outer-VIF Values
-    data = {}
-    for corevariable in corevariables:
-        length_abbreviation = len(corevariable.abbreviation)
-        data[corevariable.abbreviation] = []
-
-        list_of_dicts = [df.iloc[i].to_dict() for i in range(len(df))]
-        for dct in list_of_dicts:
-            total = 0
-            for key in dct:
-                if key[:length_abbreviation] == corevariable.abbreviation:
-                    total += int(dct[key])
-            data[corevariable.abbreviation].append(total)
-    x = pd.DataFrame(data)
-
-    X = add_constant(x)
-    # VIF dataframe
-    vif_data = pd.DataFrame()
-    vif_data["feature"] = X.columns
-
-    # calculating VIF for each feature
-    vif_data["VIF"] = [variance_inflation_factor(X.values, i)
-                       for i in range(len(X.columns))]
-
-    data_outer_vif = {}
-    for i in range(len(result_outer_vif)):
-        data_outer_vif[result_outer_vif.iloc[i]['feature']] = round(int(result_outer_vif.iloc[i]['VIF']), 3)
-
-    return render_template('new_study/test.html', study_code=study_code, corevariable=corevariable,
-                           corevariables=corevariables, result_outer_vif=result_outer_vif,
-                           data_outer_vif=data_outer_vif)

@@ -117,3 +117,5 @@ AttributeError: 'DataFrame' object has no attribute 'linked_corevariables'
 2021-12-14 14:38:06,624 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
 2021-12-14 14:39:30,995 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
 2021-12-14 14:47:54,199 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-14 16:07:24,260 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-14 16:44:10,892 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]

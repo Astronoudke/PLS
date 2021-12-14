@@ -7,8 +7,9 @@ from plspm.mode import Mode
 import math
 import pandas as pd
 import numpy as np
-
-from app.models import Study
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.tools.tools import add_constant
+from app.models import Study, Question, QuestionGroup
 
 
 def check_authorization(name_study):
@@ -219,3 +220,34 @@ def htmt_matrix(dataset, model):
     df = df.transpose()
 
     return df
+
+
+def outer_vif_values_dict(dataset, questionnaire):
+    abbreviations_by_lv = []
+    questiongroups = [questiongroup for questiongroup in
+                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    for questiongroup in questiongroups:
+        questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
+        abbreviations_by_lv.append([question.question_code for question in questions])
+
+    dataframes_vif = []
+    for questiongroup in abbreviations_by_lv:
+        X = add_constant(dataset[questiongroup])
+        # VIF dataframe
+        vif_data = pd.DataFrame()
+        vif_data["feature"] = X.columns
+
+        # calculating VIF for each feature
+        vif_data["VIF"] = [variance_inflation_factor(X.values, i)
+                           for i in range(len(X.columns))]
+
+        dataframes_vif.append(vif_data)
+
+    result = pd.concat(dataframes_vif)
+    result_outer_vif = result[result.feature != 'const']
+
+    data_outer_vif = {}
+    for i in range(len(result_outer_vif)):
+        data_outer_vif[result_outer_vif.iloc[i]['feature']] = round(float(result_outer_vif.iloc[i]['VIF']), 4)
+
+    return data_outer_vif
