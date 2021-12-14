@@ -18,6 +18,7 @@ from app.new_study.functions import variance, cronbachs_alpha, composite_reliabi
     covariance, \
     pearson_correlation, correlation_matrix, heterotrait_monotrait, htmt_matrix
 from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.tools.tools import add_constant
 
 
 #############################################################################################################
@@ -822,17 +823,7 @@ def data_analysis(study_code):
 
     df = pd.DataFrame(list_of_answers).transpose()
     df.columns = list_of_questions
-    print(df)
 
-    X = df[[i for i in df]]
-    vif_data = pd.DataFrame()
-    vif_data["feature"] = X.columns
-
-    # calculating VIF for each feature
-    vif_data["VIF"] = [variance_inflation_factor(X.values, i)
-                       for i in range(len(X.columns))]
-
-    print(vif_data)
     structure = c.Structure()
 
     for corevariable in corevariables:
@@ -922,14 +913,15 @@ def corevariable_analysis(study_code, corevariable_id):
     construct_data = [[round(cronbachs_alpha(corevariable, df), 4),
                        round(composite_reliability(corevariable, df, config, Scheme.CENTROID), 4),
                        round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4)] for corevariable
-                       in corevariables]
+                      in corevariables]
 
     # Voor alle kernvariabelen
     corevariable_names_js_all = [corevariable for corevariable in model.linked_corevariables]
     corevariable_ave_js_all = [round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4) for
                                corevariable in corevariables]
     corevariable_ca_js_all = [round(cronbachs_alpha(corevariable, df), 4) for corevariable in corevariables]
-    corevariable_cr_js_all = [round(composite_reliability(corevariable, df, config, Scheme.CENTROID), 4) for corevariable
+    corevariable_cr_js_all = [round(composite_reliability(corevariable, df, config, Scheme.CENTROID), 4) for
+                              corevariable
                               in corevariables]
 
     length_corevariables = len(corevariable_names_js_all)
@@ -964,5 +956,89 @@ def corevariable_analysis(study_code, corevariable_id):
                            corevariables=corevariables, corevariable_names_js=corevariable_names_js,
                            corevariable_ave_js=corevariable_ave_js, corevariable_ca_js=corevariable_ca_js,
                            corevariable_cr_js=corevariable_cr_js, corevariable_names_js_all=corevariable_names_js_all,
-                           corevariable_ave_js_all=corevariable_ave_js_all, corevariable_ca_js_all=corevariable_ca_js_all,
+                           corevariable_ave_js_all=corevariable_ave_js_all,
+                           corevariable_ca_js_all=corevariable_ca_js_all,
                            corevariable_cr_js_all=corevariable_cr_js_all, length_corevariables=length_corevariables)
+
+
+@bp.route('/data_analysis/test/<study_code>/<corevariable_id>', methods=['GET', 'POST'])
+@login_required
+def test(study_code, corevariable_id):
+    study = Study.query.filter_by(code=study_code).first()
+    if current_user not in study.linked_users:
+        return redirect(url_for('main.not_authorized'))
+
+    # check access to stage
+    if study.stage_1:
+        return redirect(url_for('new_study.utaut', study_code=study_code))
+    if study.stage_2:
+        return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
+
+    questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+    model = UTAUTmodel.query.filter_by(id=study.model_id).first()
+    corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
+    corevariables = [corevariable for corevariable in model.linked_corevariables]
+
+    abbreviations_by_lv = []
+    questiongroups = [questiongroup for questiongroup in
+                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    for questiongroup in questiongroups:
+        questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
+        abbreviations_by_lv.append([question.question_code for question in questions])
+
+    print(abbreviations_by_lv)
+    # Set up dataframe
+    list_of_questions = []
+    list_of_answers = []
+    questiongroups = [questiongroup for questiongroup in
+                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+
+    for questiongroup in questiongroups:
+        questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
+        for question in questions:
+            list_of_questions.append(question.question_code)
+            answers_question = []
+            for answer in [answer for answer in Answer.query.filter_by(question_id=question.id)]:
+                answers_question.append(answer.score)
+            list_of_answers.append(answers_question)
+    df = pd.DataFrame(list_of_answers).transpose()
+    df.columns = list_of_questions
+
+    structure = c.Structure()
+    for corevariable in corevariables:
+        influenced_variables = []
+        for relation in [relation for relation in Relation.query.filter_by(model_id=model.id)]:
+            if relation.influencer_id == corevariable.id:
+                influenced = CoreVariable.query.filter_by(id=relation.influenced_id).first()
+                influenced_variables.append(influenced.abbreviation)
+        if len(influenced_variables) > 0:
+            structure.add_path([corevariable.abbreviation], influenced_variables)
+
+    config = c.Config(structure.path(), scaled=False)
+
+    for corevariable in corevariables:
+        config.add_lv_with_columns_named(corevariable.abbreviation, Mode.A, df, corevariable.abbreviation)
+
+    plspm_calc = Plspm(df, config, Scheme.CENTROID)
+
+    construct_data = [[round(cronbachs_alpha(corevariable, df), 4),
+                       round(composite_reliability(corevariable, df, config, Scheme.CENTROID), 4),
+                       round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4)] for corevariable
+                      in corevariables]
+
+    for questiongroup in abbreviations_by_lv:
+        X = add_constant(df[questiongroup])
+        # VIF dataframe
+        vif_data = pd.DataFrame()
+        vif_data["feature"] = X.columns
+
+        # calculating VIF for each feature
+        vif_data["VIF"] = [variance_inflation_factor(X.values, i)
+                           for i in range(len(X.columns))]
+
+        print(vif_data)
+    # Voor drie kernvariabelen
+    corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
+
+    return render_template('new_study/test.html', study_code=study_code, corevariable=corevariable,
+                           corevariables=corevariables)
