@@ -5,11 +5,36 @@
   <div class="title-box">
     <h1>Construct validity and reliability</h1>
   </div>
+
+  <!-- Tabel voor construct validiteit en betrouwbaarheid -->
   <section class="wrapper">
     <!-- Row title -->
     <main class="row title">
       <ul>
-        <li>Latent Variable <div class="tooltip">&#x1F6C8;<span class="tooltiptext">Tooltip text</span></div></li>
+        <li>Latent Variable</li>
+        <li>Loadings</li>
+      </ul>
+    </main>
+    <!-- Row 1 - fadeIn -->
+    {% set dictionary = loadings_dct %}
+    {% for item in dictionary %}
+    <section class="row-fadeIn-wrapper">
+      <article class="row fadeIn nfl">
+        <ul>
+          <li>{{ item }}</li>
+          <li>{{ dictionary[item] }}</li>
+        </ul>
+      </article>
+    </section>
+    {% endfor %}
+  </section>
+
+  <!-- Tabel voor construct validiteit en betrouwbaarheid -->
+  <section class="wrapper">
+    <!-- Row title -->
+    <main class="row title">
+      <ul>
+        <li>Latent Variable</li>
         <li>Cronbach's Alpha</li>
         <li>Composite Reliability</li>
         <li>AVE</li>
@@ -21,7 +46,7 @@
     <section class="row-fadeIn-wrapper">
       <article class="row fadeIn nfl">
         <ul>
-          <li><a onclick="window.location.href='{{ url_for('new_study.corevariable_analysis', study_code=study.code, corevariable_id=variable.id) }}';">{{ variable.name }}</a></li>
+          <li class="clickable-lv"><a onclick="window.location.href='{{ url_for('new_study.corevariable_analysis', study_code=study.code, corevariable_id=variable.id) }}';">{{ variable.name }}</a></li>
           <li>{{ dictionary[variable][0] }}</li>
           <li>{{ dictionary[variable][1] }}</li>
           <li>{{ dictionary[variable][2] }}</li>
@@ -33,6 +58,37 @@
     </section>
     {% endfor %}
   </section>
+
+  <!-- Tabel voor VIF-waarden -->
+  <section class="section-htmt">
+      <!--for demo wrap-->
+      <h1>Variance Inflation Factor</h1>
+      <div class="tbl-header">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>VIF-value</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <div class="tbl-content">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tbody>
+            {% set dictionary = data_outer_vif %}
+            {% for item in dictionary %}
+                <tr>
+                    <th>{{ item }}</th>
+                    <td>{{ dictionary[item] }}</td>
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+  </section>
+
+  <!-- Tabel voor HTMT -->
   <section class="section-htmt">
       <!--for demo wrap-->
       <h1>Heterotrait-Monotrait Ratio</h1>

@@ -449,3 +449,7 @@ td{
 .section-htmt {
   margin: 50px;
 }
+
+.clickable-lv {
+  cursor: pointer;
+}

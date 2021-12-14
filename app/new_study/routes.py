@@ -841,7 +841,14 @@ def data_analysis(study_code):
         config.add_lv_with_columns_named(corevariable.abbreviation, Mode.A, df, corevariable.abbreviation)
 
     plspm_calc = Plspm(df, config, Scheme.CENTROID)
+    model1 = plspm_calc.outer_model()
 
+    # Creëer dictionary met alleen loadings van latente variabele
+    loadings_dct = pd.DataFrame(model1['loading']).to_dict('dict')['loading']
+    for i in loadings_dct:
+        loadings_dct[i] = round(float(loadings_dct[i]), 4)
+
+    # Alle data voor AVE, Cronbachs Alpha en Composite Reliability wordt hier opgesteld. Modules bovenaan geïmporteerd.
     data_construct_validity = {}
     for corevariable in corevariables:
         data_construct_validity[corevariable] = [round(cronbachs_alpha(corevariable, df), 4),
@@ -850,12 +857,43 @@ def data_analysis(study_code):
                                                  round(average_variance_extracted(corevariable, df, config,
                                                                                   Scheme.CENTROID), 4)]
 
+    # Een matrix van Heterotrait-Monotrait Ratio wordt hier beschikbaar gemaakt (module "htmt_matrix" staat bovenaan
+    # verwezen.
     data_htmt = htmt_matrix(df, model)
     amount_of_variables = len(corevariables)
 
+    # Buitenste VIF-waarden worden hier beschikbaar gemaakt in een dictionary onder "data_outer_vif"
+    abbreviations_by_lv = []
+    questiongroups = [questiongroup for questiongroup in
+                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    for questiongroup in questiongroups:
+        questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
+        abbreviations_by_lv.append([question.question_code for question in questions])
+
+    dataframes_vif = []
+    for questiongroup in abbreviations_by_lv:
+        X = add_constant(df[questiongroup])
+        # VIF dataframe
+        vif_data = pd.DataFrame()
+        vif_data["feature"] = X.columns
+
+        # calculating VIF for each feature
+        vif_data["VIF"] = [variance_inflation_factor(X.values, i)
+                           for i in range(len(X.columns))]
+
+        dataframes_vif.append(vif_data)
+
+    result = pd.concat(dataframes_vif)
+    result_outer_vif = result[result.feature != 'const']
+
+    data_outer_vif = {}
+    for i in range(len(result_outer_vif)):
+        data_outer_vif[result_outer_vif.iloc[i]['feature']] = round(float(result_outer_vif.iloc[i]['VIF']), 4)
+
     return render_template('new_study/data_analysis.html', study_code=study_code,
-                           data_construct_validity=data_construct_validity,
-                           data_htmt=data_htmt, amount_of_variables=amount_of_variables, study=study)
+                           data_construct_validity=data_construct_validity, data_outer_vif=data_outer_vif,
+                           data_htmt=data_htmt, amount_of_variables=amount_of_variables, study=study,
+                           loadings_dct=loadings_dct)
 
 
 @bp.route('/data_analysis/corevariable_analysis/<study_code>/<corevariable_id>', methods=['GET', 'POST'])
@@ -979,14 +1017,6 @@ def test(study_code, corevariable_id):
     corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
     corevariables = [corevariable for corevariable in model.linked_corevariables]
 
-    abbreviations_by_lv = []
-    questiongroups = [questiongroup for questiongroup in
-                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
-    for questiongroup in questiongroups:
-        questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
-        abbreviations_by_lv.append([question.question_code for question in questions])
-
-    print(abbreviations_by_lv)
     # Set up dataframe
     list_of_questions = []
     list_of_answers = []
@@ -1021,11 +1051,15 @@ def test(study_code, corevariable_id):
 
     plspm_calc = Plspm(df, config, Scheme.CENTROID)
 
-    construct_data = [[round(cronbachs_alpha(corevariable, df), 4),
-                       round(composite_reliability(corevariable, df, config, Scheme.CENTROID), 4),
-                       round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4)] for corevariable
-                      in corevariables]
+    # Inner-VIF Values
+    abbreviations_by_lv = []
+    questiongroups = [questiongroup for questiongroup in
+                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    for questiongroup in questiongroups:
+        questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
+        abbreviations_by_lv.append([question.question_code for question in questions])
 
+    dataframes_vif = []
     for questiongroup in abbreviations_by_lv:
         X = add_constant(df[questiongroup])
         # VIF dataframe
@@ -1036,9 +1070,39 @@ def test(study_code, corevariable_id):
         vif_data["VIF"] = [variance_inflation_factor(X.values, i)
                            for i in range(len(X.columns))]
 
-        print(vif_data)
-    # Voor drie kernvariabelen
-    corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
+        dataframes_vif.append(vif_data)
+
+    result = pd.concat(dataframes_vif)
+    result_outer_vif = result[result.feature != 'const']
+
+    # Outer-VIF Values
+    data = {}
+    for corevariable in corevariables:
+        length_abbreviation = len(corevariable.abbreviation)
+        data[corevariable.abbreviation] = []
+
+        list_of_dicts = [df.iloc[i].to_dict() for i in range(len(df))]
+        for dct in list_of_dicts:
+            total = 0
+            for key in dct:
+                if key[:length_abbreviation] == corevariable.abbreviation:
+                    total += int(dct[key])
+            data[corevariable.abbreviation].append(total)
+    x = pd.DataFrame(data)
+
+    X = add_constant(x)
+    # VIF dataframe
+    vif_data = pd.DataFrame()
+    vif_data["feature"] = X.columns
+
+    # calculating VIF for each feature
+    vif_data["VIF"] = [variance_inflation_factor(X.values, i)
+                       for i in range(len(X.columns))]
+
+    data_outer_vif = {}
+    for i in range(len(result_outer_vif)):
+        data_outer_vif[result_outer_vif.iloc[i]['feature']] = round(int(result_outer_vif.iloc[i]['VIF']), 3)
 
     return render_template('new_study/test.html', study_code=study_code, corevariable=corevariable,
-                           corevariables=corevariables)
+                           corevariables=corevariables, result_outer_vif=result_outer_vif,
+                           data_outer_vif=data_outer_vif)
