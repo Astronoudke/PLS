@@ -217,7 +217,6 @@ def htmt_matrix(dataset, model):
                     heterotrait_monotrait(corevariable, cv2, correlation_matrix(dataset), dataset),4))
 
     df = pd.DataFrame(data, index=[corevariable.abbreviation for corevariable in corevariables])
-    df = df.transpose()
 
     return df
 

@@ -843,9 +843,18 @@ def data_analysis(study_code):
     model1 = plspm_calc.outer_model()
 
     # Creëer dictionary met alleen loadings van latente variabele
+    # KIJKEN NAAR CODEFORMAT
     loadings_dct = pd.DataFrame(model1['loading']).to_dict('dict')['loading']
-    for i in loadings_dct:
-        loadings_dct[i] = round(float(loadings_dct[i]), 4)
+    for code in loadings_dct:
+        loadings_dct[code] = round(float(loadings_dct[code]), 4)
+        possible_questions = Question.query.filter_by(question_code=code)
+        actual_question = None
+        for question in possible_questions:
+            questiongroup = QuestionGroup.query.filter_by(id=question.questiongroup_id).first()
+            if questiongroup.questionnaire_id == questionnaire.id:
+                actual_question = Question.query.filter_by(questiongroup_id=questiongroup.id, question_code=code).first()
+                break
+        loadings_dct[code] = [actual_question.question, loadings_dct[code]]
 
     # Alle data voor AVE, Cronbachs Alpha en Composite Reliability wordt hier opgesteld. Modules bovenaan geïmporteerd.
     data_construct_validity = {}

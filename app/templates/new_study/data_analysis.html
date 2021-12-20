@@ -3,125 +3,177 @@
 {% block app_content %}
   <link rel="stylesheet" href="{{ url_for('static', filename='style_data_analysis.css') }}">
   <div class="title-box">
-    <h1>Construct validity and reliability</h1>
+    <h1>Data-analysis using PLS-SEM</h1>
   </div>
 
-  <!-- Tabel voor construct validiteit en betrouwbaarheid -->
-  <section class="wrapper">
-    <!-- Row title -->
-    <main class="row title">
-      <ul>
-        <li>Latent Variable</li>
-        <li>Loadings</li>
-      </ul>
-    </main>
-    <!-- Row 1 - fadeIn -->
-    {% set dictionary = loadings_dct %}
-    {% for item in dictionary %}
-    <section class="row-fadeIn-wrapper">
-      <article class="row fadeIn nfl">
+  <div class="tab">
+    <button class="tablinks" onclick="openCity(event, 'ConstructValidity')">Construct Validity and Reliability</button>
+    <button class="tablinks" onclick="openCity(event, 'DiscriminantValidity')">Discriminant Validity</button>
+    <button class="tablinks" onclick="openCity(event, 'Multicollinearity')">Multicollinearity</button>
+  </div>
+
+  <div id="ConstructValidity" class="tabcontent">
+    <!-- Tabel voor construct validiteit en betrouwbaarheid -->
+    <section class="wrapper">
+      <!-- Row title -->
+      <main class="row title">
         <ul>
-          <li>{{ item }}</li>
-          <li>{{ dictionary[item] }}</li>
+          <li>Latent Variable</li>
+          <li>Cronbach's Alpha</li>
+          <li>Composite Reliability</li>
+          <li>AVE</li>
         </ul>
-      </article>
-    </section>
-    {% endfor %}
-  </section>
+      </main>
+      <!-- Row 1 - fadeIn -->
+      {% set dictionary = data_construct_validity %}
+      {% for variable in dictionary %}
+      <section class="row-fadeIn-wrapper">
+        <article class="row fadeIn nfl">
+          <ul>
+            <li class="clickable-lv"><a onclick="window.location.href='{{ url_for('new_study.corevariable_analysis', study_code=study.code, corevariable_id=variable.id) }}';">{{ variable.name }}</a></li>
+            {% set value = dictionary[variable][0] | float() %}
+            {% if value >= 0.7 %}
+              <li style="color:rgb(100, 255, 94)">{{ value }}</li>
+            {% else %}
+              <li style="color:rgb(255, 79, 79)">{{ dictionary[variable][0] }}</li>
+            {% endif %}
 
-  <!-- Tabel voor construct validiteit en betrouwbaarheid -->
-  <section class="wrapper">
-    <!-- Row title -->
-    <main class="row title">
-      <ul>
-        <li>Latent Variable</li>
-        <li>Cronbach's Alpha</li>
-        <li>Composite Reliability</li>
-        <li>AVE</li>
-      </ul>
-    </main>
-    <!-- Row 1 - fadeIn -->
-    {% set dictionary = data_construct_validity %}
-    {% for variable in dictionary %}
-    <section class="row-fadeIn-wrapper">
-      <article class="row fadeIn nfl">
+            {% set value = dictionary[variable][1] | float() %}
+            {% if value >= 0.7 %}
+              <li style="color:rgb(100, 255, 94)">{{ value }}</li>
+            {% else %}
+              <li style="color:rgb(255, 79, 79)">{{ value }}</li>
+            {% endif %}
+
+            {% set value = dictionary[variable][2] | float() %}
+            {% if value >= 0.5 %}
+              <li style="color:rgb(100, 255, 94)">{{ value }}</li>
+            {% else %}
+              <li style="color:rgb(255, 79, 79)">{{ value }}</li>
+            {% endif %}
+          </ul>
+          <ul class="more-content">
+            <li>{{ variable.description }}</li>
+          </ul>
+        </article>
+      </section>
+      {% endfor %}
+    </section>
+
+    <!-- Tabel voor items -->
+    <section class="wrapper">
+      <!-- Row title -->
+      <main class="row title">
         <ul>
-          <li class="clickable-lv"><a onclick="window.location.href='{{ url_for('new_study.corevariable_analysis', study_code=study.code, corevariable_id=variable.id) }}';">{{ variable.name }}</a></li>
-          <li>{{ dictionary[variable][0] }}</li>
-          <li>{{ dictionary[variable][1] }}</li>
-          <li>{{ dictionary[variable][2] }}</li>
+          <li>Item</li>
+          <li>Loading</li>
         </ul>
-        <ul class="more-content">
-          <li>{{ variable.description }}</li>
-        </ul>
-      </article>
+      </main>
+      <!-- Row 1 - fadeIn -->
+      {% set dictionary = loadings_dct %}
+      {% for item in dictionary %}
+      <section class="row-fadeIn-wrapper">
+        <article class="row fadeIn nfl">
+          <ul>
+            <li>{{ item }}</li>
+            {% set value = dictionary[item][1] | float() %}
+            {% if value >= 0.5 %}
+              <li style="color:rgb(100, 255, 94)">{{ value }}</li>
+            {% else %}
+              <li style="color:rgb(255, 79, 79)">{{ value }}</li>
+            {% endif %}
+          </ul>
+          <ul class="more-content">
+            <li>{{ dictionary[item][0] }}</li>
+          </ul>
+        </article>
+      </section>
+      {% endfor %}
     </section>
-    {% endfor %}
-  </section>
+  </div>
 
-  <!-- Tabel voor VIF-waarden -->
-  <section class="section-htmt">
-      <!--for demo wrap-->
-      <h1>Variance Inflation Factor</h1>
-      <div class="tbl-header">
-        <table cellpadding="0" cellspacing="0" border="0">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>VIF-value</th>
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div class="tbl-content">
-        <table cellpadding="0" cellspacing="0" border="0">
-          <tbody>
-            {% set dictionary = data_outer_vif %}
-            {% for item in dictionary %}
-                <tr>
-                    <th>{{ item }}</th>
-                    <td>{{ dictionary[item] }}</td>
-                </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-  </section>
-
-  <!-- Tabel voor HTMT -->
-  <section class="section-htmt">
-      <!--for demo wrap-->
-      <h1>Heterotrait-Monotrait Ratio</h1>
-      <div class="tbl-header">
-        <table cellpadding="0" cellspacing="0" border="0">
-          <thead>
-            <tr>
-              <th></th>
+  <div id="DiscriminantValidity" class="tabcontent">
+    <!-- Tabel voor HTMT -->
+    <section class="section-htmt">
+        <!--for demo wrap-->
+        <h1>Heterotrait-Monotrait Ratio</h1>
+        <div class="tbl-header">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <thead>
+              <tr>
+                <th></th>
+                {% set dictionary = data_htmt %}
+                {% for variable in dictionary %}
+                  <th>{{ variable }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="tbl-content">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
               {% set dictionary = data_htmt %}
               {% for variable in dictionary %}
-                <th>{{ variable }}</th>
+                  <tr>
+                      <th>{{ variable }}</th>
+                      {% for i in range(amount_of_variables) %}
+                          {% set value = dictionary[variable][i] | float() %}
+                          {% if value < 0.85 and value != 0 %}
+                            <td style="color:rgb(100, 255, 94)">{{ value }}</td>
+                          {% elif value >= 0.85 and value != 0 %}
+                            <td style="color:rgb(255, 79, 79)">{{ value }}</td>
+                          {% endif %}
+                      {% endfor %}
+                  </tr>
               {% endfor %}
-            </tr>
-          </thead>
-        </table>
-      </div>
-      <div class="tbl-content">
-        <table cellpadding="0" cellspacing="0" border="0">
-          <tbody>
-            {% set dictionary = data_htmt %}
-            {% for variable in dictionary %}
-                <tr>
-                    <th>{{ variable }}</th>
-                    {% for i in range(amount_of_variables) %}
-                        <td>{{ dictionary[variable][i] }}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-  </section>
+            </tbody>
+          </table>
+        </div>
+    </section>
+  </div>
+
+  <!-- Tabel voor VIF-waarden -->
+
+  <div id="Multicollinearity" class="tabcontent">
+    <section class="section-htmt">
+        <!--for demo wrap-->
+        <h1>Variance Inflation Factor</h1>
+        <div class="tbl-header">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>VIF-value</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+        <div class="tbl-content">
+          <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+              {% set dictionary = data_outer_vif %}
+              {% for item in dictionary %}
+                  <tr>
+                      <th>{{ item }}</th>
+                      {% set value = dictionary[item] | float() %}
+                      {% if value < 3 %}
+                        <td style="color:rgb(100, 255, 94)">{{ value }}</td>
+                      {% elif 3 < value < 5 %}
+                        <td style="color:rgb(255, 185, 64)">{{ value }}</td>
+                      {% else %}
+                        <td style="color:rgb(255, 79, 79)">{{ value }}</td>
+                      {% endif %}
+                  </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+    </section>
+  </div>
+
 {% endblock %}
 
 {% block scripts %}
+  <script src="{{ url_for('static', filename='script_data_analysis.js') }}"></script>
 {% endblock %}
