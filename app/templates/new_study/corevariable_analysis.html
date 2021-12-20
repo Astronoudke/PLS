@@ -54,6 +54,16 @@
       </div>
     </div>
   </div>
+  <div class="graphics-box" id="button-loadings">
+    <div class="graphic-box">
+      <div class="graphic-namebox">
+        <p class="graphic-name">Loadings</p>
+      </div>
+      <div class="graphic-graphbox">
+        <canvas id="chart_loadings"></canvas>
+      </div>
+    </div>
+  </div>
 
   <div class="full-graphic-background" id="overlay-back-ave"></div>
   <div class="full-graphic-box" id="overlay-ave">
@@ -593,12 +603,12 @@
                   },
                   y: {
                     beginAtZero: true,
-                    max: 15,
+                    max: 10,
                     grid: {
                       drawBorder: false,
                       color: function(context) {
                         if (context.tick.value == 5) {
-                          return '#009900';
+                          return 'rgb(199, 13, 0)';
                         }
                         return '#C2C2C2';
                       },
@@ -611,6 +621,70 @@
           const chart_vif = new Chart(
             document.getElementById('chart_vif'),
             config_vif
+          );
+
+      /* Loadings-items table */
+          const labels_loadings = [
+              {% for item in items_lv %}
+                '{{ item }}',
+              {% endfor %}
+          ];
+          var data_loadings = {
+              labels: labels_loadings,
+              datasets: [{
+                label: 'Loading',
+                backgroundColor: [
+                  {% for i in range(length_items_lv) %}
+                    chartColors.green,
+                  {% endfor %}
+                ],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [{% for loading in loadings_list %} {{ loading }}, {% endfor %}]
+              }]
+          };
+
+          var colorChangeValue = 0.7; //set this to whatever is the deciding color change value
+          var dataset = data_loadings.datasets[0];
+          for (var i = 0; i < dataset.data.length; i++) {
+            if (dataset.data[i] < colorChangeValue) {
+              dataset.backgroundColor[i] = chartColors.red;
+            }
+          };
+
+          const config_loadings = {
+              type: 'bar',
+              data: data_loadings,
+              options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                maintainAspectRatio: false,
+                scales: {
+                  x: {
+                      barPercentage: 0.4
+                  },
+                  y: {
+                    beginAtZero: true,
+                    max: 1,
+                    grid: {
+                      drawBorder: false,
+                      color: function(context) {
+                        if (context.tick.value == 0.7) {
+                          return '#009900';
+                        }
+                        return '#C2C2C2';
+                      },
+                    },
+                  }
+                }
+              },
+          };
+
+          const chart_loadings = new Chart(
+            document.getElementById('chart_loadings'),
+            config_loadings
           );
 
   </script>

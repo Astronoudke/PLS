@@ -7,9 +7,9 @@
   </div>
 
   <div class="tab">
-    <button class="tablinks" onclick="openCity(event, 'ConstructValidity')">Construct Validity and Reliability</button>
-    <button class="tablinks" onclick="openCity(event, 'DiscriminantValidity')">Discriminant Validity</button>
-    <button class="tablinks" onclick="openCity(event, 'Multicollinearity')">Multicollinearity</button>
+    <button class="tablinks" onclick="openAnalysis(event, 'ConstructValidity')">Construct Validity and Reliability</button>
+    <button class="tablinks" onclick="openAnalysis(event, 'DiscriminantValidity')">Discriminant Validity</button>
+    <button class="tablinks" onclick="openAnalysis(event, 'Multicollinearity')">Multicollinearity</button>
   </div>
 
   <div id="ConstructValidity" class="tabcontent">
@@ -77,7 +77,7 @@
           <ul>
             <li>{{ item }}</li>
             {% set value = dictionary[item][1] | float() %}
-            {% if value >= 0.5 %}
+            {% if value >= 0.7 %}
               <li style="color:rgb(100, 255, 94)">{{ value }}</li>
             {% else %}
               <li style="color:rgb(255, 79, 79)">{{ value }}</li>

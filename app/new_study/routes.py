@@ -785,7 +785,7 @@ def summary_results(study_code):
 
     return render_template('new_study/summary_results.html', study_code=study_code, demographics=demographics,
                            cases=cases, dct_demographics=dct_demographics, dct_answers=dct_answers, questions=questions,
-                           dct_questions=dct_questions)
+                           dct_questions=dct_questions, study=study)
 
 
 @bp.route('/data_analysis/<study_code>', methods=['GET', 'POST'])
@@ -901,12 +901,13 @@ def corevariable_analysis(study_code, corevariable_id):
                       QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
     length_abbreviation = len(corevariable.abbreviation)
     items_lv = []
-    length_items_lv = len(items_lv)
     for questiongroup in questiongroups:
         for question in Question.query.filter_by(questiongroup_id=questiongroup.id):
             if question.question_code[:length_abbreviation] == corevariable.abbreviation:
                 items_lv.append(question.question_code)
+    length_items_lv = len(items_lv)
     # Set up dataframe
+
     list_of_questions = []
     list_of_answers = []
 
@@ -938,6 +939,7 @@ def corevariable_analysis(study_code, corevariable_id):
         config.add_lv_with_columns_named(corevariable.abbreviation, Mode.A, df, corevariable.abbreviation)
 
     plspm_calc = Plspm(df, config, Scheme.CENTROID)
+    model1 = plspm_calc.outer_model()
 
     construct_data = [[round(cronbachs_alpha(corevariable, df), 4),
                        round(composite_reliability(corevariable, df, config, Scheme.CENTROID), 4),
@@ -986,11 +988,15 @@ def corevariable_analysis(study_code, corevariable_id):
 
     corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
 
+    loadings_dct = pd.DataFrame(model1['loading']).to_dict('dict')['loading']
+    loadings_list = [loadings_dct[item] for item in items_lv]
+
     return render_template('new_study/corevariable_analysis.html', study_code=study_code, corevariable=corevariable,
                            corevariables=corevariables, corevariable_names_js=corevariable_names_js,
                            corevariable_ave_js=corevariable_ave_js, corevariable_ca_js=corevariable_ca_js,
                            corevariable_cr_js=corevariable_cr_js, corevariable_names_js_all=corevariable_names_js_all,
                            corevariable_ave_js_all=corevariable_ave_js_all, items_lv=items_lv, length_items_lv=length_items_lv,
                            corevariable_ca_js_all=corevariable_ca_js_all, corevariable_vif_js=corevariable_vif_js,
-                           corevariable_cr_js_all=corevariable_cr_js_all, length_corevariables=length_corevariables)
+                           corevariable_cr_js_all=corevariable_cr_js_all, length_corevariables=length_corevariables,
+                           loadings_list=loadings_list)
 
