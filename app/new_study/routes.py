@@ -21,7 +21,7 @@ from statsmodels.tools.tools import add_constant
 
 
 #############################################################################################################
-#                                        Setting up the study
+#                                        De studie opzetten
 #############################################################################################################
 
 
@@ -30,7 +30,7 @@ from statsmodels.tools.tools import add_constant
 def new_study():
     form = CreateNewStudyForm()
     if form.validate_on_submit():
-        # Create new model
+        #
         new_model = UTAUTmodel(name="UTAUT")
         db.session.add(new_model)
         db.session.commit()
@@ -123,7 +123,7 @@ def add_user(study_code):
 
 
 #############################################################################################################
-#                                               UTAUT
+#                                      Onderzoeksmodel opstellen
 #############################################################################################################
 
 @bp.route('/utaut/<study_code>', methods=['GET', 'POST'])
@@ -298,31 +298,32 @@ def remove_relation(study_code, id_relation):
 
 
 #############################################################################################################
-#                                           Questionnaire
+#                                        Vragenlijst opstellen
 #############################################################################################################
 
 
 @bp.route('/pre_questionnaire/<study_code>', methods=['GET', 'POST'])
 @login_required
 def pre_questionnaire(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
     if study.stage_3:
         return redirect(url_for('new_study.summary_results', study_code=study_code))
 
-    # create questionnaire if no questionnaire exists yet
+    # Voor het geval geen vragenlijst nog is opgesteld een vragenlijst aanmaken voor het onderzoek.
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     if Questionnaire.query.filter_by(study_id=study.id).first() is None:
         newquestionnaire = Questionnaire(study_id=study.id)
         db.session.add(newquestionnaire)
         db.session.commit()
 
+        # Vragenlijstgroepen aanmaken per kernvariabele.
         for corevariable in model.linked_corevariables:
             questiongroup = QuestionGroup(title=corevariable.name, group_type="likert",
                                           questionnaire_id=newquestionnaire.id,
@@ -331,8 +332,11 @@ def pre_questionnaire(study_code):
             db.session.commit()
 
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+
+    # De Form voor de schaal voor gebruikers om in te vullen
     form = ScaleForm(questionnaire.scale)
 
+    # Bij ingeving van de schaal de schaal van de vragenlijst omzetten.
     if form.validate_on_submit():
         questionnaire.scale = form.scale.data
         db.session.commit()
@@ -345,12 +349,12 @@ def pre_questionnaire(study_code):
 @bp.route('/questionnaire/<study_code>', methods=['GET', 'POST'])
 @login_required
 def questionnaire(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
     if study.stage_3:
@@ -359,6 +363,7 @@ def questionnaire(study_code):
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
 
+    # Voor het geval nieuwe kernvariabelen zijn toegevoegd aan het onderzoeksmodel nieuwe vragenlijstgroepen aanmaken.
     for core_variable in model.linked_corevariables:
         if core_variable.id not in [questiongroup.corevariable_id for questiongroup
                                     in QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]:
@@ -369,6 +374,9 @@ def questionnaire(study_code):
             db.session.commit()
 
     questiongroups = [questiongroup for questiongroup in questionnaire.linked_questiongroups]
+
+    # Een dictionary met sublijsten van alle vragen per vragenlijstgroep/kernvariabele (questiongroups_questions)
+    # en de opzet ervan
     questions = []
     for questiongroup in questiongroups:
         questions.append(
@@ -376,6 +384,7 @@ def questionnaire(study_code):
              Question.query.filter_by(questiongroup_id=questiongroup.id).all()])
     questiongroups_questions = dict(zip(questiongroups, questions))
 
+    # Een lijst met de demographics die bij het onderzoek horen.
     demographics = [demographic for demographic in Demographic.query.filter_by(questionnaire_id=questionnaire.id)]
 
     return render_template("new_study/questionnaire.html", title='Questionnaire', study=study, model=model,
@@ -386,12 +395,12 @@ def questionnaire(study_code):
 @bp.route('/questionnaire/switch_reversed_score/<study_code>/<name_question>', methods=['GET', 'POST'])
 @login_required
 def switch_reversed_score(study_code, name_question):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
     if study.stage_3:
@@ -413,12 +422,12 @@ def switch_reversed_score(study_code, name_question):
 @bp.route('/questionnaire/use_standard_questions_questionnaire/<study_code>', methods=['GET', 'POST'])
 @login_required
 def use_standard_questions_questionnaire(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
     if study.stage_3:
@@ -457,12 +466,12 @@ def use_standard_questions_questionnaire(study_code):
 @bp.route('/questionnaire/use_standard_demographics_questionnaire/<study_code>', methods=['GET', 'POST'])
 @login_required
 def use_standard_demographics_questionnaire(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
     if study.stage_3:
@@ -492,12 +501,12 @@ def use_standard_demographics_questionnaire(study_code):
 @bp.route('/questionnaire/new_question/<name_questiongroup>/<study_code>', methods=['GET', 'POST'])
 @login_required
 def new_question(name_questiongroup, study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
     if study.stage_3:
@@ -532,12 +541,12 @@ def new_question(name_questiongroup, study_code):
 @bp.route('/remove_question/<study_code>/<name_question>', methods=['GET', 'POST'])
 @login_required
 def remove_question(study_code, name_question):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
     if study.stage_3:
@@ -552,12 +561,12 @@ def remove_question(study_code, name_question):
 @bp.route('/questionnaire/new_demographic/<study_code>', methods=['GET', 'POST'])
 @login_required
 def new_demographic(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
     if study.stage_3:
@@ -584,12 +593,12 @@ def new_demographic(study_code):
 @bp.route('/remove_demographic/<study_code>/<id_demographic>', methods=['GET', 'POST'])
 @login_required
 def remove_demographic(study_code, id_demographic):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
     if study.stage_3:
@@ -604,12 +613,12 @@ def remove_demographic(study_code, id_demographic):
 @bp.route('/check_questionnaire/<study_code>', methods=['GET', 'POST'])
 @login_required
 def check_questionnaire(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
     if study.stage_3:
@@ -628,21 +637,22 @@ def check_questionnaire(study_code):
 
 
 #############################################################################################################
-#                                            Start Study
+#                                          Start onderzoek
 #############################################################################################################
 
 @bp.route('/start_study/<study_code>', methods=['GET', 'POST'])
 @login_required
 def start_study(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
 
+    # Omzetting studie van stage_1 (opstellen van het onderzoek) naar stage_2 (het onderzoek is gaande)
     study.stage_1 = False
     study.stage_2 = True
     db.session.commit()
@@ -653,17 +663,18 @@ def start_study(study_code):
 @bp.route('/study_underway/<name_study>/<study_code>', methods=['GET', 'POST'])
 @login_required
 def study_underway(name_study, study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    study = Study.query.filter_by(name=name_study).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+    # Checken hoe ver de studie is
     if study.stage_1:
         return redirect(url_for('new_study.utaut', study_code=study_code))
     if study.stage_3:
         return redirect(url_for('new_study.summary_results', study_code=study_code))
+    # De link naar de vragenlijst
     link = '127.0.0.1:5000/d/e/{}'.format(study.code)
 
     return render_template('new_study/study_underway.html', title="Underway: {}".format(name_study), study=study,
@@ -673,17 +684,18 @@ def study_underway(name_study, study_code):
 @bp.route('/end_questionnaire/<study_code>', methods=['GET', 'POST'])
 @login_required
 def end_questionnaire(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
+    # Checken hoe ver de studie is
     if study.stage_1:
         return redirect(url_for('new_study.utaut', study_code=study_code))
-
     if study.stage_3:
         return redirect(url_for('new_study.summary_results', study_code=study_code))
 
+    # Omzetting studie van stage_2 (het onderzoek is gaande) naar stage_3 (de data-analyse)
     study.stage_2 = False
     study.stage_3 = True
     db.session.commit()
@@ -692,19 +704,18 @@ def end_questionnaire(study_code):
 
 
 #############################################################################################################
-#                                           Data Analysis
+#                                     Data Analyse en visualisatie
 #############################################################################################################
-
 
 @bp.route('/summary_results/<study_code>', methods=['GET', 'POST'])
 @login_required
 def summary_results(study_code):
-    # check authorization
     study = Study.query.filter_by(code=study_code).first()
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_1:
         return redirect(url_for('new_study.utaut', study_code=study_code))
     if study.stage_2:
@@ -714,16 +725,21 @@ def summary_results(study_code):
     demographics = [demographic for demographic in Demographic.query.filter_by(questionnaire_id=questionnaire.id)]
     total_cases = [case for case in Case.query.filter_by(questionnaire_id=questionnaire.id)]
 
-    # Summary van de demografische resultaten
+    # Samenvatting van de demografische resultaten
+
+    # Een lijst met alle case-id's en de opzet ervan.
     cases = []
     for case in total_cases:
         for i in range(len(demographics)):
             cases.append(case.id)
+
+    # Namen van de demografieken en de opzet ervan
     demos = []
     for case in total_cases:
         for demographic in demographics:
             demos.append(demographic.name)
 
+    # Dictionary met de Case-id's als keys en de gegeven demografische antwoorden als waarden en de opzet ervan
     dct_demographics = {}
     for case in cases:
         dct_demographics[case] = []
@@ -735,26 +751,32 @@ def summary_results(study_code):
         else:
             dct_demographics[case_id].append(None)
 
-    print(dct_demographics)
-    # Summary van de vragenlijstresultaten voor iedere case
-    questiongroups = [questiongroup for questiongroup in
-                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    # Samenvatting van de vragenlijstresultaten voor iedere case
+
+    # Alle vragengroepen binnen de vragenlijst
+    questiongroups = [questiongroup for questiongroup in questionnaire.linked_questiongroups]
+
+    # Een lijst met de vragen en de opzet ervan
     questions = []
     for questiongroup in questiongroups:
         list_of_questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
         for question in list_of_questions:
             questions.append(question)
+
+    # Een lijst met de Case-id's
     cases = []
     for case in total_cases:
         for i in range(len(questions)):
             cases.append(case.id)
+
+    # Een lijst met de vragen in stringvorm en de opzet ervan
     quests = []
     for case in total_cases:
         for question in questions:
             quests.append(question.question)
 
+    # Een dictionary met alle cases en de bijbehorende antwoorden op de vragen en de opzet ervan
     dct_answers = {}
-
     for case in cases:
         dct_answers[case] = []
     for (case_id, quest_name) in zip(cases, quests):
@@ -767,20 +789,22 @@ def summary_results(study_code):
                 else:
                     dct_answers[case_id].append(None)
 
-    # Summary van de gemiddeldes en standaarddeviaties voor iedere vraag
-    questiongroups = [questiongroup for questiongroup in
-                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    # Samenvatting van de gemiddeldes en standaarddeviaties voor iedere vraag
 
+    # Het creëren van een dictionary met de vragen en een lijst waar de gemiddelden en standaarddeviaties in komen
     dct_questions = {}
     for questiongroup in questiongroups:
         for question in [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]:
             dct_questions[question] = []
 
+    #Voor iedere vraag in de vragenlijst
     for question in dct_questions:
+        # Een lijst met de scores van de specifieke vraag
         answer_scores = []
         for answer in [answer for answer in Answer.query.filter_by(question_id=question.id)]:
             answer_scores.append(int(answer.score))
         array = np.array(answer_scores)
+        # Het toevoegen het gemiddelde en de standaarddeviatie van de specifieke vraag
         dct_questions[question].extend([round(np.average(array), 2), round(np.std(array), 2)])
 
     return render_template('new_study/summary_results.html', study_code=study_code, demographics=demographics,
@@ -791,12 +815,13 @@ def summary_results(study_code):
 @bp.route('/data_analysis/<study_code>', methods=['GET', 'POST'])
 @login_required
 def data_analysis(study_code):
-    # check authorization
     study = Study.query.filter_by(code=study_code).first()
+
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_1:
         return redirect(url_for('new_study.utaut', study_code=study_code))
     if study.stage_2:
@@ -806,7 +831,7 @@ def data_analysis(study_code):
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     corevariables = [corevariable for corevariable in model.linked_corevariables]
 
-    # Set up dataframe
+    # Het opzetten van de dataframe (gebruik van plspm package en pd.dataframe met de vragenlijstresultaten)
     list_of_questions = []
     list_of_answers = []
     questiongroups = [questiongroup for questiongroup in
@@ -842,7 +867,7 @@ def data_analysis(study_code):
     plspm_calc = Plspm(df, config, Scheme.CENTROID)
     model1 = plspm_calc.outer_model()
 
-    # Creëer dictionary met alleen loadings van latente variabele
+    # Creëert dictionary met alleen loadings van latente variabele
     # KIJKEN NAAR CODEFORMAT
     loadings_dct = pd.DataFrame(model1['loading']).to_dict('dict')['loading']
     for code in loadings_dct:
@@ -884,10 +909,12 @@ def data_analysis(study_code):
 @login_required
 def corevariable_analysis(study_code, corevariable_id):
     study = Study.query.filter_by(code=study_code).first()
+
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_1:
         return redirect(url_for('new_study.utaut', study_code=study_code))
     if study.stage_2:
@@ -897,20 +924,23 @@ def corevariable_analysis(study_code, corevariable_id):
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
     corevariables = [corevariable for corevariable in model.linked_corevariables]
-    questiongroups = [questiongroup for questiongroup in
-                      QuestionGroup.query.filter_by(questionnaire_id=questionnaire.id)]
+    questiongroups = [questiongroup for questiongroup in questionnaire.linked_questiongroups]
+
+    # De lengte van de afkorting van de kernvariabele voor het geval bepaald moet worden of een specifieke afkorting
+    # die van de relevante kernvariabele is.
     length_abbreviation = len(corevariable.abbreviation)
+
+    # De items/vragen (de code specifiek gezegd) die horen bij de kernvariabele
     items_lv = []
     for questiongroup in questiongroups:
         for question in Question.query.filter_by(questiongroup_id=questiongroup.id):
             if question.question_code[:length_abbreviation] == corevariable.abbreviation:
                 items_lv.append(question.question_code)
     length_items_lv = len(items_lv)
-    # Set up dataframe
 
+    # Het opzetten van de dataframe (gebruik van plspm package en pd.dataframe met de vragenlijstresultaten)
     list_of_questions = []
     list_of_answers = []
-
 
     for questiongroup in questiongroups:
         questions = [question for question in Question.query.filter_by(questiongroup_id=questiongroup.id)]
@@ -941,12 +971,7 @@ def corevariable_analysis(study_code, corevariable_id):
     plspm_calc = Plspm(df, config, Scheme.CENTROID)
     model1 = plspm_calc.outer_model()
 
-    construct_data = [[round(cronbachs_alpha(corevariable, df), 4),
-                       round(composite_reliability(corevariable, df, config, Scheme.CENTROID), 4),
-                       round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4)] for corevariable
-                      in corevariables]
-
-    # Voor alle kernvariabelen
+    # De AVE, Cronbach's Alpha, Composite Reliability voor de fullscreen grafieken (met alle kernvariabelen erin).
     corevariable_names_js_all = [corevariable for corevariable in model.linked_corevariables]
     corevariable_ave_js_all = [round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4) for
                                corevariable in corevariables]
@@ -955,16 +980,11 @@ def corevariable_analysis(study_code, corevariable_id):
                               corevariable
                               in corevariables]
 
-    length_corevariables = len(corevariable_names_js_all)
+    # De AVE, Cronbach's Alpha, Composite Reliability, ladingen, VIF-waarden en HTMT-ratios voor de kleinere grafieken
+    # (voor AVE, CA, CR en HTMT worden de twee/drie dichtstbijzijnde kernvariabelen gebruikt).
 
-    # Voor drie kernvariabelen
-
-    # VIF-waarden
-    corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
-    dct_of_all_vifs = outer_vif_values_dict(df, questionnaire)
-    corevariable_vif_js = [dct_of_all_vifs[key] for key in dct_of_all_vifs if key[:length_abbreviation] ==
-                           corevariable.abbreviation]
-
+    # De indexes van de eerste dichtstbijzijnde kernvariabele, de specifieke kernvariabele en de tweede dichtstbijzijnde
+    # kernvariabele respectievelijk.
     indexes_corevariables = []
     for corevariable in corevariables:
         if corevariable.id == int(corevariable_id):
@@ -976,30 +996,42 @@ def corevariable_analysis(study_code, corevariable_id):
                 indexes_corevariables = [corevariables.index(corevariable) - 1, corevariables.index(corevariable),
                                          corevariables.index(corevariable) + 1]
 
+    # Namen van de eerste dichtstbijzijnde kernvariabele, de specifieke kernvariabele en de tweede dichtstbijzijnde
+    # kernvariabele respectievelijk.
     corevariable_names_js = [corevariable for corevariable in
                              [corevariables[indexes_corevariables[0]], corevariables[indexes_corevariables[1]],
                               corevariables[indexes_corevariables[2]]]]
+    # AVE-lijst
     corevariable_ave_js = [round(average_variance_extracted(corevariable, df, config, Scheme.CENTROID), 4) for
                            corevariable in corevariables[indexes_corevariables[0]:indexes_corevariables[2] + 1]]
+    # Cronbach's Alpha lijst
     corevariable_ca_js = [round(cronbachs_alpha(corevariable, df), 4) for
                           corevariable in corevariables[indexes_corevariables[0]:indexes_corevariables[2] + 1]]
+    # Composite Reliability lijst
     corevariable_cr_js = [round(composite_reliability(corevariable, df, config, Scheme.CENTROID), 4) for
                           corevariable in corevariables[indexes_corevariables[0]:indexes_corevariables[2] + 1]]
 
     corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
-    print(corevariable)
 
+    length_corevariables = len(corevariable_names_js_all)
+
+    # VIF-waarden
+    corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
+    dct_of_all_vifs = outer_vif_values_dict(df, questionnaire)
+    corevariable_vif_js = [dct_of_all_vifs[key] for key in dct_of_all_vifs if key[:length_abbreviation] ==
+                           corevariable.abbreviation]
+
+    # HTMT-waarden
     corevariables_htmt = corevariables
     corevariables_htmt.remove(corevariable)
     length_corevariables_htmt = len(corevariables_htmt)
     corevariable_names_htmt_js = corevariables_htmt[:3]
-    print(corevariables_htmt)
     corevariable_htmt_js = [round(heterotrait_monotrait(corevariable, lv, correlation_matrix(df), df), 4)
                             for lv in corevariables_htmt[:3]]
     corevariable_htmt_js_all = [round(heterotrait_monotrait(corevariable, lv, correlation_matrix(df), df), 4)
                                 for lv in corevariables_htmt]
-    print(corevariable_htmt_js)
 
+    # Ladingen van de items
     loadings_dct = pd.DataFrame(model1['loading']).to_dict('dict')['loading']
     loadings_list = [loadings_dct[item] for item in items_lv]
 
