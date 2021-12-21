@@ -28,36 +28,60 @@ from statsmodels.tools.tools import add_constant
 @bp.route('/new_study', methods=['GET', 'POST'])
 @login_required
 def new_study():
+    # De Form voor het aanmaken van een nieuw onderzoek.
     form = CreateNewStudyForm()
+
+    # Als de gebruiker aangeeft een nieuw onderzoek aan te willen maken
     if form.validate_on_submit():
-        #
+        # Ter automatisme wordt het UTAUT-model als standaardonderzoeksmodel gebruikt voor nieuwe onderzoeken.
+
+        # Een nieuw onderzoeksmodel wordt aangemaakt binnen de database.
+        # new_model is een "UTAUTmodel"-object (UTAUTmodel is een tabel binnen de database) met de naam "UTAUT" ("name"
+        # is één van de eigenschappen die ingegeven kan worden). Vervolgens wordt dit model toegevoegd (db.session.add)
+        # en opgeslagen binnen de database (db.session.commit).
         new_model = UTAUTmodel(name="UTAUT")
         db.session.add(new_model)
         db.session.commit()
 
+        # De kernvariabelen met de gegeven afkortingen worden toegevoegd aan het onderzoeksmodel.
         for abbreviation in ["PE", "EE", "SI", "FC", "BI", "UB"]:
+            # "Query" wordt gebruikt om objecten binnen de tabel (CoreVariable) te selecteren. filter_by is een manier
+            # om te filteren op welke objecten geselecteerd worden. In dit geval dient de "abbreviation" (afkorting)
+            # gelijk te zijn aan, in de eerste instantie van de for loop, "PE". first() is een manier om deze
+            # daadwerkelijk de eerste instantie van de query (van alle objecten die "PE" als afkorting hebben) te
+            # returnen.
             corevariable = CoreVariable.query.filter_by(abbreviation=abbreviation).first()
+            # De relevante kernvariabele wordt gelinkt aan het model. Zie "models.py" om de wijze waarop "linken" werkt
+            # te bestuderen.
             corevariable.link(new_model)
 
+        # De sublisten van hieronder worden omgezet in verschillende relaties.
         for sublist in [["PE", "BI"], ["EE", "BI"], ["SI", "BI"], ["FC", "UB"], ["BI", "UB"]]:
+            # Door het gebruik van "id" wordt al gelijk de ID van de kernvariabele geselecteerd die als eerste
+            # gereturned is door de query.
+            # De ID van de beïnvloedende kernvariabele bepalen.
             id_influencer = CoreVariable.query.filter_by(
                 abbreviation=sublist[0]).first().id
+            # De ID van de beïnvloede kernvariabele bepalen.
             id_influenced = CoreVariable.query.filter_by(
                 abbreviation=sublist[1]).first().id
 
+            # Een nieuwe relatie wordt aangemaakt binnen het gegeven onderzoeksmodel tussen de kernvariabelen.
             newrelation = Relation(model_id=new_model.id,
                                    influencer_id=id_influencer,
                                    influenced_id=id_influenced)
             db.session.add(newrelation)
             db.session.commit()
 
-        # Create new study
+        # Een nieuw onderzoek wordt opgezet.
         new_study = Study(name=form.name_of_study.data, description=form.description_of_study.data,
                           technology=form.technology_of_study.data, model_id=new_model.id)
+        # Een unieke code wordt gegeven aan het onderzoek (gebruikmakend van UUID4).
         new_study.create_code()
         db.session.add(new_study)
         db.session.commit()
 
+        # De huidige gebruiker wordt gelinkt aan het onderzoek.
         current_user.link(new_study)
         db.session.commit()
 
@@ -68,25 +92,31 @@ def new_study():
 @bp.route('/edit_study/<study_code>', methods=['GET', 'POST'])
 @login_required
 def edit_study(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
     if study.stage_3:
         return redirect(url_for('new_study.summary_results', study_code=study_code))
 
+    # De Form voor het aanpassen van het onderzoek.
     form = EditStudyForm(study.name, study.description, study.technology)
+
+    # Als de gebruiker aangeeft de onderzoek te willen aanpassen met de gegeven gegevens.
     if form.validate_on_submit():
+        # De gegevens van de studie worden aangepast naar de ingegeven data binnen de Form.
         study.name = form.name_of_study.data
         study.description = form.description_of_study.data
         study.technology = form.technology_of_study.data
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('new_study.utaut', study_code=study.code))
+    # Als niks is ingegeven binnen de Form worden geen aanpassingen gemaakt (en dus gebruikgemaakt van de eigen
+    # onderzoeksgegevens.
     elif request.method == 'GET':
         form.name_of_study.data = study.name
         form.description_of_study.data = study.description
@@ -95,20 +125,22 @@ def edit_study(study_code):
                            form=form, study=study)
 
 
+# Deze pagina is nog niet gerealiseerd.
 @bp.route('/add_user/<study_code>', methods=['GET', 'POST'])
 @login_required
 def add_user(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
     if study.stage_3:
         return redirect(url_for('new_study.summary_results', study_code=study_code))
 
+    # De Form voor het toevoegen van een nieuwe gebruiker aan het onderzoek.
     form = AddUserForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.name_user.data).first()
@@ -129,13 +161,13 @@ def add_user(study_code):
 @bp.route('/utaut/<study_code>', methods=['GET', 'POST'])
 @login_required
 def utaut(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
     if study.stage_3:
@@ -144,18 +176,15 @@ def utaut(study_code):
     model = UTAUTmodel.query.filter_by(id=study.model_id).first()
     core_variables = [corevariable for corevariable in model.linked_corevariables]
     relations = [relation for relation in Relation.query.filter_by(model_id=model.id)]
-    existing_models = [models for models in UTAUTmodel.query.all()]
 
+    # Het selectiemenu van bestaande kernvariabelen welke toegevoegd kunnen worden aan het onderzoeksmodel.
     form_add_variable = AddCoreVariable()
     form_add_variable.add_variable.choices = [(core_variable.id, core_variable.name) for core_variable in
                                               CoreVariable.query.filter_by(user_id=current_user.id)] + \
                                              [(core_variable.id, core_variable.name) for core_variable in
                                               CoreVariable.query.filter_by(user_id=None)]
 
-    form = ChooseNewModel()
-    form.new_model.choices = [(utautmodel.id, utautmodel.name) for utautmodel in
-                              UTAUTmodel.query.all()]
-
+    # Als de gebruiker een kernvariabele uit het selectiemenu aangeeft te willen toevoegen.
     if form_add_variable.validate_on_submit():
         core_variable = CoreVariable.query.filter_by(id=form_add_variable.add_variable.data).first()
         core_variable.link(model)
@@ -164,31 +193,31 @@ def utaut(study_code):
         return redirect(url_for('new_study.utaut', study_code=study_code))
 
     return render_template("new_study/utaut.html", title='UTAUT', study=study, model=model,
-                           core_variables=core_variables,
-                           relations=relations, existing_models=existing_models, form=form,
-                           form_add_variable=form_add_variable)
+                           core_variables=core_variables, relations=relations, form_add_variable=form_add_variable)
 
 
 @bp.route('/utaut/new_core_variable/<study_code>', methods=['GET', 'POST'])
 @login_required
 def new_core_variable(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         print("Not authorized")
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     study = Study.query.filter_by(code=study_code).first()
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study.code))
     if study.stage_3:
         return redirect(url_for('new_study.summary_results', study_code=study_code))
 
+    # De Form voor het aanmaken van een nieuwe kernvariabele.
     form = CreateNewCoreVariableForm()
 
+    # Als de gebruiker aangeeft een nieuwe kernvariabele te willen aanmaken.
     if form.validate_on_submit():
-        study = Study.query.filter_by(code=study_code).first()
+        # De kernvariabele toegevoegd aan de database.
         new_corevariable = CoreVariable(name=form.name_corevariable.data,
                                         abbreviation=form.abbreviation_corevariable.data,
                                         description=form.description_corevariable.data,
@@ -196,8 +225,8 @@ def new_core_variable(study_code):
         db.session.add(new_corevariable)
         db.session.commit()
 
+        # De kernvariabele wordt binnen het onderzoeksmodel geplaatst.
         model = UTAUTmodel.query.filter_by(id=study.model_id).first()
-
         new_corevariable.link(model)
         db.session.commit()
 
@@ -209,12 +238,12 @@ def new_core_variable(study_code):
 @bp.route('/remove_core_variable/<study_code>/<corevariable_id>', methods=['GET', 'POST'])
 @login_required
 def remove_core_variable(study_code, corevariable_id):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
     if study.stage_3:
@@ -224,6 +253,7 @@ def remove_core_variable(study_code, corevariable_id):
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
 
+    # De kernvariabele uit het onderzoeksmodel halen en alle bijbehorende relaties verwijderen.
     corevariable.unlink(model)
     db.session.commit()
     Relation.query.filter_by(influencer_id=corevariable.id, model_id=model.id).delete()
@@ -231,6 +261,7 @@ def remove_core_variable(study_code, corevariable_id):
     Relation.query.filter_by(influenced_id=corevariable.id, model_id=model.id).delete()
     db.session.commit()
 
+    # Als de kernvariabele al een vragenlijstgroep had binnen de vragenlijst deze en de bijbehorende vragen verwijderen.
     if questionnaire:
         questiongroup = QuestionGroup.query.filter_by(title=corevariable.name,
                                                       questionnaire_id=questionnaire.id).first()
@@ -245,27 +276,32 @@ def remove_core_variable(study_code, corevariable_id):
 @bp.route('/utaut/new_relation/<study_code>', methods=['GET', 'POST'])
 @login_required
 def new_relation(study_code):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
     if study.stage_3:
         return redirect(url_for('new_study.summary_results', study_code=study_code))
 
+    # De Form voor het aanmaken van een nieuwe relatie.
     form = CreateNewRelationForm()
 
+    # Als de gebruiker aangeeft een nieuwe relatie aan te willen maken.
     if form.validate_on_submit():
         model = UTAUTmodel.query.filter_by(id=study.model_id).first()
 
+        # De ID van de beïnvloedende kernvariabele bepalen.
         id_influencer = CoreVariable.query.filter_by(
             abbreviation=form.abbreviation_influencer.data).first().id
+        # De ID van de beïnvloede kernvariabele bepalen.
         id_influenced = CoreVariable.query.filter_by(
             abbreviation=form.abbreviation_influenced.data).first().id
 
+        # De relatie aanmaken tussen de twee relevante kernvariabelen.
         newrelation = Relation(model_id=model.id,
                                influencer_id=id_influencer,
                                influenced_id=id_influenced)
@@ -280,17 +316,18 @@ def new_relation(study_code):
 @bp.route('/remove_relation/<study_code>/<id_relation>', methods=['GET', 'POST'])
 @login_required
 def remove_relation(study_code, id_relation):
-    # check authorization
+    # Checken of gebruiker tot betrokken onderzoekers hoort
     study = Study.query.filter_by(code=study_code).first()
     if current_user not in study.linked_users:
         return redirect(url_for('main.not_authorized'))
 
-    # check access to stage
+    # Checken hoe ver de studie is
     if study.stage_2:
         return redirect(url_for('new_study.study_underway', name_study=study.name, study_code=study_code))
     if study.stage_3:
         return redirect(url_for('new_study.summary_results', study_code=study_code))
 
+    # Het verwijderen van de relevante relatie.
     Relation.query.filter_by(id=id_relation).delete()
     db.session.commit()
 
@@ -406,9 +443,7 @@ def switch_reversed_score(study_code, name_question):
     if study.stage_3:
         return redirect(url_for('new_study.summary_results', study_code=study_code))
 
-    user = User.query.filter_by(id=current_user.id).first()
-    questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
-
+    # De reversed_score aan- of uitzetten voor de vraag afhankelijk wat de huidige stand is.
     question = Question.query.filter_by(question=name_question).first()
     if question.reversed_score:
         question.reversed_score = False
@@ -437,20 +472,29 @@ def use_standard_questions_questionnaire(study_code):
     user = User.query.filter_by(id=current_user.id).first()
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
 
+    # Een lijst met alle standaardvragen van de gebruiker
     standard_questions = [standard_question for standard_question in StandardQuestion.query.filter_by(user_id=user.id)]
     for standard_question in standard_questions:
+        # De "(...)" vervangen door de voor het onderzoek relevante technologie
         replaced_name_question = standard_question.question.replace('(...)', study.technology)
         replaced_name_question = replaced_name_question.replace('(…)', study.technology)
+
+        # De bijbehorende vragenlijstgroep van de standaardvraag
         corresponding_questiongroup = QuestionGroup.query.filter_by(
             corevariable_id=standard_question.corevariable_id, questionnaire_id=questionnaire.id).first()
 
         corevariable = CoreVariable.query.filter_by(name=corresponding_questiongroup.title,
                                                     user_id=current_user.id).first()
+
+        # Als de kernvariabele niet aangemaakt is door de huidige gebruiker (dan hoort deze automatisch binnen het
+        # programma te horen en dus geen user_id te hebben.
         if corevariable is None:
             corevariable = CoreVariable.query.filter_by(name=corresponding_questiongroup.title, user_id=None).first()
 
+        # De toevoeging van de vraag aan de vragenlijst.
         if corevariable is not None:
             abbreviation_corevariable = corevariable.abbreviation
+            # De code voor de vraag (de kernvariabele plus een cijfer, zoals "PE3")
             new_code = abbreviation_corevariable + str(len([question for question in
                                                             Question.query.filter_by(
                                                                 questiongroup_id=corresponding_questiongroup.id)]) + 1)
@@ -482,8 +526,11 @@ def use_standard_demographics_questionnaire(study_code):
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     demographics = [demographic.name for demographic in Demographic.query.filter_by(questionnaire_id=questionnaire.id)]
 
+    # Alle standaarddemografieken van de gebruiker.
     standard_demographics = [standard_demographic for standard_demographic in
                              StandardDemographic.query.filter_by(user_id=user.id)]
+
+    # Iedere standaarddemografiek toevoegen aan het onderzoek.
     for standard_demographic in standard_demographics:
         new_demographic = Demographic(name=standard_demographic.name,
                                       description=standard_demographic.description,
@@ -491,6 +538,8 @@ def use_standard_demographics_questionnaire(study_code):
                                       optional=standard_demographic.optional,
                                       questiontype_name=standard_demographic.questiontype_name,
                                       questionnaire_id=questionnaire.id)
+        # Als de demografiek nog niet binnen het onderzoek is (als dit wel het geval is hoort deze niet toegevoegd te
+        # worden.
         if new_demographic.name not in demographics:
             db.session.add(new_demographic)
             db.session.commit()
@@ -512,21 +561,28 @@ def new_question(name_questiongroup, study_code):
     if study.stage_3:
         return redirect(url_for('new_study.summary_results', study_code=study_code))
 
+    # De Form voor het aanmaken van een nieuwe vraag.
     form = CreateNewQuestion()
 
+    # Als de gebruiker aangeeft een nieuwe vraag aan te maken met de gegeven gegevens.
     if form.validate_on_submit():
         questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
         questiongroup = QuestionGroup.query.filter_by(title=name_questiongroup,
                                                       questionnaire_id=questionnaire.id).first()
 
+        # De bijbehorende kernvariabele verkrijgen voor het bepalen van de afkorting van de correcte variabele.
         corevariable = CoreVariable.query.filter_by(name=questiongroup.title, user_id=current_user.id).first()
         if corevariable is None:
             corevariable = CoreVariable.query.filter_by(name=questiongroup.title, user_id=None).first()
 
         abbreviation_corevariable = corevariable.abbreviation
+
+        # De code voor de vraag (de kernvariabele plus een cijfer, zoals "PE3")
         new_code = abbreviation_corevariable + str(len([question for question in
                                                         Question.query.filter_by(
                                                             questiongroup_id=questiongroup.id)]) + 1)
+
+        # Het aanmaken van een nieuwe vraag in de database.
         new_question = Question(question=form.name_question.data,
                                 questiongroup_id=questiongroup.id,
                                 question_code=new_code)
@@ -552,6 +608,7 @@ def remove_question(study_code, name_question):
     if study.stage_3:
         return redirect(url_for('new_study.summary_results', study_code=study_code))
 
+    # Het verwijderen van de vraag uit de database.
     Question.query.filter_by(question=name_question).delete()
     db.session.commit()
 
@@ -573,8 +630,11 @@ def new_demographic(study_code):
         return redirect(url_for('new_study.summary_results', study_code=study_code))
 
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
+
+    # De Form voor het aanmaken van een nieuwe demografiek.
     form = CreateNewDemographicForm()
 
+    # Als de gebruiker aangeeft een nieuwe demografiek aan te maken met de gegeven gegevens.
     if form.validate_on_submit():
         new_demographic = Demographic(name=form.name_of_demographic.data,
                                       description=form.description_of_demographic.data,
@@ -604,6 +664,7 @@ def remove_demographic(study_code, id_demographic):
     if study.stage_3:
         return redirect(url_for('new_study.summary_results', study_code=study_code))
 
+    # Het verwijderen van de demografiek uit de database.
     Demographic.query.filter_by(id=id_demographic).delete()
     db.session.commit()
 
@@ -627,6 +688,7 @@ def check_questionnaire(study_code):
     questionnaire = Questionnaire.query.filter_by(study_id=study.id).first()
     questiongroups = [questiongroup for questiongroup in questionnaire.linked_questiongroups]
 
+    # Bepalen of alle vragenlijstgroepen tenminste één vraag hebben. Zo niet, de Flash geven en terugkeren.
     for questiongroup in questiongroups:
         if Question.query.filter_by(questiongroup_id=questiongroup.id).count() == 0:
             flash('One or more of the core variables does not have questions yet. Please add at least one question to '
