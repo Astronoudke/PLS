@@ -987,6 +987,18 @@ def corevariable_analysis(study_code, corevariable_id):
                           corevariable in corevariables[indexes_corevariables[0]:indexes_corevariables[2] + 1]]
 
     corevariable = CoreVariable.query.filter_by(id=corevariable_id).first()
+    print(corevariable)
+
+    corevariables_htmt = corevariables
+    corevariables_htmt.remove(corevariable)
+    length_corevariables_htmt = len(corevariables_htmt)
+    corevariable_names_htmt_js = corevariables_htmt[:3]
+    print(corevariables_htmt)
+    corevariable_htmt_js = [round(heterotrait_monotrait(corevariable, lv, correlation_matrix(df), df), 4)
+                            for lv in corevariables_htmt[:3]]
+    corevariable_htmt_js_all = [round(heterotrait_monotrait(corevariable, lv, correlation_matrix(df), df), 4)
+                                for lv in corevariables_htmt]
+    print(corevariable_htmt_js)
 
     loadings_dct = pd.DataFrame(model1['loading']).to_dict('dict')['loading']
     loadings_list = [loadings_dct[item] for item in items_lv]
@@ -998,5 +1010,7 @@ def corevariable_analysis(study_code, corevariable_id):
                            corevariable_ave_js_all=corevariable_ave_js_all, items_lv=items_lv, length_items_lv=length_items_lv,
                            corevariable_ca_js_all=corevariable_ca_js_all, corevariable_vif_js=corevariable_vif_js,
                            corevariable_cr_js_all=corevariable_cr_js_all, length_corevariables=length_corevariables,
-                           loadings_list=loadings_list)
+                           loadings_list=loadings_list, corevariables_htmt=corevariables_htmt,
+                           corevariable_htmt_js=corevariable_htmt_js, corevariable_names_htmt_js=corevariable_names_htmt_js,
+                           length_corevariables_htmt=length_corevariables_htmt, corevariable_htmt_js_all=corevariable_htmt_js_all)
 

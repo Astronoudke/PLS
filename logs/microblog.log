@@ -1,113 +1,16 @@
-2021-12-20 20:59:10,553 ERROR: Exception on /new_study/summary_results/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 786, in summary_results
-    return render_template('new_study/summary_results.html', study_code=study_code, demographics=demographics,
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 148, in render_template
-    ctx.app.jinja_env.get_or_select_template(template_name_or_list),
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 1068, in get_or_select_template
-    return self.get_template(template_name_or_list, parent, globals)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 997, in get_template
-    return self._load_template(name, globals)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 958, in _load_template
-    template = self.loader.load(self, name, self.make_globals(globals))
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\loaders.py", line 137, in load
-    code = environment.compile(source, name, filename)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 757, in compile
-    self.handle_exception(source=source_hint)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\summary_results.html", line 112, in template
-    <a href="window.location.href='{{ url_for('new_study.data_analysis">Data-analysis</a>
-jinja2.exceptions.TemplateSyntaxError: unexpected char "'" at 3448
-2021-12-20 20:59:53,761 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-20 20:59:57,171 ERROR: Exception on /new_study/summary_results/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 786, in summary_results
-    return render_template('new_study/summary_results.html', study_code=study_code, demographics=demographics,
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
-    return _render(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
-    rv = template.render(context)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 1291, in render
-    self.environment.handle_exception()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\summary_results.html", line 2, in top-level template code
-    {% from 'bootstrap/form.html' import render_form, render_field %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 40, in top-level template code
-    {% block content %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 51, in block 'content'
-    {% block app_content %}{% endblock %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\summary_results.html", line 112, in block 'app_content'
-    <a href="window.location.href='{{ url_for('new_study.data_analysis') }}'">Data-analysis</a>
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\helpers.py", line 338, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\helpers.py", line 325, in url_for
-    rv = url_adapter.build(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\werkzeug\routing.py", line 2305, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'new_study.data_analysis'. Did you forget to specify values ['study_code']?
-2021-12-20 21:01:37,847 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-20 21:01:41,082 ERROR: Exception on /new_study/summary_results/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
-Traceback (most recent call last):
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
-    response = self.full_dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
-    return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 786, in summary_results
-    return render_template('new_study/summary_results.html', study_code=study_code, demographics=demographics,
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
-    return _render(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
-    rv = template.render(context)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 1291, in render
-    self.environment.handle_exception()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\summary_results.html", line 2, in top-level template code
-    {% from 'bootstrap/form.html' import render_form, render_field %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 40, in top-level template code
-    {% block content %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\base.html", line 51, in block 'content'
-    {% block app_content %}{% endblock %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\summary_results.html", line 112, in block 'app_content'
-    <a href="window.location.href='{{ url_for('new_study.data_analysis', study_code=study.code) }}';">Data-analysis</a>
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 474, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'study' is undefined
-2021-12-20 21:02:13,374 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-20 21:03:16,713 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-20 21:11:24,955 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-20 21:12:19,807 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-20 21:13:45,483 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-20 21:18:04,925 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-20 21:19:00,968 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-20 21:21:04,806 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-20 21:30:24,672 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-20 21:38:32,220 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 09:40:44,779 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 09:48:04,204 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 09:55:55,357 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 09:57:44,501 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 10:10:51,656 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 10:14:04,298 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 10:15:41,407 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 10:18:00,937 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 10:24:20,449 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 10:31:14,643 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 10:35:56,408 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 10:41:41,791 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 10:43:40,288 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 10:45:17,350 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 10:48:17,686 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-21 10:48:37,600 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]

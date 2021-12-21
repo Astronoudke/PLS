@@ -1,4 +1,17 @@
-2021-12-01 15:13:25,898 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+2021-12-02 11:40:55,837 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 11:41:19,070 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 11:51:19,927 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 11:51:36,048 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 17:34:33,931 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 17:34:55,579 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 17:35:19,396 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 17:39:01,192 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 17:44:43,458 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 17:45:26,181 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 18:01:34,432 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 18:01:39,026 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 18:06:46,321 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 18:06:46,653 ERROR: Exception on /new_study/data_analysis/corevariable_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3/1 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -10,25 +23,42 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 851, in data_analysis
-    return render_template('new_study/data_analysis.html', study_code=study_code, data_construct_validity=data_construct_validity,
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
-    return _render(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
-    rv = template.render(context)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 1291, in render
-    self.environment.handle_exception()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\data_analysis.html", line 3, in top-level template code
-    {% block app_content %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\data_analysis.html", line 24, in block 'app_content'
-    <li><a onclick="window.location.href='{{ url_for('new_study.corevariable_analysis', study_code=study.code, corevariable_id=variable.id) }}';">{{ variable.name }}</a></li>
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 474, in getattr
-    return getattr(obj, attribute)
-jinja2.exceptions.UndefinedError: 'study' is undefined
-2021-12-01 15:13:57,521 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:14:17,926 ERROR: Exception on /new_study/data_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 903, in corevariable_analysis
+    construct_data =[[round(cronbachs_alpha(corevariable, df),4),
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 904, in <listcomp>
+    round(composite_reliability(corevariable, df, config, Scheme.CENTROID),4),
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\functions.py", line 71, in composite_reliability
+    plspm_calc = Plspm(dataset, configuration, scheme)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\plspm\plspm.py", line 64, in __init__
+    filtered_data = config.filter(data)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\plspm\config.py", line 262, in filter
+    raise ValueError(
+ValueError: The Path matrix supplied does not specify the same latent variables as you added when configuring manifest variables. Path:  LVs: 
+2021-12-02 23:14:20,577 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 23:17:17,442 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 23:25:30,687 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 23:26:39,538 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 23:27:08,880 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 23:27:52,544 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 23:29:49,764 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 23:30:25,718 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-02 23:39:32,668 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 09:51:38,843 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 09:59:33,698 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:02:50,599 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:03:29,671 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:04:07,537 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:04:58,795 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:06:06,819 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:13:32,102 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:14:56,605 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:15:38,568 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:16:34,008 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:27:41,346 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:29:37,686 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:32:21,082 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:56:14,310 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:56:33,861 ERROR: Exception on /new_study/data_analysis/corevariable_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3/1 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
 Traceback (most recent call last):
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
     response = self.full_dispatch_request()
@@ -40,65 +70,23 @@ Traceback (most recent call last):
     return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
   File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
     return func(*args, **kwargs)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 851, in data_analysis
-    return render_template('new_study/data_analysis.html', study_code=study_code, data_construct_validity=data_construct_validity,
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 147, in render_template
-    return _render(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\templating.py", line 128, in _render
-    rv = template.render(context)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 1291, in render
-    self.environment.handle_exception()
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\jinja2\environment.py", line 925, in handle_exception
-    raise rewrite_traceback_stack(source=source)
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\data_analysis.html", line 3, in top-level template code
-    {% block app_content %}
-  File "C:\Users\noudy\PycharmProjects\PLS\app\templates\new_study\data_analysis.html", line 24, in block 'app_content'
-    <li><a onclick="window.location.href='{{ url_for('new_study.corevariable_analysis', study_code=study.code, corevariable_id=variable.id) }}';">{{ variable.name }}</a></li>
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\helpers.py", line 338, in url_for
-    return appctx.app.handle_url_build_error(error, endpoint, values)
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\helpers.py", line 325, in url_for
-    rv = url_adapter.build(
-  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\werkzeug\routing.py", line 2305, in build
-    raise BuildError(endpoint, values, method, self)
-werkzeug.routing.BuildError: Could not build url for endpoint 'new_study.corevariable_analysis' with values ['corevariable_id', 'study_code']. Did you forget to specify values ['corevariable_abbreviation']?
-2021-12-01 15:15:01,952 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:21:26,687 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:22:03,125 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:23:57,327 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:25:01,228 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:25:38,400 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:25:53,994 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:26:10,998 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:26:27,423 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:26:40,744 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:28:34,247 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:32:39,161 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:34:46,791 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:34:52,381 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:38:16,587 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:38:53,982 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:39:25,777 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:39:39,097 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:40:03,163 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-01 15:46:39,888 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 10:14:53,690 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 10:27:50,289 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 10:28:08,754 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 10:31:08,021 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:05:02,343 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:06:23,539 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:08:29,982 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:09:17,970 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:09:55,469 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:10:09,276 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:17:02,412 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:21:56,628 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:23:45,532 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:24:44,028 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:26:42,336 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:27:14,510 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:35:15,437 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:35:55,163 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:36:09,455 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:38:21,176 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
-2021-12-02 11:39:05,866 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 934, in corevariable_analysis
+    corevariable_names_js = [corevariable for corevariable in corevariables[indexes_corevariables[0]: indexes_corevariables[2]]]
+IndexError: list index out of range
+2021-12-03 10:58:17,881 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]
+2021-12-03 10:58:38,099 ERROR: Exception on /new_study/data_analysis/corevariable_analysis/4fd4455c-f3c0-4415-a057-f3471ffdb6a3/1 [GET] [in C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py:1457]
+Traceback (most recent call last):
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 2073, in wsgi_app
+    response = self.full_dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1518, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1516, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask\app.py", line 1502, in dispatch_request
+    return self.ensure_sync(self.view_functions[rule.endpoint])(**req.view_args)
+  File "C:\Users\noudy\PycharmProjects\untitled2\PLS\lib\site-packages\flask_login\utils.py", line 272, in decorated_view
+    return func(*args, **kwargs)
+  File "C:\Users\noudy\PycharmProjects\PLS\app\new_study\routes.py", line 934, in corevariable_analysis
+    corevariable_names_js = [corevariable for corevariable in [corevariables[indexes_corevariables[0]], corevariables[indexes_corevariables[1]],
+IndexError: list index out of range
+2021-12-03 10:59:14,687 INFO: Microblog startup [in C:\Users\noudy\PycharmProjects\PLS\app\__init__.py:78]

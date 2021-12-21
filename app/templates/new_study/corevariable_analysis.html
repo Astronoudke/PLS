@@ -64,6 +64,16 @@
       </div>
     </div>
   </div>
+  <div class="graphics-box" id="button-htmt">
+    <div class="graphic-box">
+      <div class="graphic-namebox">
+        <p class="graphic-name">Heterotrait-Monotrait Ratio</p>
+      </div>
+      <div class="graphic-graphbox">
+        <canvas id="chart_htmt"></canvas>
+      </div>
+    </div>
+  </div>
 
   <div class="full-graphic-background" id="overlay-back-ave"></div>
   <div class="full-graphic-box" id="overlay-ave">
@@ -86,6 +96,14 @@
     <button style="display: none;" id="overlay-button-cr">Go back</button>
     <div class="full-graphic" id="overlay-graphic-cr">
       <canvas id="chart_cr_all"></canvas>
+    </div>
+  </div>
+
+  <div class="full-graphic-background" id="overlay-back-htmt"></div>
+  <div class="full-graphic-box" id="overlay-htmt">
+    <button style="display: none;" id="overlay-button-htmt">Go back</button>
+    <div class="full-graphic" id="overlay-graphic-htmt">
+      <canvas id="chart_htmt_all"></canvas>
     </div>
   </div>
 
@@ -348,6 +366,82 @@
           const chart_cr_all = new Chart(
             document.getElementById('chart_cr_all'),
             config_cr_all
+          );
+
+
+      /* HTMT-all table */
+          $('#button-htmt').on('click', function () {
+              $('#overlay-htmt, #overlay-back-htmt, #overlay-graphic-htmt, #overlay-button-htmt').fadeIn(500);
+          });
+
+          $('#overlay-button-htmt').on('click', function () {
+              $('#overlay-htmt, #overlay-back-htmt, #overlay-graphic-htmt, #overlay-button-htmt').fadeOut(500);
+          });
+
+          var labels_htmt_all = [
+              {% for corevariable in corevariables_htmt %}
+                '{{ corevariable.name }}',
+              {% endfor %}
+          ];
+
+          var data_htmt_all = {
+              labels: labels_htmt_all,
+              datasets: [{
+                label: 'HTMT-ratio',
+                backgroundColor: [
+                  {% for corevariable in range(length_corevariables_htmt) %}
+                    chartColors.green,
+                  {% endfor %}
+                ],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [{% for htmt in corevariable_htmt_js_all %} {{ htmt }}, {% endfor %}],
+              }]
+          };
+
+          var colorChangeValue = 0.85;
+          var dataset = data_htmt_all.datasets[0];
+          for (var i = 0; i < dataset.data.length; i++) {
+            if (dataset.data[i] >= colorChangeValue) {
+              dataset.backgroundColor[i] = chartColors.red;
+            }
+          };
+
+          const config_htmt_all = {
+              type: 'bar',
+              data: data_htmt_all,
+              options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Heterotrait-Monotrait Ratio'
+                    },
+                    legend: {
+                        display: false,
+                    }
+                },
+                maintainAspectRatio: false,
+                scales: {
+                  x: {
+                      barPercentage: 0.4
+                  },
+                  y: {
+                    grid: {
+                      drawBorder: false,
+                      color: function(context) {
+                        if (context.tick.value == 0.85) {
+                          return '#FFFFFF';
+                        }
+                        return '#C2C2C2';
+                      },
+                    },
+                  }
+                }
+              },
+          };
+
+          const chart_htmt_all = new Chart(
+            document.getElementById('chart_htmt_all'),
+            config_htmt_all
           );
 
 
@@ -685,6 +779,69 @@
           const chart_loadings = new Chart(
             document.getElementById('chart_loadings'),
             config_loadings
+          );
+
+
+      /* HTMT-corevariable table */
+          const labels_htmt = [
+              {% for corevariable in corevariable_names_htmt_js %}
+                '{{ corevariable.abbreviation }}',
+              {% endfor %}
+          ];
+          var data_htmt = {
+              labels: labels_htmt,
+              datasets: [{
+                label: 'HTMT-ratio',
+                backgroundColor: [
+                  chartColors.green,
+                  chartColors.green,
+                  chartColors.green
+                ],
+                borderColor: 'rgb(255, 99, 132)',
+                data: [{% for htmt in corevariable_htmt_js %} {{ htmt }}, {% endfor %}]
+              }]
+          };
+
+          var colorChangeValue = 0.85; //set this to whatever is the deciding color change value
+          var dataset = data_htmt.datasets[0];
+          for (var i = 0; i < dataset.data.length; i++) {
+            if (dataset.data[i] >= colorChangeValue) {
+              dataset.backgroundColor[i] = chartColors.red;
+            }
+          };
+
+          const config_htmt = {
+              type: 'bar',
+              data: data_htmt,
+              options: {
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                },
+                maintainAspectRatio: false,
+                scales: {
+                  x: {
+                      barPercentage: 0.4
+                  },
+                  y: {
+                    grid: {
+                      drawBorder: false,
+                      color: function(context) {
+                        if (context.tick.value == 0.85) {
+                          return 'rgb(199, 13, 0)';
+                        }
+                        return '#C2C2C2';
+                      },
+                    },
+                  }
+                }
+              },
+          };
+
+          const chart_htmt = new Chart(
+            document.getElementById('chart_htmt'),
+            config_htmt
           );
 
   </script>
