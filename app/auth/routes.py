@@ -12,11 +12,15 @@ from app.models import User
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
+    # Als de gebruiker al ingelogd is wordt deze verwezen naar het hoofdmenu.
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
+    # De Form voor het inloggen.
     form = LoginForm()
+    # Als de gebruiker aangeeft in te willen loggen.
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
+        # Als de gebruiker niet bestaart of als het wachtwoord niet klopt.
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('auth.login'))
@@ -31,15 +35,19 @@ def login():
 
 @bp.route('/logout')
 def logout():
+    # De gebruiker wordt uitgelogd.
     logout_user()
     return redirect(url_for('main.index'))
 
 
 @bp.route('/register', methods=['GET', 'POST'])
 def register():
+    # Als de gebruiker al ingelogd is wordt deze verwezen naar het hoofdmenu.
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
+    # De Form voor registratie binnen de app.
     form = RegistrationForm()
+    # Als de gebruiker aangeeft de registratiegegevens ingevuld te hebben.
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
         user.set_password(form.password.data)
@@ -52,9 +60,12 @@ def register():
 
 @bp.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
+    # Als de gebruiker al ingelogd is wordt deze verwezen naar het hoofdmenu.
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
+    # De Form voor het resetten van het wachtwoord.
     form = ResetPasswordRequestForm()
+    # Als de gebruiker aangeeft het wachtwoord te willen resetten.
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
@@ -67,6 +78,7 @@ def reset_password_request():
 
 @bp.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
+    # Als de gebruiker al ingelogd is wordt deze verwezen naar het hoofdmenu.
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     user = User.verify_reset_password_token(token)

@@ -1,9 +1,11 @@
+<!-- Het einde van de vragenlijst. -->
 {% extends 'base_visitor.html' %}
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
 {% block app_content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style_ending_questionlist.css') }}">
     <h1>Einde vragenlijst</h1>
+    <!-- De Form voor het voltooien van de vragenlijst. -->
     <div class="form-container">
         <div class="row">
             <div class="col-md-4">

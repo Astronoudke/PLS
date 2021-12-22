@@ -1,3 +1,4 @@
+<!-- De pagina waarbinnen de standaarddemografieken van de gebruiker weergegeven worden. -->
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
@@ -5,7 +6,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style_questionnaire.css') }}">
     <div class="table-corevariable">
         <h1 class="table-header">Your standard demographics</h1>
+        <!-- De tabel waarbinnen de standaarddemografieken weergegeven worden. -->
         <table class="table-class">
+          <!-- De gegevens van de demografieken. -->
           <tr>
             <th>Name</th>
             <th>Type</th>
@@ -32,6 +35,7 @@
           {% endfor %}
         </table>
     </div>
+    <!-- De knop waarmee een nieuwe standaarddemografiek gemaakt kan worden. -->
     <button type="button" onclick="window.location.href='{{ url_for('main.new_standard_demographic') }}';">
         Create New Demographic
     </button>

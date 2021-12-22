@@ -1,8 +1,10 @@
+<!-- Het menu waarbinnen de gebruiker het profiel kan aanpassen. -->
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
 {% block content %}
     <h1>Edit Profile</h1>
+    <!-- De Form voor het aanpassen van het profiel. -->
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>

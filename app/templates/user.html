@@ -1,3 +1,4 @@
+<!-- Het weergeven van de profiel van de gebruiker. -->
 {% extends "base.html" %}
 
 {% block app_content %}
@@ -6,16 +7,21 @@
         <tr>
             <td width="256px"><img src="{{ user.avatar(256) }}"></td>
             <td>
+                <!-- Gegevens over de gebruiker weergeven. -->
                 <h1>User: {{ user.username }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                 {% if user.last_seen %}
                 <p>Last seen on: {{ moment(user.last_seen).format('LLL') }}</p>
                 {% endif %}
                 <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
+                <!-- Als de huidige gebruiker ook de gebruiker is van het profiel de opties weergeven om de volgende
+                 aanpassingen te kunnen maken aan het profiel. -->
                 {% if user == current_user %}
                 <p><a href="{{ url_for('main.edit_profile') }}">Edit your profile</a></p>
                 <p><a href="{{ url_for('main.standard_questions', username=user.username) }}">Edit standard questions</a></p>
                 <p><a href="{{ url_for('main.standard_demographics', username=user.username) }}">Edit standard demographics</a></p>
+                <!-- Als de huidige gebruiker niet de gebruiker is van het profiel en de gebruiker nog niet "volgt"
+                 (volgfunctie nog niet volledig geïmplementeerd in de applicatie. -->
                 {% elif not current_user.is_following(user) %}
                 <p>
                     <form action="{{ url_for('main.follow', username=user.username) }}" method="post">
@@ -23,6 +29,7 @@
                         {{ form.submit(value=Follow, class_='btn btn-default') }}
                     </form>
                 </p>
+                <!-- Als de huidige gebruiker niet de gebruiker is van het profiel en de gebruiker wel "volgt". -->
                 {% else %}
                 <p>
                     <form action="{{ url_for('main.unfollow', username=user.username) }}" method="post">

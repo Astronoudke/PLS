@@ -5,6 +5,7 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
 from app.models import User
 
 
+# De Form om in te loggen.
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -12,6 +13,7 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Sign In')
 
 
+# De Form om te registreren binnen de applicatie.
 class RegistrationForm(FlaskForm):
     style_email = {'style': 'width:185%;'}
     email = StringField('Email', validators=[DataRequired(), Email()], render_kw=style_email)
@@ -32,12 +34,14 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Please use a different email address.')
 
 
+# De Form om een wachtwoordreset aan te vragen.
 class ResetPasswordRequestForm(FlaskForm):
     style_reset = {'style': 'width:120%;'}
     email = StringField('Email', validators=[DataRequired(), Email()], render_kw=style_reset)
     submit = SubmitField('Request Password Reset')
 
 
+# De Form om de wachtwoordreset te voltooien.
 class ResetPasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(

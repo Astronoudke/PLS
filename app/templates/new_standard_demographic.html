@@ -1,9 +1,11 @@
+<!-- De pagina waarbinnen een nieuwe standaarddemografiek gecreëerd kan worden. -->
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
 {% block content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style_edit_study.css') }}">
     <h1>Create new demographic</h1>
+    <!-- De Form voor het ingeven van de relevante gegevens over de demografiek. -->
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
