@@ -1,3 +1,4 @@
+<!-- De pagina waarbinnen het onderzoeksmodel aangepast kan worden. -->
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
@@ -6,9 +7,11 @@
     <div class="title-box">
         <h1 class="title-header"> {{ study.name }}</h1>
     </div>
+    <!-- De optie om het onderzoek zelf aan te passen. -->
     <button type="button" onclick="window.location.href='{{ url_for('new_study.edit_study', study_code=study.code) }}';">
         Edit Study
     </button>
+    <!-- De tabel met alle kernvariabelen. -->
     <div id="table-corevariables">
         <h1 class="table-header">Core Variables</h1>
         <table class="table-class">
@@ -22,7 +25,8 @@
         </table>
     </div>
 
-
+    <!-- Een div welke de optie bevat om een kernvariabele toe te voegen vanuit een selectiemenu of er handmatig een toe
+     te voegen. -->
     <div class="popuptext">
         <div class="form-container">
             <div class="row">
@@ -36,7 +40,7 @@
         </button>
     </div>
 
-
+    <!-- De tabel met alle relaties. -->
     <div id="table-relations">
         <h1 class="table-header">Relations</h1>
         <table class="table-class">
@@ -53,7 +57,4 @@
         Go To Questionnaire
     </button>
 
-{% endblock %}
-
-{% block scripts %}
 {% endblock %}

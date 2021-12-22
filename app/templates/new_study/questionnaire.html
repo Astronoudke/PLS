@@ -1,3 +1,4 @@
+<!-- De pagina waarbinnen de vragenlijst opgesteld kan worden voor het onderzoek. -->
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
@@ -6,9 +7,11 @@
     <div class="title-box">
         <h1 class="title-header"> {{ study.name }}</h1>
     </div>
+    <!-- De knop om aanpassingen te maken aan de studie. -->
     <button type="button" onclick="window.location.href='{{ url_for('new_study.edit_study', study_code=study.code) }}';">
         Edit Study
     </button>
+    <!-- De tabel waarbinnen de demografieken gegeven staan. -->
     <div class="table-corevariable">
         <h1 class="table-header">Collected data participants</h1>
         <table class="table-class">
@@ -17,6 +20,7 @@
             <th>Type</th>
             <th>Optional</th>
           </tr>
+          <!-- Voor iedere demografiek in de vragenlijst de naam, soort demografiek en de optionaliteit weergeven. -->
           {% for demographic in demographics %}
             <tr>
                 <td>
@@ -41,6 +45,8 @@
     <button type="button" onclick="window.location.href='{{ url_for('new_study.new_demographic', study_code=study.code) }}';">
         Create New Demographic
     </button>
+    <!-- Voor iedere vragengroep/kernvariabele de vragen weergeven, de mogelijkheid om de scores voor de vraag om te
+     draaien en de mogelijkheden om vragen toe te voegen of te verwijderen.-->
     {% for questiongroup in questiongroups_questions.keys() %}
         <div class="table-corevariable">
             <h1 class="table-header"> {{ questiongroup.title }}</h1>
@@ -83,20 +89,25 @@
         </button>
     {% endfor %}
 
+    <!-- De optie om de standaardvragen van de gebruiker over te nemen naar de vragenlijst. Hierbij wordt de "(...)"
+     vervangen door de voor het onderzoek relevante technologie. -->
     <button type="button" onclick="window.location.href='{{ url_for('new_study.use_standard_questions_questionnaire',
     study_code=study.code) }}';">
         Use Standard Questions
     </button>
 
+    <!-- De optie om de standaarddemografieken van de gebruiker over te nemen naar de vragenlijst. -->
     <button type="button" onclick="window.location.href='{{ url_for('new_study.use_standard_demographics_questionnaire',
     study_code=study.code) }}';">
         Use Standard Demographics
     </button>
 
+    <!-- De knop om terug te gaan naar het bewerken van het onderzoeksmodel. -->
     <button type="button" onclick="window.location.href='{{ url_for('new_study.utaut', study_code=study.code) }}';">
         Go Back to UTAUT
     </button>
 
+    <!-- De optie om het onderzoek te starten. -->
     <button type="button" onclick="window.location.href='{{ url_for('new_study.check_questionnaire', study_code=study.code) }}';">
         Start Study
     </button>

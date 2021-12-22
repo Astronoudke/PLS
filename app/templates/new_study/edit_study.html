@@ -1,9 +1,11 @@
+<!-- De pagina waarbinnen het onderzoek zelf aangepast kan worden. -->
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
 {% block content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style_edit_study.css') }}">
     <h1>Edit Study</h1>
+    <!-- De Form waarmee het onderzoek aangepast kan worden. -->
     <form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
@@ -31,7 +33,5 @@
     </form>
 
     <button type="button" onclick="window.location.href='{{ url_for('new_study.add_user',
-                            study_code=study.code) }}';">
-                                Add User
-    </button>
+                            study_code=study.code) }}';">Add User</button>
 {% endblock %}

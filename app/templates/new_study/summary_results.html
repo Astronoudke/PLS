@@ -1,3 +1,4 @@
+<!-- De pagina waarbinnen de samenvatting van de vragenlijstresultaten weergegeven wordt. -->
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
@@ -6,8 +7,8 @@
     <div class="title-box">
         <h1>Summary Results</h1>
     </div>
+    <!-- De tabel waarin de demografische informatie van alle participanten weergegeven wordt. -->
     <section>
-      <!--for demo wrap-->
       <h1>All demographic results</h1>
       <div class="tbl-header">
         <table cellpadding="0" cellspacing="0" border="0">
@@ -29,6 +30,7 @@
                 <tr>
                   <td style="font-weight: bold;">{{ i }}</td>
                   {% for k in dictionary[i] %}
+                    <!-- Als er een gegeven is om te geven wordt deze getoond. Anders wordt het gegeven leeggelaten. -->
                     {% if k %}
                         <td>{{ k }}</td>
                     {% else %}
@@ -42,8 +44,8 @@
       </div>
     </section>
 
+    <!-- De tabel waarin alle vragenlijstresultaten per case weergegeven worden. -->
     <section>
-      <!--for demo wrap-->
       <h1>All questionnaire results</h1>
       <div class="tbl-header">
         <table cellpadding="0" cellspacing="0" border="0">
@@ -78,8 +80,8 @@
       </div>
     </section>
 
+    <!-- De tabel waarin de gemiddelden en standaardeviaties van de vragen weergegeven worden. -->
     <section>
-      <!--for demo wrap-->
       <h1>Average and standard deviation questions</h1>
       <div class="tbl-header">
         <table cellpadding="0" cellspacing="0" border="0">

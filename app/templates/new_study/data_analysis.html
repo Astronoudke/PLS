@@ -1,3 +1,4 @@
+<!-- De pagina waarbinnen de data-analyse van de kwaliteitscriteria wordt getoond. -->
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
 {% block app_content %}
@@ -6,16 +7,19 @@
     <h1>Data-analysis using PLS-SEM</h1>
   </div>
 
+  <!-- Een menu waarbinnen de verschillende soorten kwaliteitscriteria getoond kunnen worden. Dit ter overzichtelijkheid
+   van de pagina.-->
   <div class="tab">
     <button class="tablinks" onclick="openAnalysis(event, 'ConstructValidity')">Construct Validity and Reliability</button>
     <button class="tablinks" onclick="openAnalysis(event, 'DiscriminantValidity')">Discriminant Validity</button>
     <button class="tablinks" onclick="openAnalysis(event, 'Multicollinearity')">Multicollinearity</button>
   </div>
 
+  <!-- De tab binnen het menu voor de Construct Validiteit en Betrouwbaarheid (AVE, Cronbach's Alpha, Composite
+   Reliability en ladingen.-->
   <div id="ConstructValidity" class="tabcontent">
-    <!-- Tabel voor construct validiteit en betrouwbaarheid -->
+    <!-- De tabel voor AVE, Cronbach's Alpha en Composite Reliability. -->
     <section class="wrapper">
-      <!-- Row title -->
       <main class="row title">
         <ul>
           <li>Latent Variable</li>
@@ -24,14 +28,17 @@
           <li>AVE</li>
         </ul>
       </main>
-      <!-- Row 1 - fadeIn -->
       {% set dictionary = data_construct_validity %}
+      <!-- Voor iedere kernvariabele binnen het model worden de kwaliteitscriteria weergegeven. -->
       {% for variable in dictionary %}
       <section class="row-fadeIn-wrapper">
         <article class="row fadeIn nfl">
           <ul>
             <li class="clickable-lv"><a onclick="window.location.href='{{ url_for('new_study.corevariable_analysis', study_code=study.code, corevariable_id=variable.id) }}';">{{ variable.name }}</a></li>
             {% set value = dictionary[variable][0] | float() %}
+            <!-- Als de waarde groter is dan of gelijk is aan 0,7 moet deze in het groen weergegeven worden (de waarde
+            voldoet aan de kwaliteitscriterium). Als de waarde kleiner is dan 0,7 (else) dan wordt de waarde in het rood
+            weergegeven. -->
             {% if value >= 0.7 %}
               <li style="color:rgb(100, 255, 94)">{{ value }}</li>
             {% else %}
@@ -52,6 +59,7 @@
               <li style="color:rgb(255, 79, 79)">{{ value }}</li>
             {% endif %}
           </ul>
+          <!-- Geeft de beschrijving van de kernvariabele weer in een klein menuutje bij het hoveren op de kernvariabele. -->
           <ul class="more-content">
             <li>{{ variable.description }}</li>
           </ul>
@@ -60,9 +68,8 @@
       {% endfor %}
     </section>
 
-    <!-- Tabel voor items -->
+    <!-- De tabel voor het weergeven van de ladingen van de items van alle kernvariabelen. -->
     <section class="wrapper">
-      <!-- Row title -->
       <main class="row title">
         <ul>
           <li>Item</li>
@@ -71,6 +78,7 @@
       </main>
       <!-- Row 1 - fadeIn -->
       {% set dictionary = loadings_dct %}
+      <!-- Voor ieder item wordt de waarde weergegeven. -->
       {% for item in dictionary %}
       <section class="row-fadeIn-wrapper">
         <article class="row fadeIn nfl">
@@ -83,6 +91,7 @@
               <li style="color:rgb(255, 79, 79)">{{ value }}</li>
             {% endif %}
           </ul>
+          <!-- Het weergeven van de vraag. -->
           <ul class="more-content">
             <li>{{ dictionary[item][0] }}</li>
           </ul>
@@ -92,10 +101,10 @@
     </section>
   </div>
 
+  <!-- De tab binnen het menu voor de Discriminante Validiteit (HTMT-waarden).-->
   <div id="DiscriminantValidity" class="tabcontent">
-    <!-- Tabel voor HTMT -->
+    <!-- De tabel voor het weergeven van de HTMT-ratios van alle kernvariabelen. -->
     <section class="section-htmt">
-        <!--for demo wrap-->
         <h1>Heterotrait-Monotrait Ratio</h1>
         <div class="tbl-header">
           <table cellpadding="0" cellspacing="0" border="0">
@@ -103,6 +112,7 @@
               <tr>
                 <th></th>
                 {% set dictionary = data_htmt %}
+                <!-- Voor iedere kolom een kernvariabele. -->
                 {% for variable in dictionary %}
                   <th>{{ variable }}</th>
                 {% endfor %}
@@ -114,6 +124,8 @@
           <table cellpadding="0" cellspacing="0" border="0">
             <tbody>
               {% set dictionary = data_htmt %}
+              <!-- Voor iedere rij ten eerste de kernvariabele ({{ variable }}) en vervolgens de waarden die horen op de
+               specifieke positie. De correcte waarden (waarden onder 0.85) worden getoond in het groen. -->
               {% for variable in dictionary %}
                   <tr>
                       <th>{{ variable }}</th>
@@ -133,11 +145,10 @@
     </section>
   </div>
 
-  <!-- Tabel voor VIF-waarden -->
-
+  <!-- De tab binnen het menu voor de Collineariteitsstatistieken (Buitenste-VIF waarden).-->
   <div id="Multicollinearity" class="tabcontent">
+    <!-- De tabel voor het weergeven van de VIF-waarden van alle items van alle kernvariabelen. -->
     <section class="section-htmt">
-        <!--for demo wrap-->
         <h1>Variance Inflation Factor</h1>
         <div class="tbl-header">
           <table cellpadding="0" cellspacing="0" border="0">
@@ -171,7 +182,6 @@
         </div>
     </section>
   </div>
-
 {% endblock %}
 
 {% block scripts %}

@@ -1,8 +1,10 @@
+<!-- De pagina waarbinnen de data-analyse van de kernvariabele getoond wordt. -->
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
 {% block app_content %}
   <link rel="stylesheet" href="{{ url_for('static', filename='style_corevariable_analysis.css') }}">
+  <!-- Informatie over de kernvariabele (de naam, afkorting en beschrijving). -->
   <div class="corevariable-infotable">
     <div class="corevariable-namebox">
       <p class="corevariable-name">{{ corevariable.name }}</p>
@@ -14,6 +16,10 @@
       <p class="corevariable-description">{{ corevariable.description }}</p>
     </div>
   </div>
+  <!-- De div's waarbinnen de verschillende kleinschalige grafieken worden getoond. "Button" wordt toegevoegd als de
+   mogelijkheid gegeven wordt bij het klikken op de div om de fullscreengrafiek weer te geven. De div is onderverdeeld
+   in een "namebox" waarbinnen de naam van de specifieke criterium wordt gegeven (graphic-namebox) en een "graphbox"
+   waarbinnen de chart/grafiek zit (graphic-graphbox).-->
   <div class="graphics-box" id="button-ave">
     <div class="graphic-box">
       <div class="graphic-namebox">
@@ -75,6 +81,9 @@
     </div>
   </div>
 
+  <!-- De div's van de fullscreengrafieken van de kwaliteitscriteria. De chart/grafiek staat binnen de div
+  "full-graphic". De button binnen de div "overlay-button" is een button welke de optie geeft om de fullscreengrafiek
+  weg te halen van het scherm.-->
   <div class="full-graphic-background" id="overlay-back-ave"></div>
   <div class="full-graphic-box" id="overlay-ave">
     <button style="display: none;" id="overlay-button-ave">Go back</button>
@@ -108,12 +117,13 @@
   </div>
 
   <script>
-
+      /* De configuratie van Chart.js en bepaalde instellingen. */
       const DISPLAY = true;
       const BORDER = true;
       const CHART_AREA = true;
       const TICKS = true;
 
+      /* De kleuren welke gebruikt worden voor de staven in de staafgrafieken. */
       var chartColors = {
             red: 'rgb(255, 99, 132)',
             green: 'rgb(75, 210, 70)',
@@ -122,21 +132,28 @@
             darkgreen: 'rgb(0, 212, 0)'
           };
 
-      /* AVE-all table */
+      /* De AVE-fullscreengrafiek */
+
+          /* JQuery-functie om de fullscreengrafiek te openen bij het klikken op de kleinere AVE-grafiek. */
           $('#button-ave').on('click', function () {
               $('#overlay-ave, #overlay-back-ave, #overlay-graphic-ave, #overlay-button-ave').fadeIn(500);
           });
 
+          /* JQuery-functie om de fullscreengrafiek te sluiten bij het klikken op de "Go Back"-knop. */
           $('#overlay-button-ave').on('click', function () {
               $('#overlay-ave, #overlay-back-ave, #overlay-graphic-ave, #overlay-button-ave').fadeOut(500);
           });
 
+          /* De labels binnen de grafiek (de namen welke horen bij de staven). */
           var labels_ave_all = [
               {% for corevariable in corevariable_names_js_all %}
                 '{{ corevariable.name }}',
               {% endfor %}
           ];
 
+          /* Dataconfiguratie binnen de grafiek, waaronder de data die hoort bij de staven "data", de kleuren die
+           nu worden ingesteld (backgroundColor) en gelijk door de functie hieronder worden aangepast op basis van de
+           relevante waarde en om wat voor waarde het gaat bij het hoveren op de staven. */
           var data_ave_all = {
               labels: labels_ave_all,
               datasets: [{
@@ -151,6 +168,9 @@
               }]
           };
 
+          /* Aan de hand van de grenswaarde (in dit geval 0.50) de kleur van de staven aanpassen. Voor iedere waarde
+           wordt gekeken of de waarde onder 0.50 ligt (in dit geval de staaf rood maken), en daarna of het om de staaf
+           gaat welke hoort bij de kernvariabele zelf (welke gehighlighted wordt met geel). */
           var colorChangeValue = 0.50;
           var dataset = data_ave_all.datasets[0];
           for (var i = 0; i < dataset.data.length; i++) {
@@ -163,6 +183,12 @@
             }
           };
 
+          /* De configuratie van de grafiek. De type geeft het soort grafiek aan, de data wordt geconfigureerd en de
+           opties stellen enkele onderdelen vast binnen de grafiek. De title geeft een titel weer bovenaan de grafiek.
+           "legend" is de legenda welke in dit geval niet weergegeven wordt. Voor de x- en y-as wordt bepaald dat de
+           x-as een specifieke barPercentage heeft (de bepaalde breedte van de staaf) en dat de y-as begint bij 0,
+           dat de y-as ook eindigt bij 1 en dat bij de grenswaarde van 0,5 een groene lijn getoond wordt om deze waarde
+           aan te tonen. */
           const config_ave_all = {
               type: 'bar',
               data: data_ave_all,
@@ -198,13 +224,14 @@
               },
           };
 
+          /* De uiteindelijk configuratie van de grafiek. "chart_ave_all" is terug te vinden in de HTML-code. */
           const chart_ave_all = new Chart(
             document.getElementById('chart_ave_all'),
             config_ave_all
           );
 
 
-      /* Cronbachs Alpha-all table */
+      /* De Cronbach's Alpha-fullscreengrafiek */
           $('#button-ca').on('click', function () {
               $('#overlay-ca, #overlay-back-ca, #overlay-graphic-ca, #overlay-button-ca').fadeIn(500);
           });
@@ -287,7 +314,7 @@
 
 
 
-      /* Composite Reliability-all table */
+      /* De Composite Reliability-fullscreengrafiek */
           $('#button-cr').on('click', function () {
               $('#overlay-cr, #overlay-back-cr, #overlay-graphic-cr, #overlay-button-cr').fadeIn(500);
           });
@@ -369,7 +396,7 @@
           );
 
 
-      /* HTMT-all table */
+      /* De Heterotrait-Monotrait Ratio-fullscreengrafiek */
           $('#button-htmt').on('click', function () {
               $('#overlay-htmt, #overlay-back-htmt, #overlay-graphic-htmt, #overlay-button-htmt').fadeIn(500);
           });
@@ -445,7 +472,7 @@
           );
 
 
-      /* AVE-corevariable table */
+      /* De AVE-kleinschalige grafiek */
           var labels_ave = [
               {% for corevariable in corevariable_names_js %}
                 '{{ corevariable.abbreviation }}',
@@ -514,7 +541,7 @@
           );
 
 
-      /* Cronbachs Alpha-corevariable table */
+      /* De Cronbach's Alpha-kleinschalige grafiek */
           const labels_ca = [
               {% for corevariable in corevariable_names_js %}
                 '{{ corevariable.abbreviation }}',
@@ -584,7 +611,7 @@
           );
 
 
-      /* Composite Reliability-corevariable table */
+      /* De Composite Reliability-kleinschalige grafiek */
           const labels_cr = [
               {% for corevariable in corevariable_names_js %}
                 '{{ corevariable.abbreviation }}',
@@ -653,7 +680,7 @@
           );
 
 
-      /* VIF-corevariable table */
+      /* De VIF (Variance Inflation Factor)-kleinschalige grafiek */
           const labels_vif = [
               {% for item in items_lv %}
                 '{{ item }}',
@@ -717,7 +744,7 @@
             config_vif
           );
 
-      /* Loadings-items table */
+      /* De Ladingen-kleinschalige grafiek */
           const labels_loadings = [
               {% for item in items_lv %}
                 '{{ item }}',
@@ -782,7 +809,7 @@
           );
 
 
-      /* HTMT-corevariable table */
+      /* De Heterotrait Monotrait Ratio-kleinschalige grafiek */
           const labels_htmt = [
               {% for corevariable in corevariable_names_htmt_js %}
                 '{{ corevariable.abbreviation }}',

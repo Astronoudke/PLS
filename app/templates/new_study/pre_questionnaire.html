@@ -1,9 +1,11 @@
+<!-- De pagina voorafgaand aan het opstellen van de vragenlijst waarmee enkele instellingen gegeven worden. -->
 {% extends "base.html" %}
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
 {% block app_content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style_questionnaire.css') }}">
-    <h1>Create a New Questionnaire</h1>
+    <h1>Set-up the questionnaire</h1>
+    <!-- De Form voor het instellen van de voorafgaande instellingen. -->
     <div class="form-container">
         <div class="row">
             <div class="col-md-4">
