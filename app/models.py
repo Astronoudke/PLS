@@ -109,7 +109,7 @@ class Study(db.Model):
     name = db.Column(db.String(200), index=True, unique=True)
     description = db.Column(db.String(3000))
     technology = db.Column(db.String(75))
-    code = db.Column(db.String, unique=True)
+    code = db.Column(db.String(60), unique=True)
     # stage_1 is the stage in which the research is being set up and changes can be made
     stage_1 = db.Column(db.Boolean, default=True)
     # stage_2 is the stage in which the research is underway, but questionnaires are being put out and only very
@@ -151,10 +151,10 @@ class Questionnaire(db.Model):
 class Demographic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), index=True)
-    description = db.Column(db.String)
-    choices = db.Column(db.String)
+    description = db.Column(db.String(200))
+    choices = db.Column(db.String(200))
     optional = db.Column(db.Boolean, default=True)
-    questiontype_name = db.Column(db.String, db.ForeignKey('question_type.name'))
+    questiontype_name = db.Column(db.String(64), db.ForeignKey('question_type.name'))
     questionnaire_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
 
     def __repr__(self):
@@ -184,7 +184,7 @@ class Demographic(db.Model):
 
 class DemographicAnswer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    answer = db.Column(db.String)
+    answer = db.Column(db.String(200))
     demographic_id = db.Column(db.Integer, db.ForeignKey('demographic.id'))
     case_id = db.Column(db.Integer, db.ForeignKey('case.id'))
 
@@ -196,10 +196,10 @@ class DemographicAnswer(db.Model):
 class StandardDemographic(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), index=True, unique=True)
-    description = db.Column(db.String)
-    choices = db.Column(db.String)
+    description = db.Column(db.String(300))
+    choices = db.Column(db.String(200))
     optional = db.Column(db.Boolean, default=True)
-    questiontype_name = db.Column(db.String, db.ForeignKey('question_type.name'))
+    questiontype_name = db.Column(db.String(64), db.ForeignKey('question_type.name'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
@@ -225,8 +225,8 @@ class QuestionType(db.Model):
 
 class QuestionGroup(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String)
-    group_type = db.Column(db.String)
+    title = db.Column(db.String(100))
+    group_type = db.Column(db.String(50))
     description = db.Column(db.Text)
     questionnaire_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
     corevariable_id = db.Column(db.Integer, db.ForeignKey('core_variable.id'))
@@ -297,7 +297,7 @@ class Relation(db.Model):
 
 class Case(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    session_id = db.Column(db.String, unique=True)
+    session_id = db.Column(db.String(100), unique=True)
     questionnaire_id = db.Column(db.Integer, db.ForeignKey('questionnaire.id'))
     start = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     completed = db.Column(db.Boolean, default=False)

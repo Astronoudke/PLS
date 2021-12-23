@@ -1,21 +1,25 @@
+<!-- De pagina waarbinnen de gebruiker kan inloggen. -->
 {% extends 'base_logged_out.html' %}
 {% from 'bootstrap/form.html' import render_form, render_field %}
 
 {% block app_content %}
     <link rel="stylesheet" href="{{ url_for('static', filename='style_login.css') }}">
     <h1>Sign In</h1>
+    <!-- De Form waarmee de gebruiker kan inloggen. -->
     <div class="row">
         <div class="col-md-4">
             {{ render_form(form) }}
         </div>
     </div>
     <br>
+    <!-- De knop waarmee de gebruiker zich kan registreren. -->
     <p>New User? <a href="{{ url_for('auth.register') }}">Click to Register!</a></p>
+    <!-- De knop waarmee de gebruiker het wachtwoord kan resetten. -->
     <p>
         Forgot Your Password?
         <a href="{{ url_for('auth.reset_password_request') }}">Click to Reset It</a>
     </p>
-
+    <!-- Informatie over de applicatie. -->
     <div class="info-box">
         <img src="https://spacelaser.nl/images/IMG_1873.png" class="info-box-logo"></img>
         <p style="color:black;text-align: left;">RubyHub is a webapplication for researchers to conduct UTAUT-based studies. The unified theory of acceptance and use of technology (UTAUT) is a technology acceptance model formulated by Venkatesh and others in "User acceptance of information technology: Toward a unified view".[1] The UTAUT aims to explain user intentions to use an information system and subsequent usage behavior. The theory holds that there are four key constructs: 1) performance expectancy, 2) effort expectancy, 3) social influence, and 4) facilitating conditions.

@@ -1,7 +1,6 @@
 import logging
 import os
 from logging.handlers import SMTPHandler, RotatingFileHandler
-
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
@@ -10,8 +9,8 @@ from flask_migrate import Migrate
 from flask_moment import Moment
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
-
 from config import Config
+from flask_mysqldb import MySQL
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -22,6 +21,7 @@ mail = Mail()
 moment = Moment()
 bootstrap = Bootstrap()
 session = Session()
+mysql = MySQL()
 
 
 def create_app(config_class=Config):
@@ -29,6 +29,9 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
     app.config["SESSION_PERMANENT"] = False
     app.config["SESSION_TYPE"] = "filesystem"
+    app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+    app.config['MYSQL_DATABASE_USER'] = 'root'
+    app.config['MYSQL_DATABASE_DB'] = 'app'
 
     db.init_app(app)
     migrate.init_app(app, db)
@@ -37,6 +40,7 @@ def create_app(config_class=Config):
     moment.init_app(app)
     bootstrap.init_app(app)
     session.init_app(app)
+    mysql.init_app(app)
 
     from app.auth import bp as auth_bp
     app.register_blueprint(auth_bp, url_prefix='/auth')
